@@ -41,17 +41,6 @@ public class MapDrawer : EditorWindow
 
     void OnSceneGUI(SceneView sceneView)
     {
-        switch (_select)
-        {
-            case 0:
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test1.prefab", typeof(Object));
-                break;
-            case 1:
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test2.prefab", typeof(Object));
-                break;
-        }
-
-
 
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));//为scene响应添加默认事件,用来屏蔽以前的点击选中物体
         if (Event.current.type == EventType.MouseDown && Event.current.button == 0)//点击
@@ -87,9 +76,15 @@ public class MapDrawer : EditorWindow
         {
             case 0:
                 cost = 1;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test1.prefab", typeof(Object));
                 break;
             case 1:
                 cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test2.prefab", typeof(Object));
+                break;
+            case 2:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/grass.prefab", typeof(Object));
                 break;
         }
         bool hit = Physics.Raycast(ray, out rh, 3000f);
@@ -157,6 +152,7 @@ public class MapDrawer : EditorWindow
 
         items[0] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test1.jpeg", typeof(Texture2D));
         items[1] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test2.jpeg", typeof(Texture2D));
+        items[2] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/grass.png", typeof(Texture2D));
 
     }
 
