@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using BaseObject;
 
 
-public class startwnd : MonoBehaviour
+public class startwnd : window
 {
     public GameObject menu;
     public GameObject new_game_btn_ob;
@@ -32,7 +33,7 @@ public class startwnd : MonoBehaviour
     //开始游戏
     void start_game()
     {
-         SceneManager.LoadScene("battle");
+        //WindowMgr.Instance.switch_window("mode");
     }
     //继续游戏
     void continue_game()
