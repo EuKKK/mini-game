@@ -33,7 +33,7 @@ public class startwnd : window
     //开始游戏
     void start_game()
     {
-        //WindowMgr.Instance.switch_window("mode");
+        WindowMgr.Instance.switch_window("Mode");
     }
     //继续游戏
     void continue_game()

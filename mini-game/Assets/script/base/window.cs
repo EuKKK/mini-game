@@ -17,13 +17,20 @@ namespace BaseObject
             if(!window)
                 window = this.gameObject;
 
-
+            window.SetActive(true);
         }
         public void destroy(GameObject window = null)
         {
             if(!window)
                 window = this.gameObject;
 
+        }
+        public void close(GameObject window = null)
+        {
+            if(!window)
+                window = this.gameObject;
+
+            window.SetActive(false);
         }
     }
 

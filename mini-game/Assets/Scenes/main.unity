@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 25403024}
   - component: {fileID: 25403023}
-  - component: {fileID: 25403025}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -156,18 +155,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &25403025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 25403022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6762e44d2d08e4fbc48e4982790d14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &72512484
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u9000\u51FA\u6E38\u620F"
 --- !u!222 &138661786
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -464,7 +451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -442, y: -247}
+  m_AnchoredPosition: {x: -371, y: -247}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373094108
@@ -610,7 +597,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u7EE7\u7EED\u6E38\u620F"
 --- !u!222 &430053317
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -997,7 +984,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u6559\u7A0B\u56DE\u5ECA"
 --- !u!222 &851276881
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1019,12 +1006,12 @@ GameObject:
   - component: {fileID: 924820866}
   - component: {fileID: 924820868}
   m_Layer: 5
-  m_Name: start_menu
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &924820865
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1045,7 +1032,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1148, y: 621}
+  m_SizeDelta: {x: 971, y: 546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &924820866
 MonoBehaviour:
@@ -1109,13 +1096,14 @@ GameObject:
   - component: {fileID: 1013368636}
   - component: {fileID: 1013368638}
   - component: {fileID: 1013368637}
+  - component: {fileID: 1013368639}
   m_Layer: 5
-  m_Name: mode_select
+  m_Name: Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1013368636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1136,7 +1124,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1148, y: 621}
+  m_SizeDelta: {x: 971, y: 546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1013368637
 MonoBehaviour:
@@ -1173,6 +1161,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013368635}
   m_CullTransparentMesh: 0
+--- !u!114 &1013368639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013368635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae20045465df38d459decbb708f39302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 1013368635}
+  battle_btn_ob: {fileID: 483828517}
+  shop_btn_ob: {fileID: 72512484}
+  guide_btn_ob: {fileID: 1049835481}
 --- !u!1 &1049835481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,7 +1359,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u5F00\u59CB\u6E38\u620F"
 --- !u!222 &1088937041
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1376,6 +1380,7 @@ GameObject:
   - component: {fileID: 1461280974}
   - component: {fileID: 1461280973}
   - component: {fileID: 1461280972}
+  - component: {fileID: 1461280976}
   m_Layer: 5
   m_Name: canvas
   m_TagString: Untagged
@@ -1464,6 +1469,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1461280976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461280971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6762e44d2d08e4fbc48e4982790d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1572354464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,7 +1517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 404, y: -247}
+  m_AnchoredPosition: {x: 377, y: -247}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1572354466
@@ -1646,7 +1663,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u8FDB\u5165\u7F8A\u5708"
 --- !u!222 &1643858036
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1789,7 +1806,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u7EE7\u7EED\u65C5\u7A0B"
 --- !u!222 &1839151511
 CanvasRenderer:
   m_ObjectHideFlags: 0
