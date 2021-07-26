@@ -76,15 +76,19 @@ public class MapDrawer : EditorWindow
         {
             case 0:
                 cost = 1;
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test1.prefab", typeof(Object));
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/ground.prefab", typeof(Object));
                 break;
             case 1:
                 cost = 999;
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test2.prefab", typeof(Object));
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/desert.prefab", typeof(Object));
                 break;
             case 2:
                 cost = 999;
                 prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/grass.prefab", typeof(Object));
+                break;
+            case 3:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/plains.prefab", typeof(Object));
                 break;
         }
         bool hit = Physics.Raycast(ray, out rh, 3000f);
@@ -150,9 +154,10 @@ public class MapDrawer : EditorWindow
         _select = GUI.SelectionGrid(new Rect(new Vector2(0, 155), new Vector2(100 * 4, sizeY)), _select, items, 4);//可以给出grid选择框,需要传入贴图数组_items
 
 
-        items[0] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test1.jpeg", typeof(Texture2D));
-        items[1] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test2.jpeg", typeof(Texture2D));
+        items[0] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/ground.png", typeof(Texture2D));
+        items[1] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/desert.png", typeof(Texture2D));
         items[2] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/grass.png", typeof(Texture2D));
+        items[3] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/plains.png", typeof(Texture2D));
 
     }
 

@@ -77,11 +77,11 @@ public class LandformCreate : EditorWindow
         {
             case 0:
                 cost = 1;
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test1.prefab", typeof(Object));
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/mountain.prefab", typeof(Object));
                 break;
             case 1:
                 cost = 999;
-                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/test2.prefab", typeof(Object));
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/jungle.prefab", typeof(Object));
                 break;
             case 2:
                 cost = 999;
@@ -98,6 +98,14 @@ public class LandformCreate : EditorWindow
             case 5:
                 cost = 999;
                 prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/tower2.prefab", typeof(Object));
+                break;
+            case 6:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/water.prefab", typeof(Object));
+                break;
+            case 7:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/barrier.prefab", typeof(Object));
                 break;
 
         }
@@ -164,12 +172,14 @@ public class LandformCreate : EditorWindow
         _select = GUI.SelectionGrid(new Rect(new Vector2(0, 155), new Vector2(100 * 4, sizeY)), _select, items, 4);//可以给出grid选择框,需要传入贴图数组_items
 
 
-        items[0] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test1.jpeg", typeof(Texture2D));
-        items[1] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/test2.jpeg", typeof(Texture2D));
+        items[0] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/mountain.png", typeof(Texture2D));
+        items[1] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/jungle.png", typeof(Texture2D));
         items[2] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/tree.png", typeof(Texture2D));
         items[3] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/spike1.png", typeof(Texture2D));
         items[4] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/spike2.png", typeof(Texture2D));
         items[5] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/tower2.png", typeof(Texture2D));
+        items[6] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/water.png", typeof(Texture2D));
+        items[7] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/barrier.png", typeof(Texture2D));
 
     }
     void EndDraw()
