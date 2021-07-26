@@ -5,14 +5,14 @@ using UnityEditor;
 
 public class LandformCreate : EditorWindow
 {
-    static int WIDE = 25;
+    static int WIDE = 30;
 
     string maxRow = string.Empty;
     string maxCol = string.Empty;
     private int _select = 0;
     private Texture2D[] items = new Texture2D[12];
     private bool _drag = false;
-    public int[,] map = new int[25, 25];
+    public int[,] map = new int[30, 30];
     private Object prefabTest;
     private bool isCreate;
     private bool isEliminate;
@@ -107,6 +107,14 @@ public class LandformCreate : EditorWindow
                 cost = 999;
                 prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/barrier.prefab", typeof(Object));
                 break;
+            case 8:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/character.prefab", typeof(Object));
+                break;
+            case 9:
+                cost = 999;
+                prefabTest = AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorPrefab/enemy.prefab", typeof(Object));
+                break;
 
         }
         bool hit = Physics.Raycast(ray, out rh, 3000f);
@@ -182,6 +190,8 @@ public class LandformCreate : EditorWindow
         items[5] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/tower2.png", typeof(Texture2D));
         items[6] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/water.png", typeof(Texture2D));
         items[7] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/barrier.png", typeof(Texture2D));
+        items[8] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/character.jpeg", typeof(Texture2D));
+        items[9] = (Texture2D)AssetDatabase.LoadAssetAtPath("Assets/Editor/EditorTexture/enemy.jpeg", typeof(Texture2D));
 
     }
     void EndDraw()

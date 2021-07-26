@@ -9,6 +9,11 @@ TagManager:
   - water
   - jungle
   - trap
+  - Map
+  - Landform
+  - wall
+  - enemy
+  - character
   layers:
   - Default
   - TransparentFX

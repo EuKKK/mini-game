@@ -5,14 +5,14 @@ using UnityEditor;
 
 public class MapDrawer : EditorWindow
 {
-    static int WIDE = 25;
+    static int WIDE = 30;
 
     string maxRow = string.Empty;
     string maxCol = string.Empty;
     private int _select = 0;
     private Texture2D[] items = new Texture2D[12];
     private bool _drag = false;
-    public int[,] map = new int[25, 25];
+    public int[,] map = new int[30, 30];
     private Object prefabTest;
     private bool isCreate;
     private bool isEliminate;
