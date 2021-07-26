@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BaseObject;
 
-public class Battle : window
+public class Resultwnd : window
 {
     public GameObject menu;
+    public GameObject back_ob;
 
     // Start is called before the first frame update
     void Start()
@@ -17,17 +18,17 @@ public class Battle : window
     //注册按钮点击监听
     void register_btn_click()
     {
+        Button back_btn = back_ob.GetComponent<Button>();
+
+        back_btn.onClick.AddListener(back);
     }
 
-    //开始战斗
-    void battle_start()
-    {
-
-    }
-
+    //结束战斗
     void back()
     {
+        WindowMgr.Instance.switch_window("Mode");
     }
+
 
     // Update is called once per frame
     void Update()

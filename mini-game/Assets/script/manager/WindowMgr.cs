@@ -52,4 +52,9 @@ public class WindowMgr : MonoBehaviour
                 now_window.close();
         }
     }
+
+    public void active_window(string window_name)
+    {
+        window_map[window_name].redraw();
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BaseObject;
 
-public class Battlestandbywnd : window
+public class Battlewnd : window
 {
     public GameObject menu;
     public GameObject battle_btn_ob;
@@ -20,25 +20,19 @@ public class Battlestandbywnd : window
     {
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
 
-        battle_btn.onClick.AddListener(battle_start);
+        battle_btn.onClick.AddListener(battle_end);
     }
 
-    //开始战斗
-    void battle_start()
+    //结束战斗
+    void battle_end()
     {
-        WindowMgr.Instance.switch_window("Battle");
+        WindowMgr.Instance.active_window("Result");
     }
 
-    void back()
-    {
-    }
 
-    public override void redraw(GameObject window = null)
+    // Update is called once per frame
+    void Update()
     {
-        if(!window)
-            window = this.gameObject;
         
-        FormationMgr.Instance.init_formation();
-
     }
 }
