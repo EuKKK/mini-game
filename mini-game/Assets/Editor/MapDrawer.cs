@@ -92,30 +92,33 @@ public class MapDrawer : EditorWindow
                 break;
         }
         bool hit = Physics.Raycast(ray, out rh, 3000f);
-        if (hit && isCreate)
+        if (hit)
         {
             int horizontal = Mathf.FloorToInt(rh.point.x / 40);
             int vertical = Mathf.FloorToInt(rh.point.y / 40);
-            if (map[horizontal, vertical] == 0)
+            Debug.Log((horizontal + 1) + "," + (vertical + 1));
+            if (isCreate)
             {
-                map[horizontal, vertical] = cost;
-                GameObject thisPrefab = (GameObject)Instantiate(prefabTest, new Vector3(horizontal * 40 + 20, vertical * 40 + 20), new Quaternion(0, 0, 0, 0));
-                prefabGO.Add(horizontal + vertical * WIDE, thisPrefab);
+                if (map[horizontal, vertical] == 0)
+                {
+                    map[horizontal, vertical] = cost;
+                    GameObject thisPrefab = (GameObject)Instantiate(prefabTest, new Vector3(horizontal * 40 + 20, vertical * 40 + 20), new Quaternion(0, 0, 0, 0));
+                    prefabGO.Add(horizontal + vertical * WIDE, thisPrefab);
+                }
             }
-        }
 
-        if (hit && isEliminate)
-        {
-            int horizontal = Mathf.FloorToInt(rh.point.x / 40);
-            int vertical = Mathf.FloorToInt(rh.point.y / 40);
-            if (map[horizontal, vertical] != 0)
+            if (isEliminate)
             {
-                map[horizontal, vertical] = 0;
 
-                Object deleteObject = prefabGO[horizontal + vertical * WIDE];
-                prefabGO.Remove(horizontal + vertical * WIDE);
-                DestroyImmediate((GameObject)deleteObject);
+                if (map[horizontal, vertical] != 0)
+                {
+                    map[horizontal, vertical] = 0;
 
+                    Object deleteObject = prefabGO[horizontal + vertical * WIDE];
+                    prefabGO.Remove(horizontal + vertical * WIDE);
+                    DestroyImmediate((GameObject)deleteObject);
+
+                }
             }
         }
     }
