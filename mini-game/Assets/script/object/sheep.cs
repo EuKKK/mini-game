@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class User : MonoBehaviour
+public class sheep : MonoBehaviour
 {
     public 
     // Start is called before the first frame update

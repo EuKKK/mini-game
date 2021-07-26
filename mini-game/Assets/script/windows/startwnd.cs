@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using BaseObject;
 
 
-public class startwnd : window
+public class Startwnd : window
 {
     public GameObject menu;
     public GameObject new_game_btn_ob;
