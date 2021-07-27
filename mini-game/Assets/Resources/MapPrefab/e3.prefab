@@ -18246,7 +18246,7 @@ GameObject:
   - component: {fileID: 3648301611512982076}
   m_Layer: 0
   m_Name: e3
-  m_TagString: Untagged
+  m_TagString: MapInfo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -320,20 +320,17 @@ public class MapMgr : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            HighLightDestroy();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             RaycastHit rh;
             bool hit = Physics.Raycast(ray, out rh);
-
-            MapInfoInit();
             if (hit)
             {
                 GameObject target = rh.collider.gameObject;
                 locationX = GetLocation(target.transform.position.x);
                 locationY = GetLocation(target.transform.position.y); ;
             }
-            //stop = true;
+            MapInfoInit();
+            HighLightDestroy();
 
             mapRoute[locationX, locationY].direction = Direction.stand;
             mapRoute[locationX, locationY].movePoint = maxMove;
