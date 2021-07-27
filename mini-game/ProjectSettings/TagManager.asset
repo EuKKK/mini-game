@@ -14,6 +14,7 @@ TagManager:
   - wall
   - enemy
   - character
+  - MapInfo
   layers:
   - Default
   - TransparentFX
