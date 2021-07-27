@@ -26,6 +26,7 @@ public class Resultwnd : window
     //结束战斗
     void back()
     {
+        Game.Instance.player_save();
         WindowMgr.Instance.switch_window("Mode");
     }
 

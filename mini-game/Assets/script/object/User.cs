@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using sheeps;
+using System;
 
 public class User : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class User : MonoBehaviour
     void Start()
     {
         Instance = this;
-        add_test_sheep();
+        //Game.Instance.load_saves();
+        
     }
 
     // Update is called once per frame
@@ -36,10 +38,16 @@ public class User : MonoBehaviour
             sheep new_sheep = new sheep();
             new_sheep.test();
             sheep_map[i] = new_sheep;
+            new_sheep.set_id(i);
         }
     }
     public Dictionary <int, sheep> get_sheeps()
     {
         return sheep_map;
     }
+    public void add_sheep(int id, sheep u_sheep)
+    {
+        sheep_map[id] = u_sheep;
+    }
+
 }

@@ -34,11 +34,13 @@ public class Startwnd : window
     void start_game()
     {
         WindowMgr.Instance.switch_window("Mode");
+        User.Instance.add_test_sheep();
     }
     //继续游戏
     void continue_game()
     {
-
+        WindowMgr.Instance.switch_window("Mode");
+        Game.Instance.load_saves();
     }
     //退出游戏
     void exit_game()

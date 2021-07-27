@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace sheeps
 {
+    [Serializable]
     public class sheep 
     {
         public int hp;
@@ -14,6 +16,9 @@ namespace sheeps
         public string camp;
         public string unit;
         public int id;
+        public sheep()
+        {
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -35,6 +40,18 @@ namespace sheeps
             attack_range = 5;
             camp = "our";
             unit = "ground";
+        }
+        public int get_id()
+        {
+            return id;
+        }
+        public void set_id(int u_id)
+        {
+            id = u_id;
+        }
+        public string get_camp()
+        {
+            return camp;
         }
     }
 
