@@ -15,7 +15,7 @@ public class FormationMgr : MonoBehaviour
 {
 
     public static FormationMgr Instance { get; private set; }
-    public Dictionary<string, sheep> user_sheeps;
+    public Dictionary<int, sheep> sheep_formation;
     
 
     void Awake()
@@ -29,7 +29,25 @@ public class FormationMgr : MonoBehaviour
     
     public void init_formation()
     {
-        user_sheeps = User.Instance.get_sheeps();
-
+        sheep_formation = new Dictionary<int, sheep>();
     }
+    public void enter_team(int id, sheep enter_sheep)
+    {
+        if(sheep_formation.ContainsKey(id))
+            leave_team(id);
+        sheep_formation[id] = enter_sheep;
+    }
+    public void leave_team(int id)
+    {
+        sheep_formation[id] = null;
+    }
+
+    public void enter_test(Dictionary<int, sheep> map)
+    {
+        foreach(int id in map.Keys)
+        {
+            enter_team(id, map[id]);
+        }
+    }
+
 }
