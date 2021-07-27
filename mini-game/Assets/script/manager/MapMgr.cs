@@ -36,7 +36,7 @@ public class MapMgr : MonoBehaviour
     }
     private RouteObject[,] mapRoute = new RouteObject[30, 30];
     public bool change = true;
-    int maxMove = 2;
+    int maxMove = 3;
 
     void Start()
     {
@@ -113,6 +113,7 @@ public class MapMgr : MonoBehaviour
     {
         waySearch(x, y, maxMove, true);
         HighLightSearch(true);
+        MapInfoInit();
         waySearch(x, y, maxMove, false);
         HighLightSearch(false);
         HighLightShow();
@@ -325,6 +326,7 @@ public class MapMgr : MonoBehaviour
             RaycastHit rh;
             bool hit = Physics.Raycast(ray, out rh);
 
+            MapInfoInit();
             if (hit)
             {
                 GameObject target = rh.collider.gameObject;
@@ -332,18 +334,21 @@ public class MapMgr : MonoBehaviour
                 locationY = GetLocation(target.transform.position.y); ;
             }
             //stop = true;
-            for (int i = 0; i < 30; i++)
-            {
-                for (int j = 0; j < 30; j++)
-                {
-                    mapRoute[i, j].movePoint = -999;
-                    mapRoute[i, j].direction = Direction.stand;
-                }
-            }
 
             mapRoute[locationX, locationY].direction = Direction.stand;
             mapRoute[locationX, locationY].movePoint = maxMove;
             CharacterMove(locationX, locationY);
+        }
+    }
+    private void MapInfoInit()
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            for (int j = 0; j < 30; j++)
+            {
+                mapRoute[i, j].movePoint = -999;
+                mapRoute[i, j].direction = Direction.stand;
+            }
         }
     }
 }
