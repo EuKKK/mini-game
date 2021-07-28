@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 25403023}
   - component: {fileID: 25403025}
   - component: {fileID: 25403026}
+  - component: {fileID: 25403027}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -286,7 +287,6 @@ MonoBehaviour:
   money: 0
   level: 0
   character_num: 0
-  sheep_id: 1
 --- !u!114 &25403026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +299,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f356774451a51245ad568bbddc8fe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &25403027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25403022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a75a2b08ca9a674ca7e5fa1d9cc2eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapInfo: {fileID: 0}
+  map: {fileID: 0}
+  landform: {fileID: 0}
+  highLight: {fileID: 0}
+  highLightD: {fileID: 0}
+  ex: {fileID: 0}
+  stop: 0
+  change: 1
 --- !u!1 &42495057
 GameObject:
   m_ObjectHideFlags: 0

@@ -327,7 +327,7 @@ public class MapMgr : MonoBehaviour
             {
                 GameObject target = rh.collider.gameObject;
                 locationX = GetLocation(target.transform.position.x);
-                locationY = GetLocation(target.transform.position.y); ;
+                locationY = GetLocation(target.transform.position.y);
             }
             MapInfoInit();
             HighLightDestroy();

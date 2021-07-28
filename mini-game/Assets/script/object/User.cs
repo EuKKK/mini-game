@@ -11,7 +11,6 @@ public class User : MonoBehaviour
     public int character_num;
     public static User Instance { get; private set; }
     public Dictionary <int, sheep> sheep_map = new Dictionary<int, sheep>();
-    public int sheep_id = 1;
     
     // Start is called before the first frame update
     void Start()
