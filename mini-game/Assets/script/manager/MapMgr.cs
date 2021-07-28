@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class MapMgr : MonoBehaviour
 {
+    public const int MAX_NUMBER = 30;
     public int[,] MapInfo = new int[30, 30];
     public int[,] GamePlayer = new int[30, 30];
+    public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
     public GameObject mapInfo;
     public GameObject map;
     public GameObject landform;
     public int locationX;
     public int locationY;
+    public int maxX;
+    public int maxY;
     public string MgrCheck;
 
     void Start()
@@ -24,11 +28,15 @@ public class MapMgr : MonoBehaviour
         mapInfo = GameObject.FindGameObjectWithTag("MapInfo").gameObject;
         map = mapInfo.transform.Find("Map(Clone)").gameObject;
         landform = mapInfo.transform.Find("Landform(Clone)").gameObject;
+        maxX = 0;
+        maxY = 0;
         for (int i = 0; i < map.transform.childCount; i++)
         {
             GameObject g = map.transform.GetChild(i).gameObject;
             int x = GetLocation(g.transform.position.x);
             int y = GetLocation(g.transform.position.y);
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
             MapInfo[x, y] = 1;
         }
         for (int i = 0; i < landform.transform.childCount; i++)
@@ -37,6 +45,7 @@ public class MapMgr : MonoBehaviour
             string tag = g.tag;
             int x = GetLocation(g.transform.position.x);
             int y = GetLocation(g.transform.position.y);
+            landformPos.Add(MAX_NUMBER * x + y, g);
             if (MapInfo[x, y] == 1)
             {
                 switch (tag)

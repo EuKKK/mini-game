@@ -5,13 +5,18 @@ using System.Threading;
 
 public class BattleMgr : MonoBehaviour
 {
+    public const int MAX_NUMBER = 30;
     public GameObject highLight;
     public GameObject highLightD;
+    public GameObject highLightS;
     public GameObject character;
     public GameObject ex;
     public Dictionary<int, GameObject> highLightObj = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
     public int[,] MapInfo = new int[30, 30];
     public int[,] GamePlayer = new int[30, 30];
+    public int maxX;
+    public int maxY;
     private Direction[] DangerousTry = new Direction[10];
     private int wayCount;
     private int trapCount;
@@ -32,6 +37,9 @@ public class BattleMgr : MonoBehaviour
     private RouteObject[,] mapRoute = new RouteObject[30, 30];
     private bool check = true;
     int maxMove = 3;
+
+    private int locationX;
+    private int locationY;
 
     enum Direction
     {
@@ -62,10 +70,28 @@ public class BattleMgr : MonoBehaviour
         rotZ = ex.transform.eulerAngles.z;
         highLight = (GameObject)Resources.Load("Prefab/HighLight");
         highLightD = (GameObject)Resources.Load("Prefab/HighLightD");
+        highLightS = (GameObject)Resources.Load("Prefab/HighLightS");
         MapInfo = GetComponent<MapMgr>().MapInfo;
         GamePlayer = GetComponent<MapMgr>().GamePlayer;
+        landformPos = GetComponent<MapMgr>().landformPos;
+        maxX = GetComponent<MapMgr>().maxX;
+        maxY = GetComponent<MapMgr>().maxY;
+
     }
 
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 寻路
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void CharacterMove(int x, int y)
     {
         SafeWaySearch(x, y, maxMove, true);
@@ -289,54 +315,6 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
-    public void HighLightShow()
-    {
-        int t = 0;
-        for (int i = 0; i < 30; i++)
-        {
-            for (int j = 0; j < 30; j++)
-            {
-                if (HighLight[i, j] == 1)
-                {
-                    int insX = GetPosition(i);
-                    int insY = GetPosition(j);
-                    GameObject g = Instantiate(highLight, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
-                    g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
-                    t++;
-                    highLightObj.Add(t, g);
-                }
-                if (HighLight[i, j] == 2)
-                {
-                    int insX = GetPosition(i);
-                    int insY = GetPosition(j);
-                    GameObject g = Instantiate(highLightD, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
-                    g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
-                    t++;
-                    highLightObj.Add(t, g);
-                }
-            }
-        }
-    }
-    public void HighLightDestroy()
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            for (int j = 0; j < 30; j++)
-            {
-                HighLight[i, j] = 0;
-            }
-        }
-        if (highLightObj.Count > 0)
-        {
-
-            foreach (GameObject g in highLightObj.Values)
-            {
-                DestroyImmediate(g);
-
-            }
-            highLightObj.Clear();
-        }
-    }
     private void wayWalk(int targetX, int targetY, int CharacterX, int CharacterY)
     {
         if (targetX == CharacterX && targetY == CharacterY)
@@ -428,16 +406,6 @@ public class BattleMgr : MonoBehaviour
             way[i] = Direction.stand;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isWalk)
-        {
-            Walk(walkType);
-            isWalk = false;
-        }
-    }
     private void Walk(bool safe)
     {
 
@@ -491,6 +459,183 @@ public class BattleMgr : MonoBehaviour
 
             }
         }
+
+    }
+
+    /// <summary>
+    /// 高光显示和销毁
+    /// </summary>
+    public void HighLightShow()
+    {
+        int t = 0;
+        for (int i = 0; i < 30; i++)
+        {
+            for (int j = 0; j < 30; j++)
+            {
+                if (HighLight[i, j] == 1)
+                {
+                    int insX = GetPosition(i);
+                    int insY = GetPosition(j);
+                    GameObject g = Instantiate(highLight, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
+                    g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    t++;
+                    highLightObj.Add(t, g);
+                }
+                if (HighLight[i, j] == 2)
+                {
+                    int insX = GetPosition(i);
+                    int insY = GetPosition(j);
+                    GameObject g = Instantiate(highLightD, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
+                    g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    t++;
+                    highLightObj.Add(t, g);
+                }
+                if (HighLight[i, j] == 3)
+                {
+                    int insX = GetPosition(i);
+                    int insY = GetPosition(j);
+                    GameObject g = Instantiate(highLightS, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
+                    g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    t++;
+                    highLightObj.Add(t, g);
+                }
+            }
+        }
+    }
+    public void HighLightDestroy()
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            for (int j = 0; j < 30; j++)
+            {
+                HighLight[i, j] = 0;
+            }
+        }
+        if (highLightObj.Count > 0)
+        {
+
+            foreach (GameObject g in highLightObj.Values)
+            {
+                DestroyImmediate(g);
+
+            }
+            highLightObj.Clear();
+        }
+    }
+
+
+    void Update()
+    {
+        OnMouseMove();
+
+        if (isWalk)
+        {
+            Walk(walkType);
+            isWalk = false;
+        }
+    }
+
+
+    private void OnMouseMove()
+    {
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rh;
+            bool hit = Physics.Raycast(ray, out rh);
+            if (hit)
+            {
+                GameObject target = rh.collider.gameObject;
+                locationX = GetLocation(target.transform.position.x);
+                locationY = GetLocation(target.transform.position.y);
+
+                if (HighLight[locationX, locationY] == 3)
+                {
+                    SkillChoose(CharacterX, CharacterY, true);
+                }
+                else if (GamePlayer[locationX, locationY] == 1)
+                {
+                    HighLightDestroy();
+                    SkillChoose(locationX, locationY, false);
+                    CharacterX = locationX;
+                    CharacterY = locationY;
+                }
+                else
+                {
+                    HighLightDestroy();
+                }
+            }
+
+        }
+    }
+    private void SkillChoose(int x, int y, bool sure)
+    {
+        Rotate(x, y, sure);
+    }
+
+    /// <summary>
+    /// 技能
+    /// </summary>
+    public void Attract()
+    {
+
+    }
+    public void Rotate(int x, int y, bool sure)
+    {
+        if (x > 0 && x < maxX && y > 0 && y < maxY)
+        {
+            if (!sure)
+            {
+                HighLight[x + 1, y + 1] = 3;
+                HighLight[x - 1, y + 1] = 3;
+                HighLight[x + 1, y - 1] = 3;
+                HighLight[x - 1, y - 1] = 3;
+                HighLightShow();
+            }
+            else
+            {
+                int t;
+                t = MapInfo[x + 1, y + 1];
+                MapInfo[x + 1, y + 1] = MapInfo[x - 1, y + 1];
+                MapInfo[x - 1, y + 1] = MapInfo[x - 1, y - 1];
+                MapInfo[x - 1, y - 1] = MapInfo[x + 1, y - 1];
+                MapInfo[x + 1, y - 1] = t;
+                int g1P = (x + 1) * MAX_NUMBER + y + 1;
+                int g2P = (x - 1) * MAX_NUMBER + y + 1;
+                int g3P = (x - 1) * MAX_NUMBER + y - 1;
+                int g4P = (x + 1) * MAX_NUMBER + y - 1;
+                GameObject g1 = landformPos[g1P];
+                GameObject g2 = landformPos[g2P];
+                GameObject g3 = landformPos[g3P];
+                GameObject g4 = landformPos[g4P];
+                landformPos.Remove(g1P);
+                landformPos.Remove(g2P);
+                landformPos.Remove(g3P);
+                landformPos.Remove(g4P);
+                g1.transform.position = g1.transform.position + new Vector3(0, -80, 0);
+                g2.transform.position = g2.transform.position + new Vector3(80, 0, 0);
+                g3.transform.position = g3.transform.position + new Vector3(0, 80, 0);
+                g4.transform.position = g4.transform.position + new Vector3(-80, 0, 0);
+                t = g1P;
+                g1P = g2P;
+                g2P = g3P;
+                g3P = g4P;
+                g4P = t;
+                landformPos.Add(g1P, g1);
+                landformPos.Add(g2P, g2);
+                landformPos.Add(g3P, g3);
+                landformPos.Add(g4P, g4);
+                HighLightDestroy();
+            }
+        }
+    }
+    public void Push()
+    {
+
+    }
+    public void jump()
+    {
 
     }
 }

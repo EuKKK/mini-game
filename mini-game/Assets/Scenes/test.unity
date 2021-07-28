@@ -518,6 +518,8 @@ MonoBehaviour:
   landform: {fileID: 0}
   locationX: 0
   locationY: 0
+  maxX: 0
+  maxY: 0
   MgrCheck: 
 --- !u!114 &1568864176
 MonoBehaviour:
@@ -533,8 +535,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highLight: {fileID: 0}
   highLightD: {fileID: 0}
+  highLightS: {fileID: 0}
   character: {fileID: 0}
   ex: {fileID: 5862724636156509566}
+  maxX: 0
+  maxY: 0
 --- !u!1 &1850967400
 GameObject:
   m_ObjectHideFlags: 0
