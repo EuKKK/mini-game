@@ -5,9 +5,11 @@ using UnityEngine;
 public class MapMgr : MonoBehaviour
 {
     public const int MAX_NUMBER = 30;
-    public int[,] MapInfo = new int[30, 30];
-    public int[,] GamePlayer = new int[30, 30];
+    public int[,] MapInfo = new int[35, 35];
+    public int[,] GamePlayer = new int[35, 35];
     public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> characterPos = new Dictionary<int, GameObject>();
     public GameObject mapInfo;
     public GameObject map;
     public GameObject landform;
@@ -30,6 +32,14 @@ public class MapMgr : MonoBehaviour
         landform = mapInfo.transform.Find("Landform(Clone)").gameObject;
         maxX = 0;
         maxY = 0;
+        for (int i = 0; i < 35; i++)
+        {
+            for (int j = 0; j < 35; j++)
+            {
+                MapInfo[i, j] = 0;
+                GamePlayer[i, j] = 0;
+            }
+        }
         for (int i = 0; i < map.transform.childCount; i++)
         {
             GameObject g = map.transform.GetChild(i).gameObject;
@@ -45,7 +55,7 @@ public class MapMgr : MonoBehaviour
             string tag = g.tag;
             int x = GetLocation(g.transform.position.x);
             int y = GetLocation(g.transform.position.y);
-            landformPos.Add(MAX_NUMBER * x + y, g);
+
             if (MapInfo[x, y] == 1)
             {
                 switch (tag)
@@ -53,22 +63,28 @@ public class MapMgr : MonoBehaviour
                     case "character":
                         GamePlayer[x, y] = 1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
+                        characterPos.Add(getDic(x, y), g);
                         break;
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
+                        enemyPos.Add(getDic(x, y), g);
                         break;
                     case "barrier":
                         MapInfo[x, y] = 900;
+                        landformPos.Add(getDic(x, y), g);
                         break;
                     case "jungle":
                         MapInfo[x, y] = 2;
+                        landformPos.Add(getDic(x, y), g);
                         break;
                     case "water":
                         MapInfo[x, y] = 9999;
+                        landformPos.Add(getDic(x, y), g);
                         break;
                     case "trap":
                         MapInfo[x, y] = 500;
+                        landformPos.Add(getDic(x, y), g);
                         break;
                 }
             }
@@ -78,11 +94,15 @@ public class MapMgr : MonoBehaviour
 
     public int GetLocation(float pos)
     {
-        return ((int)pos - 20) / 40;
+        return ((int)pos - 20) / 40 + 1;
     }
     public int GetPosition(int loc)
     {
-        return loc * 40 + 20;
+        return (loc - 1) * 40 + 20;
+    }
+    private int getDic(int x, int y)
+    {
+        return y * MAX_NUMBER + x;
     }
 
     void Update()

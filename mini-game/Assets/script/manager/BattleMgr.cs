@@ -13,17 +13,24 @@ public class BattleMgr : MonoBehaviour
     public GameObject ex;
     public Dictionary<int, GameObject> highLightObj = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
-    public int[,] MapInfo = new int[30, 30];
-    public int[,] GamePlayer = new int[30, 30];
+    public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> characterPos = new Dictionary<int, GameObject>();
+    public int characterAttackX = 0;
+    public int characterAttackY = 0;
+    public int health = 10;
+    public int[,] MapInfo = new int[35, 35];
+    public int[,] GamePlayer = new int[35, 35];
     public int maxX;
     public int maxY;
-    private Direction[] DangerousTry = new Direction[10];
+    private Direction[] DangerousTry = new Direction[20];
     private int wayCount;
     private int trapCount;
-    private Direction[] way = new Direction[10];
+    private Direction[] way = new Direction[20];
     private int step = 0;
-    public int[,] HighLight = new int[30, 30];
+    public int[,] HighLight = new int[35, 35];
+    private GameObject moveEnemy;
     private bool isWalk;
+    private bool enemyWalk;
     private bool walkType;
 
     //private int locationX;
@@ -34,8 +41,11 @@ public class BattleMgr : MonoBehaviour
     private float rotY;
     private float rotZ;
 
-    private RouteObject[,] mapRoute = new RouteObject[30, 30];
+    private RouteObject[,] mapRoute = new RouteObject[35, 35];
     private bool check = true;
+    int enemyRange = 4;
+    int enemyAttackRange = 1;
+    int enemyMaxMove = 3;
     int maxMove = 3;
 
     private int locationX;
@@ -54,14 +64,7 @@ public class BattleMgr : MonoBehaviour
         public int movePoint;
         public Direction direction;
     }
-    public int GetLocation(float pos)
-    {
-        return ((int)pos - 20) / 40;
-    }
-    public int GetPosition(int loc)
-    {
-        return loc * 40 + 20;
-    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,64 +77,106 @@ public class BattleMgr : MonoBehaviour
         MapInfo = GetComponent<MapMgr>().MapInfo;
         GamePlayer = GetComponent<MapMgr>().GamePlayer;
         landformPos = GetComponent<MapMgr>().landformPos;
+        enemyPos = GetComponent<MapMgr>().enemyPos;
+        characterPos = GetComponent<MapMgr>().characterPos;
         maxX = GetComponent<MapMgr>().maxX;
         maxY = GetComponent<MapMgr>().maxY;
 
     }
 
 
-
-
-
-
-
-
-
     /// <summary>
-    /// 寻路
+    /// 角色寻路
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    public void CharacterMove(int x, int y)
+    public void CharacterCheck(int locationX, int locationY, ref GameObject target)
     {
-        SafeWaySearch(x, y, maxMove, true);
+
+        if (GamePlayer[locationX, locationY] == 1)
+        {
+            character = target;
+            MapRouteInit();
+            HighLightDestroy();
+            mapRoute[locationX, locationY].direction = Direction.stand;
+            mapRoute[locationX, locationY].movePoint = maxMove;
+            CharacterX = locationX;
+            CharacterY = locationY;
+            CharacterMove(locationX, locationY, true);
+            check = true;
+        }
+        else if (HighLight[locationX, locationY] == 1)
+        {
+            step = 0;
+            GamePlayer[CharacterX, CharacterY] = 0;
+            GamePlayer[locationX, locationY] = 1;
+            wayWalk(locationX, locationY, CharacterX, CharacterY);
+            isWalk = true;
+            walkType = true;
+            HighLightDestroy();
+        }
+        else if (HighLight[locationX, locationY] == 2)
+        {
+            step = 0;
+            trapCount = 999;
+            MapRouteInit();
+            mapRoute[CharacterX, CharacterY].direction = Direction.stand;
+            mapRoute[CharacterX, CharacterY].movePoint = maxMove;
+            DangerousWayWalk(CharacterX, CharacterY, locationX, locationY, maxMove, 0, true);
+
+            GamePlayer[CharacterX, CharacterY] = 0;
+            GamePlayer[locationX, locationY] = 1;
+            //step = wayCount;
+            isWalk = true;
+            walkType = false;
+            HighLightDestroy();
+        }
+        else
+        {
+            HighLightDestroy();
+            check = false;
+        }
+    }
+    public void CharacterMove(int x, int y, bool sheep)
+    {
+        SafeWaySearch(x, y, maxMove, true, sheep);
         HighLightSearch(true);
-        MapInfoInit();
+        MapRouteInit();
         mapRoute[x, y].movePoint = maxMove;
-        SafeWaySearch(x, y, maxMove, false);
+        SafeWaySearch(x, y, maxMove, false, sheep);
         HighLightSearch(false);
         HighLightShow();
 
     }
-    public void EnemyMove()
-    {
-
-    }
-    private void SafeWaySearch(int _x, int _y, int point, bool trapAfford)
+    private void SafeWaySearch(int _x, int _y, int point, bool trapAfford, bool sheep)
     {
         int upPoint = 0;
         int downPoint = 0;
         int leftPoint = 0;
         int rightPoint = 0;
-        if (_y + 1 < 30)
+        if (_y + 1 <= 30)
         {
             upPoint = MapInfo[_x, _y + 1];
             if (trapAfford && upPoint == 500) upPoint = 1;
+            if (sheep && upPoint == 900) upPoint = 1;
         }
-        if (_y - 1 >= 0)
+        if (_y - 1 > 0)
         {
             downPoint = MapInfo[_x, _y - 1];
             if (trapAfford && downPoint == 500) downPoint = 1;
+            if (sheep && downPoint == 900) downPoint = 1;
         }
-        if (_x + 1 < 30)
+        if (_x + 1 <= 30)
         {
             rightPoint = MapInfo[_x + 1, _y];
             if (trapAfford && rightPoint == 500) rightPoint = 1;
+            if (sheep && rightPoint == 900) rightPoint = 1;
         }
-        if (_x - 1 >= 0)
+        if (_x - 1 > 0)
         {
             leftPoint = MapInfo[_x - 1, _y];
             if (trapAfford && leftPoint == 500) leftPoint = 1;
+            if (sheep && leftPoint == 900) leftPoint = 1;
         }
         if (point >= 0)
         {
@@ -141,7 +186,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x, _y + 1].movePoint = point - upPoint;
                     mapRoute[_x, _y + 1].direction = Direction.up;
-                    SafeWaySearch(_x, _y + 1, mapRoute[_x, _y + 1].movePoint, trapAfford);
+                    SafeWaySearch(_x, _y + 1, mapRoute[_x, _y + 1].movePoint, trapAfford, sheep);
                 }
             }
             if (downPoint != 0)
@@ -150,7 +195,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x, _y - 1].movePoint = point - downPoint;
                     mapRoute[_x, _y - 1].direction = Direction.down;
-                    SafeWaySearch(_x, _y - 1, mapRoute[_x, _y - 1].movePoint, trapAfford);
+                    SafeWaySearch(_x, _y - 1, mapRoute[_x, _y - 1].movePoint, trapAfford, sheep);
                 }
             }
             if (rightPoint != 0)
@@ -159,7 +204,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x + 1, _y].movePoint = point - rightPoint;
                     mapRoute[_x + 1, _y].direction = Direction.right;
-                    SafeWaySearch(_x + 1, _y, mapRoute[_x + 1, _y].movePoint, trapAfford);
+                    SafeWaySearch(_x + 1, _y, mapRoute[_x + 1, _y].movePoint, trapAfford, sheep);
                 }
             }
             if (leftPoint != 0)
@@ -168,13 +213,12 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x - 1, _y].movePoint = point - leftPoint;
                     mapRoute[_x - 1, _y].direction = Direction.left;
-                    SafeWaySearch(_x - 1, _y, mapRoute[_x - 1, _y].movePoint, trapAfford);
+                    SafeWaySearch(_x - 1, _y, mapRoute[_x - 1, _y].movePoint, trapAfford, sheep);
                 }
             }
         }
     }
-
-    public void DangerousWayWalk(int _x, int _y, int targetX, int targetY, int point, int count)
+    public void DangerousWayWalk(int _x, int _y, int targetX, int targetY, int point, int count, bool sheep)
     {
         int upPoint = 0;
         int downPoint = 0;
@@ -187,6 +231,7 @@ public class BattleMgr : MonoBehaviour
         if (_y + 1 < 30)
         {
             upPoint = MapInfo[_x, _y + 1];
+            if (sheep && upPoint == 900) upPoint = 1;
             if (upPoint == 500)
             {
                 upPoint = 1;
@@ -196,6 +241,7 @@ public class BattleMgr : MonoBehaviour
         if (_y - 1 >= 0)
         {
             downPoint = MapInfo[_x, _y - 1];
+            if (sheep && downPoint == 900) downPoint = 1;
             if (downPoint == 500)
             {
                 downPoint = 1;
@@ -205,6 +251,7 @@ public class BattleMgr : MonoBehaviour
         if (_x + 1 < 30)
         {
             rightPoint = MapInfo[_x + 1, _y];
+            if (sheep && rightPoint == 900) rightPoint = 1;
             if (rightPoint == 500)
             {
                 rightPoint = 1;
@@ -214,6 +261,7 @@ public class BattleMgr : MonoBehaviour
         if (_x - 1 >= 0)
         {
             leftPoint = MapInfo[_x - 1, _y];
+            if (sheep && leftPoint == 900) leftPoint = 1;
             if (leftPoint == 500)
             {
                 leftPoint = 1;
@@ -256,7 +304,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x, _y + 1].movePoint = point - upPoint;
                     DangerousTry[step] = Direction.up;
-                    DangerousWayWalk(_x, _y + 1, targetX, targetY, mapRoute[_x, _y + 1].movePoint, count + signUp);
+                    DangerousWayWalk(_x, _y + 1, targetX, targetY, mapRoute[_x, _y + 1].movePoint, count + signUp, sheep);
                     mapRoute[_x, _y + 1].movePoint = -999;
                 }
             }
@@ -266,7 +314,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x, _y - 1].movePoint = point - downPoint;
                     DangerousTry[step] = Direction.down;
-                    DangerousWayWalk(_x, _y - 1, targetX, targetY, mapRoute[_x, _y - 1].movePoint, count + signDown);
+                    DangerousWayWalk(_x, _y - 1, targetX, targetY, mapRoute[_x, _y - 1].movePoint, count + signDown, sheep);
                     mapRoute[_x, _y - 1].movePoint = -999;
                 }
             }
@@ -276,7 +324,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x + 1, _y].movePoint = point - rightPoint;
                     DangerousTry[step] = Direction.right;
-                    DangerousWayWalk(_x + 1, _y, targetX, targetY, mapRoute[_x + 1, _y].movePoint, count + signRight);
+                    DangerousWayWalk(_x + 1, _y, targetX, targetY, mapRoute[_x + 1, _y].movePoint, count + signRight, sheep);
                     mapRoute[_x + 1, _y].movePoint = -999;
                 }
             }
@@ -286,7 +334,7 @@ public class BattleMgr : MonoBehaviour
                 {
                     mapRoute[_x - 1, _y].movePoint = point - leftPoint;
                     DangerousTry[step] = Direction.left;
-                    DangerousWayWalk(_x - 1, _y, targetX, targetY, mapRoute[_x - 1, _y].movePoint, count + signLeft);
+                    DangerousWayWalk(_x - 1, _y, targetX, targetY, mapRoute[_x - 1, _y].movePoint, count + signLeft, sheep);
                     mapRoute[_x - 1, _y].movePoint = -999;
                 }
             }
@@ -343,68 +391,103 @@ public class BattleMgr : MonoBehaviour
         }
 
     }
-
-    public void CharacterCheck(int locationX, int locationY, ref GameObject target)
+    /// <summary>
+    /// 敌人寻路
+    /// </summary>
+    public void EnemyMove()
     {
-
-        if (GamePlayer[locationX, locationY] == 1)
-        {
-            character = target;
-            MapInfoInit();
-            HighLightDestroy();
-            mapRoute[locationX, locationY].direction = Direction.stand;
-            mapRoute[locationX, locationY].movePoint = maxMove;
-            CharacterX = locationX;
-            CharacterY = locationY;
-            CharacterMove(locationX, locationY);
-            check = true;
-        }
-        else if (HighLight[locationX, locationY] == 1)
+        MapRouteInit();
+        enemyAttackSearch(13, 2, enemyRange);
+        if (characterAttackX > -100)
         {
             step = 0;
-            GamePlayer[CharacterX, CharacterY] = 0;
-            GamePlayer[locationX, locationY] = 1;
-            wayWalk(locationX, locationY, CharacterX, CharacterY);
-            isWalk = true;
-            walkType = true;
-            HighLightDestroy();
-        }
-        else if (HighLight[locationX, locationY] == 2)
-        {
-            step = 0;
-            trapCount = 999;
-            MapInfoInit();
-            mapRoute[CharacterX, CharacterY].direction = Direction.stand;
-            mapRoute[CharacterX, CharacterY].movePoint = maxMove;
-            DangerousWayWalk(CharacterX, CharacterY, locationX, locationY, maxMove, 0);
-
-            GamePlayer[CharacterX, CharacterY] = 0;
-            GamePlayer[locationX, locationY] = 1;
+            trapCount = 100;
+            DangerousWayWalk(13, 2, characterAttackX, characterAttackY, 19, 0, false);
+            moveEnemy = enemyPos[getDic(13, 2)];
             step = wayCount;
-            isWalk = true;
-            walkType = false;
-            HighLightDestroy();
+            enemyWalk = true;
+
+            GamePlayer[13, 2] = 0;
+            //GamePlayer[characterAttackX, characterAttackY] = -1;
         }
         else
         {
-            HighLightDestroy();
-            check = false;
+            Debug.Log("找不到攻击角色");
         }
     }
-    private void MapInfoInit()
+    private void enemyAttackSearch(int _x, int _y, int point)
     {
-        for (int i = 0; i < 30; i++)
+        characterAttackX = -100;
+        characterAttackY = -100;
+        for (int i = -point; i <= point; i++)
         {
-            for (int j = 0; j < 30; j++)
+            int absI = point - Mathf.Abs(i);
+            for (int j = -absI; j <= absI; j++)
+            {
+                if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
+                {
+                    //if (health <= 10)
+                    //{
+                    characterAttackX = i + _x;
+                    characterAttackY = j + _y;
+                    // }
+                }
+            }
+        }
+    }
+
+    private void MapRouteInit()
+    {
+        for (int i = 0; i < 35; i++)
+        {
+            for (int j = 0; j < 35; j++)
             {
                 mapRoute[i, j].movePoint = -999;
                 mapRoute[i, j].direction = Direction.stand;
             }
         }
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             way[i] = Direction.stand;
         }
+    }
+    private void EnemyWalk(GameObject g, int maxMove)
+    {
+        step = 1;
+        bool getPoint = false;
+        int _x = GetLocation(g.transform.position.x);
+        int _y = GetLocation(g.transform.position.y);
+        while (step <= wayCount && step <= maxMove && !getPoint)
+        {
+            switch (way[step])
+            {
+                case Direction.up:
+                    _x++;
+                    if (GamePlayer[_x, _y] == 1)
+                    {
+                        getPoint = true;
+                    }
+                    else
+                    {
+                        g.transform.position = new Vector3(g.transform.position.x, g.transform.position.y + 40, g.transform.position.z);
+                    }
+                    break;
+                case Direction.down:
+                    g.transform.position = new Vector3(g.transform.position.x, g.transform.position.y - 40, g.transform.position.z);
+
+                    break;
+                case Direction.right:
+                    g.transform.position = new Vector3(g.transform.position.x + 40, g.transform.position.y, g.transform.position.z);
+
+                    break;
+                case Direction.left:
+                    g.transform.position = new Vector3(g.transform.position.x - 40, g.transform.position.y, g.transform.position.z);
+
+                    break;
+            }
+            step++;
+        }
+
     }
     private void Walk(bool safe)
     {
@@ -526,6 +609,11 @@ public class BattleMgr : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            EnemyMove();
+        }
+
         OnMouseMove();
 
         if (isWalk)
@@ -533,8 +621,14 @@ public class BattleMgr : MonoBehaviour
             Walk(walkType);
             isWalk = false;
         }
-    }
 
+        if (enemyWalk)
+        {
+            Debug.Log("get");
+            EnemyWalk(moveEnemy, maxMove);
+            enemyWalk = false;
+        }
+    }
 
     private void OnMouseMove()
     {
@@ -550,16 +644,19 @@ public class BattleMgr : MonoBehaviour
                 locationX = GetLocation(target.transform.position.x);
                 locationY = GetLocation(target.transform.position.y);
 
+                Debug.Log(target.name);
+
                 if (HighLight[locationX, locationY] == 3)
                 {
-                    SkillChoose(CharacterX, CharacterY, true);
+                    SkillChoose(CharacterX, CharacterY, locationX, locationY, true);
                 }
                 else if (GamePlayer[locationX, locationY] == 1)
                 {
                     HighLightDestroy();
-                    SkillChoose(locationX, locationY, false);
                     CharacterX = locationX;
                     CharacterY = locationY;
+                    SkillChoose(CharacterX, CharacterY, locationX, locationY, false);
+
                 }
                 else
                 {
@@ -569,17 +666,80 @@ public class BattleMgr : MonoBehaviour
 
         }
     }
-    private void SkillChoose(int x, int y, bool sure)
-    {
-        Rotate(x, y, sure);
-    }
 
     /// <summary>
     /// 技能
     /// </summary>
-    public void Attract()
+    /// 
+    private void SkillChoose(int CharacterX, int CharacterY, int locationX, int locationY, bool sure)
     {
+        Push(CharacterX, CharacterY, locationX, locationY, sure);
+        //Attract(CharacterX, CharacterY, sure);
+        //Rotate(CharacterX, CharacterY, sure);
 
+
+    }
+    public void Attract(int x, int y, bool sure)
+    {
+        if (x > 1 && x < maxX - 1 && y > 1 && y < maxY - 1)
+        {
+            if (!sure)
+            {
+                HighLight[x + 2, y] = 3;
+                HighLight[x - 2, y] = 3;
+                HighLight[x, y + 2] = 3;
+                HighLight[x, y - 2] = 3;
+                HighLightShow();
+            }
+            else
+            {
+                if (MapInfo[x + 1, y] == 1 && MapInfo[x + 2, y] > 1)
+                {
+                    int gEx = getDic(x + 2, y);
+                    int g = getDic(x + 1, y);
+                    GameObject go = landformPos[gEx];
+                    landformPos.Remove(gEx);
+                    go.transform.position = go.transform.position + new Vector3(-40, 0, 0);
+                    landformPos.Add(g, go);
+                    MapInfo[x + 1, y] = MapInfo[x + 2, y];
+                    MapInfo[x + 2, y] = 1;
+                }
+                if (MapInfo[x - 1, y] == 1 && MapInfo[x - 2, y] > 1)
+                {
+                    int gEx = getDic(x - 2, y);
+                    int g = getDic(x - 1, y);
+                    GameObject go = landformPos[gEx];
+                    landformPos.Remove(gEx);
+                    go.transform.position = go.transform.position + new Vector3(40, 0, 0);
+                    landformPos.Add(g, go);
+                    MapInfo[x - 1, y] = MapInfo[x - 2, y];
+                    MapInfo[x - 2, y] = 1;
+                }
+                if (MapInfo[x, y + 1] == 1 && MapInfo[x, y + 2] > 1)
+                {
+                    int gEx = getDic(x, y + 2);
+                    int g = getDic(x, y + 1);
+                    GameObject go = landformPos[gEx];
+                    landformPos.Remove(gEx);
+                    go.transform.position = go.transform.position + new Vector3(0, -40, 0);
+                    landformPos.Add(g, go);
+                    MapInfo[x, y + 1] = MapInfo[x, y + 2];
+                    MapInfo[x, y + 2] = 1;
+                }
+                if (MapInfo[x, y - 1] == 1 && MapInfo[x, y - 2] > 1)
+                {
+                    int gEx = getDic(x, y - 2);
+                    int g = getDic(x, y - 1);
+                    GameObject go = landformPos[gEx];
+                    landformPos.Remove(gEx);
+                    go.transform.position = go.transform.position + new Vector3(0, 40, 0);
+                    landformPos.Add(g, go);
+                    MapInfo[x, y - 1] = MapInfo[x, y - 2];
+                    MapInfo[x, y - 2] = 1;
+                }
+                HighLightDestroy();
+            }
+        }
     }
     public void Rotate(int x, int y, bool sure)
     {
@@ -601,41 +761,166 @@ public class BattleMgr : MonoBehaviour
                 MapInfo[x - 1, y + 1] = MapInfo[x - 1, y - 1];
                 MapInfo[x - 1, y - 1] = MapInfo[x + 1, y - 1];
                 MapInfo[x + 1, y - 1] = t;
-                int g1P = (x + 1) * MAX_NUMBER + y + 1;
-                int g2P = (x - 1) * MAX_NUMBER + y + 1;
-                int g3P = (x - 1) * MAX_NUMBER + y - 1;
-                int g4P = (x + 1) * MAX_NUMBER + y - 1;
-                GameObject g1 = landformPos[g1P];
-                GameObject g2 = landformPos[g2P];
-                GameObject g3 = landformPos[g3P];
-                GameObject g4 = landformPos[g4P];
-                landformPos.Remove(g1P);
-                landformPos.Remove(g2P);
-                landformPos.Remove(g3P);
-                landformPos.Remove(g4P);
-                g1.transform.position = g1.transform.position + new Vector3(0, -80, 0);
-                g2.transform.position = g2.transform.position + new Vector3(80, 0, 0);
-                g3.transform.position = g3.transform.position + new Vector3(0, 80, 0);
-                g4.transform.position = g4.transform.position + new Vector3(-80, 0, 0);
-                t = g1P;
-                g1P = g2P;
-                g2P = g3P;
-                g3P = g4P;
-                g4P = t;
-                landformPos.Add(g1P, g1);
-                landformPos.Add(g2P, g2);
-                landformPos.Add(g3P, g3);
-                landformPos.Add(g4P, g4);
+
+                int g1P = getDic(x + 1, y + 1);
+                int g2P = getDic(x - 1, y + 1);
+                int g3P = getDic(x - 1, y - 1);
+                int g4P = getDic(x + 1, y - 1);
+
+                GameObject g1 = null;
+                GameObject g2 = null;
+                GameObject g3 = null;
+                GameObject g4 = null;
+                try
+                {
+                    g1 = landformPos[g1P];
+                    landformPos.Remove(g1P);
+                }
+                catch { }
+                try
+                {
+                    g2 = landformPos[g2P];
+                    landformPos.Remove(g2P);
+                }
+                catch { }
+                try
+                {
+                    g3 = landformPos[g3P];
+                    landformPos.Remove(g3P);
+                }
+                catch { }
+                try
+                {
+                    g4 = landformPos[g4P];
+                    landformPos.Remove(g4P);
+                }
+                catch { }
+
+                if (g1 != null)
+                {
+                    g1.transform.position = g1.transform.position + new Vector3(0, -80, 0);
+                    g1P = getDic(x + 1, y - 1);
+                    landformPos.Add(g1P, g1);
+                }
+
+                if (g2 != null)
+                {
+                    g2.transform.position = g2.transform.position + new Vector3(80, 0, 0);
+                    g2P = getDic(x + 1, y + 1);
+                    landformPos.Add(g2P, g2);
+                }
+                if (g3 != null)
+                {
+                    g3.transform.position = g3.transform.position + new Vector3(0, 80, 0);
+                    g3P = getDic(x - 1, y + 1);
+                    landformPos.Add(g3P, g3);
+                }
+                if (g4 != null)
+                {
+                    g4.transform.position = g4.transform.position + new Vector3(-80, 0, 0);
+                    g4P = getDic(x - 1, y - 1);
+                    landformPos.Add(g4P, g4);
+                }
+
                 HighLightDestroy();
             }
         }
     }
-    public void Push()
+    public void Push(int x, int y, int PushX, int PushY, bool sure)
     {
+        if (!sure)
+        {
+            if (x + 1 <= maxX) HighLight[x + 1, y] = 3;
+            if (x - 1 >= 0) HighLight[x - 1, y] = 3;
+            if (y + 1 <= maxY) HighLight[x, y + 1] = 3;
+            if (y - 1 >= 0) HighLight[x, y - 1] = 3;
+            HighLightShow();
+        }
+        else
+        {
+            if (GamePlayer[PushX, PushY] == -1)
+            {
+                int PushDisX = PushX - x;
+                int PushDisY = PushY - y;
+                if (PushDisX != 0)
+                {
+                    PushCheck(x + PushDisX, y, x + 2 * PushDisX, y);
+                    if (GamePlayer[x + PushDisX, y + 1] == -1)
+                    {
+                        PushCheck(x + PushDisX, y + 1, x + 2 * PushDisX, y + 1);
+                    }
+                    if (GamePlayer[x + PushDisX, y - 1] == -1)
+                    {
+                        PushCheck(x + PushDisX, y - 1, x + 2 * PushDisX, y - 1);
+                    }
+                }
+                if (PushDisY != 0)
+                {
+                    PushCheck(x, y + PushDisY, x, y + 2 * PushDisY);
+                    if (GamePlayer[x + 1, y + PushDisY] == -1)
+                    {
+                        PushCheck(x + 1, y + PushDisY, x + 1, y + 2 * PushDisY);
+                    }
+                    if (GamePlayer[x - 1, y + PushDisY] == -1)
+                    {
+                        PushCheck(x - 1, y + PushDisY, x - 1, y + 2 * PushDisY);
+                    }
+                }
+            }
+            HighLightDestroy();
+        }
 
+    }
+    private void PushCheck(int x, int y, int PushX, int PushY)
+    {
+        if (MapInfo[PushX, PushY] == 0)
+        {
+            Debug.Log("推出地图");
+        }
+        else if (GamePlayer[PushX, PushY] == 1)
+        {
+            Debug.Log("撞到人伤害");
+        }
+        else if (GamePlayer[PushX, PushY] == -1)
+        {
+            Debug.Log("撞到敌人伤害");
+        }
+        else if (MapInfo[PushX, PushY] == 900)
+        {
+            Debug.Log("撞到栅栏伤害");
+        }
+        else
+        {
+            int enemyG = getDic(x, y);
+            GameObject g = enemyPos[enemyG];
+            enemyPos.Remove(enemyG);
+            g.transform.position = g.transform.position + new Vector3((PushX - x) * 40, (PushY - y) * 40, 0);
+            enemyG = getDic(PushX, PushY);
+            enemyPos.Add(enemyG, g);
+            GamePlayer[x, y] = 0;
+            GamePlayer[PushX, PushY] = -1;
+        }
     }
     public void jump()
     {
 
+    }
+
+    /// <summary>
+    /// 位置工具
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public int GetLocation(float pos)
+    {
+        return ((int)pos - 20) / 40 + 1;
+    }
+    public int GetPosition(int loc)
+    {
+        return (loc - 1) * 40 + 20;
+    }
+    private int getDic(int x, int y)
+    {
+        return y * MAX_NUMBER + x;
     }
 }
