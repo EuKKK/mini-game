@@ -5,6 +5,8 @@ using UnityEditor;
 using ExcelDataReader;
 using excel_d;
 using System.IO;
+using BaseObject;
+
 public class BuildAssets : EditorWindow
 {
     static string file_path = "Assets/Resources/doc/";
@@ -19,8 +21,11 @@ public class BuildAssets : EditorWindow
 
         for(int i=0;i<files.Length;i++){  
             if (files[i].Name.EndsWith(".xlsx")){  
-                Dictionary<string, Dictionary<string, string >> excel_map;
-                ExcelAccess.SelectMenuTable(file_path + files[i].Name);
+                holder asset_holder = ExcelAccess.SelectMenuTable(file_path + files[i].Name);
+                string name = files[i].Name.Replace(".xlsx", "");
+                string asset_path = file_path + name + ".asset";
+                AssetDatabase.CreateAsset(asset_holder, asset_path);
+                AssetDatabase.Refresh();                
                 //Debug.Log( "Name:" + files[i].Name );  
             }  
             //Debug.Log( "FullName:" + files[i].FullName );  
@@ -29,8 +34,7 @@ public class BuildAssets : EditorWindow
 
         //查询excel表中数据，赋值给asset文件
  
-        string path= "Assets/Resources/booknames.asset";
- 
+
         // AssetDatabase.CreateAsset(holder, path);
         // AssetDatabase.Refresh();
  

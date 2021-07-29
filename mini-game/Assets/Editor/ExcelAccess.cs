@@ -4,19 +4,20 @@ using System.Data;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections;
- 
+using BaseObject;
+
 namespace excel_d
 {
     public class ExcelAccess
     {
     
         //查询menu表
-        public static Dictionary<string, Dictionary<string, string>> SelectMenuTable(string file_path)
+        public static holder SelectMenuTable(string file_path)
         {
             string sheetName = "sheet1";
             DataRowCollection collect = ExcelAccess.ReadExcel(file_path, sheetName);
             Dictionary<string, Dictionary<string, string>> excel_map = new Dictionary<string, Dictionary<string, string>>();
-    
+            
             for (int i = 1; i < collect.Count; i++)
             {
                 string col_id = collect[i][0].ToString();
@@ -27,7 +28,9 @@ namespace excel_d
                 }
             }
 
-            return excel_map;
+            holder hold = ScriptableObject.CreateInstance<holder>();
+            hold.init(excel_map);
+            return hold;
         }
     
         /// <summary>
