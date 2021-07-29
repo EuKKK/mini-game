@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
     }
     void Start()
     {
-        test_asset();
+        //test_asset();
     }
 
     // Update is called once per frame
