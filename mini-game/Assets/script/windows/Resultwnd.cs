@@ -27,6 +27,7 @@ public class Resultwnd : window
     void back()
     {
         Game.Instance.player_save();
+        MapMgr.Instance.leave_battle();
         WindowMgr.Instance.switch_window("Mode");
     }
 

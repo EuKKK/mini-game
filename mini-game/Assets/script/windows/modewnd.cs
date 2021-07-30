@@ -35,9 +35,10 @@ public class Modewnd : window
     //开始战斗
     void battle_start()
     {
-        SceneManager.LoadSceneAsync("battle");
         WindowMgr.Instance.switch_window("Battlestandby");
+        MapMgr.Instance.GetMap(1);
     }
+
     //打开商店
     void open_shop()
     {

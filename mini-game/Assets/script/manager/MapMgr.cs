@@ -5,10 +5,8 @@ using UnityEngine;
 public class MapMgr : MonoBehaviour
 {
     public const int MAX_NUMBER = 30;
-    public int[,] MapInfo = new int[35, 35];
-    public int[,] GamePlayer = new int[35, 35];
-    public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
-    public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
+	public int[,] MapInfo = new int[35, 35];
+    public int[,] GamePlayer = new int[35, 35]; 	public Dictionary<int, GameObject> landformPos ;    public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> characterPos = new Dictionary<int, GameObject>();
     public GameObject mapInfo;
     public GameObject map;
@@ -18,6 +16,7 @@ public class MapMgr : MonoBehaviour
     public int maxX;
     public int maxY;
     public string MgrCheck;
+    public static MapMgr Instance { get; private set; }
 
 
     private bool isMouseDown;
@@ -25,17 +24,15 @@ public class MapMgr : MonoBehaviour
 
     void Start()
     {
-        GetMap();
+        Instance = this;
         MgrCheck = "BattleMgr";
     }
 
-    public void GetMap()
+    public void GetMap(int level)
     {
-        mapInfo = GameObject.FindGameObjectWithTag("MapInfo").gameObject;
-        map = mapInfo.transform.Find("Map(Clone)").gameObject;
-        landform = mapInfo.transform.Find("Landform(Clone)").gameObject;
-        maxX = 0;
-        maxY = 0;
+        //初始化地图数据
+        map_init();
+        
         for (int i = 0; i < 35; i++)
         {
             for (int j = 0; j < 35; j++)
@@ -94,6 +91,24 @@ public class MapMgr : MonoBehaviour
             }
         }
 
+    }
+
+    void map_init()
+    {
+        mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/e1"));
+        Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
+        foreach(Transform child in father)
+            child.gameObject.layer = 9;
+
+        map = mapInfo.transform.Find("Map(Clone)").gameObject;
+        landform = mapInfo.transform.Find("Landform(Clone)").gameObject;
+        landformPos = new Dictionary<int, GameObject>();
+        
+        maxX = 0;
+        maxY = 0;
+
+        MapInfo = new int[30, 30];
+        GamePlayer = new int[30, 30];
     }
 
     public int GetLocation(float pos)
@@ -159,7 +174,7 @@ public class MapMgr : MonoBehaviour
 
         }
     }
-    private void ScreenMove()
+private void ScreenMove()
     {
         if (Input.GetMouseButtonDown(2))
         {
@@ -179,5 +194,12 @@ public class MapMgr : MonoBehaviour
             }
             lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-    }
-}
+    }public void leave_battle() {
+        if(mapInfo)
+            Destroy(mapInfo);
+        
+        mapInfo = null;
+        GamePlayer = null;
+        landformPos = null;
+        map = null;
+    }}

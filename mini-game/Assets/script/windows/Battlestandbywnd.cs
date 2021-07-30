@@ -5,14 +5,18 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BaseObject;
 using sheeps;
+using UnityEngine.EventSystems;
 
-public class Battlestandbywnd : window
+public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler,IPointerUpHandler
 {
     public GameObject menu;
     public GameObject battle_btn_ob;
     public GameObject sheep_prefab;
     Dictionary<int, sheep> user_sheeps;
+    GameObject in_drag_ob = null;
+    Vector3 pre_pos ;
     ArrayList sheep_prefabs = new ArrayList();
+    public Camera main_camera;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +53,7 @@ public class Battlestandbywnd : window
         user_sheeps = User.Instance.get_sheeps();
         foreach(int id in user_sheeps.Keys)
         {
-            draw_sheep(user_sheeps[id]);
+            draw_sheep(id.ToString(), user_sheeps[id]);
         }
 
         FormationMgr.Instance.enter_test(user_sheeps);
@@ -65,10 +69,42 @@ public class Battlestandbywnd : window
             Destroy(u_sheep);
     }
 
-    void draw_sheep(sheep u_sheep)
+    void draw_sheep(string name, sheep u_sheep)
     {
         GameObject new_sheep_ob = GameObject.Instantiate(sheep_prefab);
-        new_sheep_ob.transform.SetParent(this.gameObject.transform.Find("sheeps/Viewport/Content"));
+        new_sheep_ob.name = "sheep" + name;
+        new_sheep_ob.transform.SetParent(this.gameObject.transform.Find("charactorscroll/Viewport/Content"));
         sheep_prefabs.Add(new_sheep_ob);
+    }
+
+    void Update()
+    {
+
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        if(in_drag_ob)
+            in_drag_ob.transform.position = eventData.position;
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        in_drag_ob = null;
+        pre_pos = new Vector3(0,0,0);
+        List<RaycastResult> list = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, list);
+        if(list[0].gameObject.name.Contains("sheep"))
+        {
+            in_drag_ob = list[0].gameObject;
+            pre_pos = in_drag_ob.transform.position;
+        }
+            
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(in_drag_ob)
+        {
+            in_drag_ob.transform.position = pre_pos;
+            
+        }
     }
 }
