@@ -19,6 +19,10 @@ public class MapMgr : MonoBehaviour
     public int maxY;
     public string MgrCheck;
 
+
+    private bool isMouseDown;
+    private Vector3 lastMousePosition;
+
     void Start()
     {
         GetMap();
@@ -108,6 +112,11 @@ public class MapMgr : MonoBehaviour
     void Update()
     {
         OnMouseMove();
+
+        if (!GetComponent<BattleMgr>().ScreenLock)
+        {
+            ScreenMove();
+        }
     }
     private void OnMouseMove()
     {
@@ -120,17 +129,55 @@ public class MapMgr : MonoBehaviour
             if (hit)
             {
                 GameObject target = rh.collider.gameObject;
-                locationX = GetLocation(target.transform.position.x);
-                locationY = GetLocation(target.transform.position.y);
+                locationX = GetLocation(target.transform.position.x - mapInfo.transform.position.x);
+                locationY = GetLocation(target.transform.position.y - mapInfo.transform.position.y);
 
                 if (MgrCheck == "BattleMgr")
                 {
-                    GetComponent<BattleMgr>().CharacterCheck(locationX, locationY, ref target);
+                    //Debug.Log(GetComponent<BattleMgr>().GamePlayer[locationX, locationY]);
+                    GetComponent<BattleMgr>().CenterManager(locationX, locationY, ref target, 0);
+                }
+            }
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rh;
+            bool hit = Physics.Raycast(ray, out rh);
+            if (hit)
+            {
+                GameObject target = rh.collider.gameObject;
+                locationX = GetLocation(target.transform.position.x - mapInfo.transform.position.x);
+                locationY = GetLocation(target.transform.position.y - mapInfo.transform.position.y);
+
+                if (MgrCheck == "BattleMgr")
+                {
+                    GetComponent<BattleMgr>().CenterManager(locationX, locationY, ref target, 1);
                 }
             }
 
         }
     }
-
-
+    private void ScreenMove()
+    {
+        if (Input.GetMouseButtonDown(2))
+        {
+            isMouseDown = true;
+        }
+        if (Input.GetMouseButtonUp(2))
+        {
+            isMouseDown = false;
+            lastMousePosition = Vector3.zero;
+        }
+        if (isMouseDown)
+        {
+            if (lastMousePosition != Vector3.zero)
+            {
+                Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
+                mapInfo.transform.position += offset;
+            }
+            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+    }
 }

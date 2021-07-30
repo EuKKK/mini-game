@@ -11,6 +11,7 @@ public class BattleMgr : MonoBehaviour
     public GameObject highLightS;
     public GameObject character;
     public GameObject ex;
+    public GameObject mapInfo;
     public Dictionary<int, GameObject> highLightObj = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
@@ -30,16 +31,15 @@ public class BattleMgr : MonoBehaviour
     public int[,] HighLight = new int[35, 35];
     private GameObject moveEnemy;
     private bool isWalk;
-    private bool enemyWalk;
+    private bool isEnemyWalk;
     private bool walkType;
-
-    //private int locationX;
-    //private int locationY;
-    private int CharacterX;
-    private int CharacterY;
+    private List<int> enemyPosList = new List<int>();
+    public bool ScreenLock = false;
     private float rotX;
     private float rotY;
     private float rotZ;
+    private int sleep;
+
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
     private bool check = true;
@@ -47,9 +47,20 @@ public class BattleMgr : MonoBehaviour
     int enemyAttackRange = 1;
     int enemyMaxMove = 3;
     int maxMove = 3;
-
+    public int CharacterX;
+    public int CharacterY;
     private int locationX;
     private int locationY;
+
+    private int t;
+    private int round;
+    private bool camp;
+    private int _x;
+    private int _y;
+    private bool getPoint;
+    private GameObject enemy;
+    private int enemyCount;
+    private bool enemyWalkAdimit = false;
 
     enum Direction
     {
@@ -75,6 +86,7 @@ public class BattleMgr : MonoBehaviour
         highLightD = (GameObject)Resources.Load("Prefab/HighLightD");
         highLightS = (GameObject)Resources.Load("Prefab/HighLightS");
         MapInfo = GetComponent<MapMgr>().MapInfo;
+        mapInfo = GetComponent<MapMgr>().mapInfo;
         GamePlayer = GetComponent<MapMgr>().GamePlayer;
         landformPos = GetComponent<MapMgr>().landformPos;
         enemyPos = GetComponent<MapMgr>().enemyPos;
@@ -82,11 +94,13 @@ public class BattleMgr : MonoBehaviour
         maxX = GetComponent<MapMgr>().maxX;
         maxY = GetComponent<MapMgr>().maxY;
 
+        round = 0;
+        camp = true;
     }
 
 
     /// <summary>
-    /// 角色寻路
+    /// 角色寻路模块
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
@@ -113,6 +127,7 @@ public class BattleMgr : MonoBehaviour
             wayWalk(locationX, locationY, CharacterX, CharacterY);
             isWalk = true;
             walkType = true;
+            //Walk(walkType);
             HighLightDestroy();
         }
         else if (HighLight[locationX, locationY] == 2)
@@ -126,9 +141,10 @@ public class BattleMgr : MonoBehaviour
 
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
-            //step = wayCount;
+            step = 0;
             isWalk = true;
             walkType = false;
+            //Walk(walkType);
             HighLightDestroy();
         }
         else
@@ -298,6 +314,7 @@ public class BattleMgr : MonoBehaviour
         else if (point > 0)
         {
             step++;
+
             if (upPoint != 0)
             {
                 if (point - upPoint > -100 && mapRoute[_x, _y + 1].movePoint < 0 && GamePlayer[_x, _y + 1] == 0)
@@ -391,34 +408,64 @@ public class BattleMgr : MonoBehaviour
         }
 
     }
+
+
+
     /// <summary>
-    /// 敌人寻路
-    /// </summary>
+    /// 敌人寻路模块
+    /// </summary>    
+    public void EnemySearch()
+    {
+        enemyPosList.Clear();
+        foreach (int pos in enemyPos.Keys)
+        {
+            enemyPosList.Add(pos);
+        }
+        enemyCount = enemyPosList.Count;
+        t = 0;
+        enemyWalkAdimit = true;
+    }
     public void EnemyMove()
     {
-        MapRouteInit();
-        enemyAttackSearch(13, 2, enemyRange);
-        if (characterAttackX > -100)
+        if (t < enemyCount)
         {
-            step = 0;
-            trapCount = 100;
-            DangerousWayWalk(13, 2, characterAttackX, characterAttackY, 19, 0, false);
-            moveEnemy = enemyPos[getDic(13, 2)];
-            step = wayCount;
-            enemyWalk = true;
-
-            GamePlayer[13, 2] = 0;
-            //GamePlayer[characterAttackX, characterAttackY] = -1;
+            int enemyPosY = DicY(enemyPosList[t]);
+            int enemyPosX = DicX(enemyPosList[t]);
+            EnemyAttackSearch(enemyPosX, enemyPosY, enemyRange);
+            if (characterAttackX > -100)
+            {
+                MapRouteInit();
+                step = 0;
+                trapCount = 100;
+                mapRoute[enemyPosX, enemyPosY].movePoint = enemyRange;
+                int s = GamePlayer[characterAttackX, characterAttackY];
+                GamePlayer[characterAttackX, characterAttackY] = 0;
+                DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, enemyRange, 0, false);
+                GamePlayer[characterAttackX, characterAttackY] = s;
+                moveEnemy = enemyPos[getDic(enemyPosX, enemyPosY)];
+                step = wayCount;
+                enemy = enemyPos[enemyPosList[t]];
+                EnemyWalkSetting();
+            }
+            else
+            {
+                t++;
+            }
         }
         else
         {
-            Debug.Log("找不到攻击角色");
+            enemyWalkAdimit = false;
+            camp = !camp;
+            round++;
+            //Debug.Log("第" + round + "回合结束");
+            //Debug.Log("第" + (round + 1) + "回合开始");
         }
     }
-    private void enemyAttackSearch(int _x, int _y, int point)
+    private void EnemyAttackSearch(int _x, int _y, int point)
     {
         characterAttackX = -100;
         characterAttackY = -100;
+
         for (int i = -point; i <= point; i++)
         {
             int absI = point - Mathf.Abs(i);
@@ -451,102 +498,23 @@ public class BattleMgr : MonoBehaviour
             way[i] = Direction.stand;
         }
     }
-    private void EnemyWalk(GameObject g, int maxMove)
+    private void EnemyWalkSetting()
     {
+
         step = 1;
-        bool getPoint = false;
-        int _x = GetLocation(g.transform.position.x);
-        int _y = GetLocation(g.transform.position.y);
-        while (step <= wayCount && step <= maxMove && !getPoint)
-        {
-            switch (way[step])
-            {
-                case Direction.up:
-                    _x++;
-                    if (GamePlayer[_x, _y] == 1)
-                    {
-                        getPoint = true;
-                    }
-                    else
-                    {
-                        g.transform.position = new Vector3(g.transform.position.x, g.transform.position.y + 40, g.transform.position.z);
-                    }
-                    break;
-                case Direction.down:
-                    g.transform.position = new Vector3(g.transform.position.x, g.transform.position.y - 40, g.transform.position.z);
-
-                    break;
-                case Direction.right:
-                    g.transform.position = new Vector3(g.transform.position.x + 40, g.transform.position.y, g.transform.position.z);
-
-                    break;
-                case Direction.left:
-                    g.transform.position = new Vector3(g.transform.position.x - 40, g.transform.position.y, g.transform.position.z);
-
-                    break;
-            }
-            step++;
-        }
+        getPoint = false;
+        _x = GetLocation(enemy.transform.position.x - mapInfo.transform.position.x);
+        _y = GetLocation(enemy.transform.position.y - mapInfo.transform.position.y);
+        enemyPos.Remove(getDic(_x, _y));
+        isEnemyWalk = true;
 
     }
-    private void Walk(bool safe)
-    {
 
-        if (safe)
-        {
-            while (step > 0)
-            {
-                switch (way[step])
-                {
-                    case Direction.up:
-                        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 40, character.transform.position.z);
-                        break;
-                    case Direction.down:
-                        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y - 40, character.transform.position.z);
-                        break;
-                    case Direction.right:
-                        character.transform.position = new Vector3(character.transform.position.x + 40, character.transform.position.y, character.transform.position.z);
-                        break;
-                    case Direction.left:
-                        character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
-                        break;
-                }
-                step--;
-            }
-        }
-        else
-        {
-            step = 0;
-            while (step < wayCount)
-            {
-                step++;
-                switch (way[step])
-                {
-                    case Direction.up:
-                        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 40, character.transform.position.z);
 
-                        break;
-                    case Direction.down:
-                        character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y - 40, character.transform.position.z);
 
-                        break;
-                    case Direction.right:
-                        character.transform.position = new Vector3(character.transform.position.x + 40, character.transform.position.y, character.transform.position.z);
-
-                        break;
-                    case Direction.left:
-                        character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
-
-                        break;
-                }
-
-            }
-        }
-
-    }
 
     /// <summary>
-    /// 高光显示和销毁
+    /// 高光显示和销毁模块
     /// </summary>
     public void HighLightShow()
     {
@@ -557,30 +525,33 @@ public class BattleMgr : MonoBehaviour
             {
                 if (HighLight[i, j] == 1)
                 {
-                    int insX = GetPosition(i);
-                    int insY = GetPosition(j);
+                    float insX = GetPosition(i) + mapInfo.transform.position.x;
+                    float insY = GetPosition(j) + mapInfo.transform.position.y;
                     GameObject g = Instantiate(highLight, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     t++;
                     highLightObj.Add(t, g);
+                    g.transform.SetParent(mapInfo.transform);
                 }
                 if (HighLight[i, j] == 2)
                 {
-                    int insX = GetPosition(i);
-                    int insY = GetPosition(j);
+                    float insX = GetPosition(i) + mapInfo.transform.position.x;
+                    float insY = GetPosition(j) + mapInfo.transform.position.y;
                     GameObject g = Instantiate(highLightD, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     t++;
                     highLightObj.Add(t, g);
+                    g.transform.SetParent(mapInfo.transform);
                 }
                 if (HighLight[i, j] == 3)
                 {
-                    int insX = GetPosition(i);
-                    int insY = GetPosition(j);
+                    float insX = GetPosition(i) + mapInfo.transform.position.x;
+                    float insY = GetPosition(j) + mapInfo.transform.position.y;
                     GameObject g = Instantiate(highLightS, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     t++;
                     highLightObj.Add(t, g);
+                    g.transform.SetParent(mapInfo.transform);
                 }
             }
         }
@@ -607,71 +578,254 @@ public class BattleMgr : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// Update与走路显示模块
+    /// </summary>
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (!isWalk && !isEnemyWalk)
         {
-            EnemyMove();
+            if (!camp && t == -1)
+            {
+                EnemySearch();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                camp = !camp;
+                t = -1;
+                Debug.Log("敌人回合");
+                HighLightDestroy();
+            }
         }
-
-        OnMouseMove();
 
         if (isWalk)
         {
             Walk(walkType);
-            isWalk = false;
         }
-
-        if (enemyWalk)
+        if (enemyWalkAdimit)
         {
-            Debug.Log("get");
-            EnemyWalk(moveEnemy, maxMove);
-            enemyWalk = false;
-        }
-    }
-
-    private void OnMouseMove()
-    {
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rh;
-            bool hit = Physics.Raycast(ray, out rh);
-            if (hit)
+            if (isEnemyWalk)
             {
-                GameObject target = rh.collider.gameObject;
-                locationX = GetLocation(target.transform.position.x);
-                locationY = GetLocation(target.transform.position.y);
+                EnemyWalk();
+            }
+            else
+            {
+                EnemyMove();
+            }
+        }
 
-                Debug.Log(target.name);
 
-                if (HighLight[locationX, locationY] == 3)
+    }
+    private void Walk(bool safe)
+    {
+        ScreenLock = true;
+        if (safe)
+        {
+            if (step > 0)
+            {
+                if (sleep >= (int)(0.1f / Time.deltaTime))
                 {
-                    SkillChoose(CharacterX, CharacterY, locationX, locationY, true);
-                }
-                else if (GamePlayer[locationX, locationY] == 1)
-                {
-                    HighLightDestroy();
-                    CharacterX = locationX;
-                    CharacterY = locationY;
-                    SkillChoose(CharacterX, CharacterY, locationX, locationY, false);
-
+                    switch (way[step])
+                    {
+                        case Direction.up:
+                            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 40, character.transform.position.z);
+                            break;
+                        case Direction.down:
+                            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y - 40, character.transform.position.z);
+                            break;
+                        case Direction.right:
+                            character.transform.position = new Vector3(character.transform.position.x + 40, character.transform.position.y, character.transform.position.z);
+                            break;
+                        case Direction.left:
+                            character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
+                            break;
+                    }
+                    step--;
+                    sleep = 0;
                 }
                 else
                 {
-                    HighLightDestroy();
+                    sleep++;
                 }
             }
+            else
+            {
+                isWalk = false;
+                sleep = 0;
+            }
+        }
+        else
+        {
+            if (step < wayCount)
+            {
+                if (sleep >= (int)(0.1f / Time.deltaTime))
+                {
+                    step++;
+                    switch (way[step])
+                    {
+                        case Direction.up:
+                            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y + 40, character.transform.position.z);
 
+                            break;
+                        case Direction.down:
+                            character.transform.position = new Vector3(character.transform.position.x, character.transform.position.y - 40, character.transform.position.z);
+
+                            break;
+                        case Direction.right:
+                            character.transform.position = new Vector3(character.transform.position.x + 40, character.transform.position.y, character.transform.position.z);
+
+                            break;
+                        case Direction.left:
+                            character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
+                            break;
+                    }
+                    sleep = 0;
+                }
+                else
+                {
+                    sleep++;
+                }
+            }
+            else
+            {
+                isWalk = false;
+                sleep = 0;
+            }
+        }
+        ScreenLock = false;
+    }
+    private void EnemyWalk()
+    {
+        ScreenLock = true;
+        if (step <= wayCount && step <= enemyMaxMove && !getPoint)
+        {
+
+            if (sleep >= (int)(0.1f / Time.deltaTime))
+            {
+                switch (way[step])
+                {
+                    case Direction.up:
+                        GamePlayer[_x, _y] = 0;
+                        _y++;
+                        if (GamePlayer[_x, _y] == 1)
+                        {
+                            GamePlayer[_x, _y - 1] = -1;
+                            getPoint = true;
+                        }
+                        else
+                        {
+                            GamePlayer[_x, _y] = -1;
+                            enemy.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 40, enemy.transform.position.z);
+                        }
+                        break;
+                    case Direction.down:
+                        GamePlayer[_x, _y] = 0;
+                        _y--;
+                        if (GamePlayer[_x, _y] == 1)
+                        {
+                            GamePlayer[_x, _y + 1] = -1;
+                            getPoint = true;
+                        }
+                        else
+                        {
+                            GamePlayer[_x, _y] = -1;
+                            enemy.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 40, enemy.transform.position.z);
+                        }
+                        break;
+                    case Direction.right:
+                        GamePlayer[_x, _y] = 0;
+                        _x++;
+                        if (GamePlayer[_x, _y] == 1)
+                        {
+                            GamePlayer[_x - 1, _y] = -1;
+                            getPoint = true;
+                        }
+                        else
+                        {
+                            GamePlayer[_x, _y] = -1;
+                            enemy.transform.position = new Vector3(enemy.transform.position.x + 40, enemy.transform.position.y, enemy.transform.position.z);
+                        }
+                        break;
+                    case Direction.left:
+                        GamePlayer[_x, _y] = 0;
+                        _x--;
+                        if (GamePlayer[_x, _y] == 1)
+                        {
+                            GamePlayer[_x + 1, _y] = -1;
+                            getPoint = true;
+                        }
+                        else
+                        {
+                            GamePlayer[_x, _y] = -1;
+                            enemy.transform.position = new Vector3(enemy.transform.position.x - 40, enemy.transform.position.y, enemy.transform.position.z);
+                        }
+                        break;
+                }
+                step++;
+                sleep = 0;
+            }
+            else
+            {
+                sleep++;
+            }
+        }
+        else
+        {
+            enemyPos.Add(getDic(GetLocation(enemy.transform.position.x - mapInfo.transform.position.x), GetLocation(enemy.transform.position.y - mapInfo.transform.position.y)), enemy);
+            isEnemyWalk = false;
+            sleep = 0;
+            t++;
+        }
+        ScreenLock = false;
+    }
+
+
+
+    public void CenterManager(int locationX, int locationY, ref GameObject gameObject, int mouse)
+    {
+        if (!isWalk && !isEnemyWalk)
+        {
+            if (camp)
+            {
+                if (mouse == 0)
+                {
+                    CharacterCheck(locationX, locationY, ref gameObject);
+                }
+                else if (mouse == 1)
+                {
+                    Skill(locationX, locationY);
+                }
+            }
         }
     }
 
+
+
+
+
     /// <summary>
-    /// 技能
+    /// 技能模块
     /// </summary>
-    /// 
-    private void SkillChoose(int CharacterX, int CharacterY, int locationX, int locationY, bool sure)
+    public void Skill(int locationX, int locationY)
+    {
+        if (HighLight[locationX, locationY] == 3)
+        {
+            SkillUse(CharacterX, CharacterY, locationX, locationY, true);
+        }
+        else if (GamePlayer[locationX, locationY] == 1)
+        {
+            HighLightDestroy();
+            CharacterX = locationX;
+            CharacterY = locationY;
+            SkillUse(CharacterX, CharacterY, locationX, locationY, false);
+        }
+        else
+        {
+            HighLightDestroy();
+        }
+    }
+    public void SkillUse(int CharacterX, int CharacterY, int locationX, int locationY, bool sure)
     {
         Push(CharacterX, CharacterY, locationX, locationY, sure);
         //Attract(CharacterX, CharacterY, sure);
@@ -906,6 +1060,7 @@ public class BattleMgr : MonoBehaviour
 
     }
 
+
     /// <summary>
     /// 位置工具
     /// </summary>
@@ -922,5 +1077,13 @@ public class BattleMgr : MonoBehaviour
     private int getDic(int x, int y)
     {
         return y * MAX_NUMBER + x;
+    }
+    private int DicY(int dicNumber)
+    {
+        return (dicNumber - 1) / MAX_NUMBER;
+    }
+    private int DicX(int dicNumber)
+    {
+        return dicNumber - DicY(dicNumber) * MAX_NUMBER;
     }
 }
