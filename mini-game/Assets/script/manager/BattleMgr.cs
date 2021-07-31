@@ -22,7 +22,6 @@ public class BattleMgr : MonoBehaviour
     public Dictionary<GameObject, sheep> characterMonster = new Dictionary<GameObject, sheep>();
     public int characterAttackX = 0;
     public int characterAttackY = 0;
-    public int healthToAttack = 10;
     public int[,] MapInfo = new int[35, 35];
     public int[,] GamePlayer = new int[35, 35];
     public int maxX;
@@ -66,7 +65,6 @@ public class BattleMgr : MonoBehaviour
     private int characterDamge = 1;
     private int barrierDamage = 3;
 
-
     enum Direction
     {
         up,
@@ -106,8 +104,8 @@ public class BattleMgr : MonoBehaviour
         characterPos = MapMgr.Instance.characterPos;
         maxX = MapMgr.Instance.maxX;
         maxY = MapMgr.Instance.maxY;
-        //RoundStart();
-        //test();
+        RoundStart();
+
         round = 0;
         camp = true;
     }
@@ -502,6 +500,7 @@ public class BattleMgr : MonoBehaviour
         characterAttackX = -100;
         characterAttackY = -100;
 
+        int health = 999;
         for (int i = -point; i <= point; i++)
         {
             int absI = point - Mathf.Abs(i);
@@ -509,11 +508,14 @@ public class BattleMgr : MonoBehaviour
             {
                 if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
                 {
-                    //if (healthToAttack <= 10)
-                    //{
-                    characterAttackX = i + _x;
-                    characterAttackY = j + _y;
-                    // }
+                    int pos = getDic(_x + i, _y + j);
+                    GameObject g = characterPos[pos];
+                    if (characterSheep[g].hp <= health)
+                    {
+                        characterAttackX = i + _x;
+                        characterAttackY = j + _y;
+                        health = characterSheep[g].hp;
+                    }
                 }
             }
         }
@@ -605,36 +607,90 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!isWalk && !isEnemyWalk)
+        if (MapMgr.Instance.Playing == true)
         {
-            if (!camp && t == -1)
+            if (!isWalk && !isEnemyWalk)
             {
-                EnemySearch();
+                if (!camp && t == -1)
+                {
+                    EnemySearch();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    camp = !camp;
+                    t = -1;
+                    Debug.Log("敌人回合");
+                    HighLightDestroy();
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                camp = !camp;
-                t = -1;
-                Debug.Log("敌人回合");
-                HighLightDestroy();
-            }
-        }
 
-        if (isWalk)
-        {
-            Walk(walkType);
-        }
-        if (enemyWalkAdimit)
-        {
-            if (isEnemyWalk)
+            if (isWalk)
             {
-                EnemyWalk();
+                Walk(walkType);
             }
-            else
+            if (enemyWalkAdimit)
             {
-                EnemyMove();
+                if (isEnemyWalk)
+                {
+                    EnemyWalk();
+                }
+                else
+                {
+                    EnemyMove();
+                }
+            }
+
+            WinCheck();
+            LoseCheck();
+        }
+    }
+    /// <summary>
+    /// Update方法
+    /// </summary>
+    private void WinCheck()
+    {
+        bool win = true;
+        foreach (GameObject g in characterMonster.Keys)
+        {
+            if (g != null)
+            {
+                if (g.tag == "enemy") win = false;
             }
         }
+        if (win)
+        {
+            foreach (int i in enemyPos.Keys)
+            {
+                if (enemyPos[i] != null)
+                {
+                    Destroy(enemyPos[i]);
+                }
+            }
+            WindowMgr.Instance.active_window("Result");
+            MapMgr.Instance.Playing = false;
+        }
+    }
+    private void LoseCheck()
+    {
+        bool lose = true;
+        foreach (GameObject g in characterSheep.Keys)
+        {
+            if (g != null)
+            {
+                if (g.tag == "player") lose = false;
+            }
+        }
+        /*
+        if (lose)
+        {
+            foreach (int i in characterPos.Keys)
+            {
+                Destroy(characterPos[i]);
+            }
+            WindowMgr.Instance.active_window("Result");
+            MapMgr.Instance.Playing = false;
+        }
+        */
     }
     private void RoundStart()
     {
@@ -679,7 +735,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                characterSheep[character].isUsed = true;
+                //characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -718,7 +774,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                characterSheep[character].isUsed = true;
+                //characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -876,10 +932,8 @@ public class BattleMgr : MonoBehaviour
                 case "stay":
                     break;
             }
-
         }
-        if (sure) SkillEffectCheck();
-        if (sure) characterSheep[gameObject].isSkilled = true;
+        //if (sure) characterSheep[gameObject].isSkilled = true;
     }
     public void Attract(int x, int y, bool sure)
     {
@@ -897,6 +951,7 @@ public class BattleMgr : MonoBehaviour
             {
                 if (MapInfo[x + 1, y] == 1 && MapInfo[x + 2, y] > 1)
                 {
+
                     int gEx = getDic(x + 2, y);
                     int g = getDic(x + 1, y);
                     GameObject go = landformPos[gEx];
@@ -905,6 +960,7 @@ public class BattleMgr : MonoBehaviour
                     landformPos.Add(g, go);
                     MapInfo[x + 1, y] = MapInfo[x + 2, y];
                     MapInfo[x + 2, y] = 1;
+                    SkillEffectCheck(x + 1, y);
                 }
                 if (MapInfo[x - 1, y] == 1 && MapInfo[x - 2, y] > 1)
                 {
@@ -916,6 +972,7 @@ public class BattleMgr : MonoBehaviour
                     landformPos.Add(g, go);
                     MapInfo[x - 1, y] = MapInfo[x - 2, y];
                     MapInfo[x - 2, y] = 1;
+                    SkillEffectCheck(x - 1, y);
                 }
                 if (MapInfo[x, y + 1] == 1 && MapInfo[x, y + 2] > 1)
                 {
@@ -927,6 +984,7 @@ public class BattleMgr : MonoBehaviour
                     landformPos.Add(g, go);
                     MapInfo[x, y + 1] = MapInfo[x, y + 2];
                     MapInfo[x, y + 2] = 1;
+                    SkillEffectCheck(x, y + 1);
                 }
                 if (MapInfo[x, y - 1] == 1 && MapInfo[x, y - 2] > 1)
                 {
@@ -938,6 +996,7 @@ public class BattleMgr : MonoBehaviour
                     landformPos.Add(g, go);
                     MapInfo[x, y - 1] = MapInfo[x, y - 2];
                     MapInfo[x, y - 2] = 1;
+                    SkillEffectCheck(x, y - 1);
                 }
                 HighLightDestroy();
             }
@@ -1023,7 +1082,10 @@ public class BattleMgr : MonoBehaviour
                     g4P = getDic(x - 1, y - 1);
                     landformPos.Add(g4P, g4);
                 }
-
+                SkillEffectCheck(x + 1, y + 1);
+                SkillEffectCheck(x + 1, y - 1);
+                SkillEffectCheck(x - 1, y + 1);
+                SkillEffectCheck(x - 1, y - 1);
                 HighLightDestroy();
             }
         }
@@ -1106,21 +1168,27 @@ public class BattleMgr : MonoBehaviour
             enemyPos.Add(enemyG, g);
             GamePlayer[x, y] = 0;
             GamePlayer[PushX, PushY] = -1;
+            SkillEffectCheck(PushX, PushY);
         }
     }
     public void jump()
     {
 
     }
-    public void SkillEffectCheck()
+    public void SkillEffectCheck(int x, int y)
     {
-
-        List<int> P = new List<int>();
-        foreach (int i in enemyPos.Keys)
+        GameObject g;
+        int pos = getDic(x, y);
+        try
         {
-            P.Add(i);
-            int x = DicX(i);
-            int y = DicY(i);
+            g = enemyPos[pos];
+        }
+        catch
+        {
+            g = null;
+        }
+        if (g != null)
+        {
             int lanformInfo = MapInfo[x, y];
             switch (lanformInfo)
             {
@@ -1140,11 +1208,6 @@ public class BattleMgr : MonoBehaviour
                     break;
             }
         }
-        for (int i = 0; i < P.Count; i++)
-        {
-            GameObject g = enemyPos[P[i]];
-            if (g == null) enemyPos.Remove(P[i]);
-        }
     }
     public void EnemyDamage(int x, int y, int damage)
     {
@@ -1160,7 +1223,7 @@ public class BattleMgr : MonoBehaviour
         GamePlayer[x, y] = 0;
         GameObject g = enemyPos[pos];
         characterMonster.Remove(g);
-
+        enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
     }
@@ -1172,23 +1235,23 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public int GetLocation(float pos)
+    public int GetLocation(float pos) //得到坐标信息
     {
         return ((int)pos - 20) / 40 + 1;
     }
-    public int GetPosition(int loc)
+    public int GetPosition(int loc) //得到位置信息
     {
         return (loc - 1) * 40 + 20;
     }
-    private int getDic(int x, int y)
+    private int getDic(int x, int y)//得到索引数字
     {
         return y * MAX_NUMBER + x;
     }
-    private int DicY(int dicNumber)
+    private int DicY(int dicNumber)//从索引数字得到坐标信息Y
     {
         return (dicNumber - 1) / MAX_NUMBER;
     }
-    private int DicX(int dicNumber)
+    private int DicX(int dicNumber)//从索引数字得到坐标信息X
     {
         return dicNumber - DicY(dicNumber) * MAX_NUMBER;
     }

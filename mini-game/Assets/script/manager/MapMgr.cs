@@ -26,7 +26,7 @@ public class MapMgr : MonoBehaviour
 
     private bool isMouseDown;
     private Vector3 lastMousePosition;
-    private bool Playing = false;
+    public bool Playing = false;
 
     void Start()
     {
@@ -127,7 +127,7 @@ public class MapMgr : MonoBehaviour
 
     void map_init()
     {
-        mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/e2"));
+        mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/e4"));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
             child.gameObject.layer = 9;
@@ -173,10 +173,10 @@ public class MapMgr : MonoBehaviour
         {
             OnMouseMove();
         }
-        // if (!GetComponent<BattleMgr>().ScreenLock)
-        // {
-        //     ScreenMove();
-        // }
+        if (!GetComponent<BattleMgr>().ScreenLock)
+        {
+            ScreenMove();
+        }
     }
     private void OnMouseMove()
     {
@@ -254,10 +254,10 @@ public class MapMgr : MonoBehaviour
         {
             if (lastMousePosition != Vector3.zero)
             {
-                Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
+                Vector3 offset = BattleCamera.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
                 mapInfo.transform.position += offset;
             }
-            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            lastMousePosition = BattleCamera.ScreenToWorldPoint(Input.mousePosition);
         }
     }
     public void leave_battle()

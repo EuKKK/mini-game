@@ -46,7 +46,7 @@ namespace sheeps
             attack_range = 5;
             camp = "our";
             unit = "ground";
-            skill = "attract";
+            skill = "push";
             cordon = 5;
             isUsed = false;
             isSkilled = false;

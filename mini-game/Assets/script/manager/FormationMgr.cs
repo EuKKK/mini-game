@@ -47,6 +47,7 @@ public class FormationMgr : MonoBehaviour
             leave_team(id);
         enter_sheep.this_sheep = Instantiate(charactor);
         enter_sheep.this_sheep.layer = 9;
+        enter_sheep.this_sheep.transform.SetParent(MapMgr.Instance.mapInfo.transform);
         Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
             child.gameObject.layer = 9;
