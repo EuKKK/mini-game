@@ -51,12 +51,5 @@ public class FormationMgr : MonoBehaviour
         
     }
 
-    // public void enter_test(Dictionary<int, sheep> map)
-    // {
-    //     foreach(int id in map.Keys)
-    //     {
-    //         enter_team(id, map[id]);
-    //     }
-    // }
 
 }
