@@ -106,14 +106,14 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
         if (in_drag_ob)
         {
             in_drag_ob.transform.position = pre_pos;
-            int[] pos = MapMgr.Instance.GetMousePos(eventData.position);
+            int[] pos = MapMgr.Instance.GetChracPos(eventData.position);
 
             if (pos != null)
             {
                 int x = MapMgr.Instance.GetPosition(pos[0]);
                 int y = MapMgr.Instance.GetPosition(pos[1]);
                 string sheep_id = in_drag_ob.name.Replace("sheep", "");
-                FormationMgr.Instance.enter_team(x, y, User.Instance.get_sheep_by_id(int.Parse(sheep_id)));
+                FormationMgr.Instance.enter_team(x, y, User.Instance.get_sheep_by_id(int.Parse(sheep_id)));          
             }
         }
     }

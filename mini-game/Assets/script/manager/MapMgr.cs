@@ -219,7 +219,7 @@ public class MapMgr : MonoBehaviour
         }
     }
 
-    public int[] GetMousePos(Vector3 pos)
+    public int[] GetChracPos(Vector3 pos)
     {
         int[] map_pos = null;
         Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
@@ -230,6 +230,7 @@ public class MapMgr : MonoBehaviour
             map_pos = new int[2];
             GameObject target = rh.collider.gameObject;
             if (target.layer != 9) return null;
+            if (!target.name.Contains("character")) return null; 
             locationX = GetLocation(target.transform.position.x);
             locationY = GetLocation(target.transform.position.y);
             map_pos[0] = locationX;
