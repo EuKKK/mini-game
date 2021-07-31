@@ -5,9 +5,11 @@ using UnityEngine;
 public class MapMgr : MonoBehaviour
 {
     public const int MAX_NUMBER = 30;
-	public int[,] MapInfo = new int[35, 35];
-    public int[,] GamePlayer = new int[35, 35]; 	public Dictionary<int, GameObject> landformPos ;    public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
-    public Dictionary<int, GameObject> characterPos = new Dictionary<int, GameObject>();
+	public int[,] MapInfo ;
+    public int[,] GamePlayer; 	
+    public Dictionary<int, GameObject> landformPos ;
+    public Dictionary<int, GameObject> enemyPos ;
+    public Dictionary<int, GameObject> characterPos ;
     public GameObject mapInfo;
     public GameObject map;
     public GameObject landform;
@@ -17,6 +19,7 @@ public class MapMgr : MonoBehaviour
     public int maxY;
     public string MgrCheck;
     public static MapMgr Instance { get; private set; }
+    public Camera BattleCamera;
 
 
     private bool isMouseDown;
@@ -103,12 +106,14 @@ public class MapMgr : MonoBehaviour
         map = mapInfo.transform.Find("Map(Clone)").gameObject;
         landform = mapInfo.transform.Find("Landform(Clone)").gameObject;
         landformPos = new Dictionary<int, GameObject>();
+        enemyPos = new Dictionary<int, GameObject>();
+        characterPos = new Dictionary<int, GameObject>();
         
         maxX = 0;
         maxY = 0;
 
-        MapInfo = new int[30, 30];
-        GamePlayer = new int[30, 30];
+        MapInfo = new int[35, 35];
+        GamePlayer = new int[35, 35];
     }
 
     public int GetLocation(float pos)
@@ -119,7 +124,7 @@ public class MapMgr : MonoBehaviour
     {
         return (loc - 1) * 40 + 20;
     }
-    private int getDic(int x, int y)
+    public int getDic(int x, int y)
     {
         return y * MAX_NUMBER + x;
     }
@@ -128,10 +133,10 @@ public class MapMgr : MonoBehaviour
     {
         OnMouseMove();
 
-        if (!GetComponent<BattleMgr>().ScreenLock)
-        {
-            ScreenMove();
-        }
+        // if (!GetComponent<BattleMgr>().ScreenLock)
+        // {
+        //     ScreenMove();
+        // }
     }
     private void OnMouseMove()
     {
@@ -174,7 +179,28 @@ public class MapMgr : MonoBehaviour
 
         }
     }
-private void ScreenMove()
+
+    public int[] GetMousePos(Vector3 pos)
+    {
+        int[] map_pos = null;
+        Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit rh;
+        bool hit = Physics.Raycast(ray, out rh);
+        if (hit)
+        {
+            map_pos = new int[2];
+            GameObject target = rh.collider.gameObject;
+            if(target.layer!=9) return null;
+            locationX = GetLocation(target.transform.position.x - mapInfo.transform.position.x);
+            locationY = GetLocation(target.transform.position.y - mapInfo.transform.position.y);
+            map_pos[0] = locationX;
+            map_pos[1] = locationY;
+        }
+        return map_pos;
+    }
+
+
+    private void ScreenMove()
     {
         if (Input.GetMouseButtonDown(2))
         {
@@ -194,12 +220,16 @@ private void ScreenMove()
             }
             lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-    }public void leave_battle() {
+    }
+    public void leave_battle() {
         if(mapInfo)
             Destroy(mapInfo);
         
         mapInfo = null;
         GamePlayer = null;
         landformPos = null;
+        enemyPos = null;
+        characterPos = null;
         map = null;
-    }}
+    }
+}

@@ -299,6 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f356774451a51245ad568bbddc8fe35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charactor: {fileID: 8473873845084255604, guid: 44e454ea433c6bf4b8df7d193a87b51c,
+    type: 3}
 --- !u!114 &25403027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +321,7 @@ MonoBehaviour:
   maxX: 0
   maxY: 0
   MgrCheck: 
+  BattleCamera: {fileID: 2094289982}
 --- !u!1 &42495057
 GameObject:
   m_ObjectHideFlags: 0

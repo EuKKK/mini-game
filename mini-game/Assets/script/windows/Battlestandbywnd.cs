@@ -56,7 +56,7 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler,IPoint
             draw_sheep(id.ToString(), user_sheeps[id]);
         }
 
-        FormationMgr.Instance.enter_test(user_sheeps);
+        //FormationMgr.Instance.enter_test(user_sheeps);
     }
 
     public override void close(GameObject window = null)
@@ -104,7 +104,17 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler,IPoint
         if(in_drag_ob)
         {
             in_drag_ob.transform.position = pre_pos;
+            int[] pos = MapMgr.Instance.GetMousePos(eventData.position);
             
+            if(pos!=null)
+            {
+                int x = MapMgr.Instance.GetPosition(pos[0]);
+                int y = MapMgr.Instance.GetPosition(pos[1]);
+                string sheep_id = in_drag_ob.name.Replace("sheep", "");
+                Debug.Log(x);
+                Debug.Log(y);
+                FormationMgr.Instance.enter_team(x,y, User.Instance.get_sheep_by_id(int.Parse(sheep_id)));
+            }
         }
     }
 }

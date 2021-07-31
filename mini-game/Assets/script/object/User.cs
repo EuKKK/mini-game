@@ -49,4 +49,9 @@ public class User : MonoBehaviour
         sheep_map[id] = u_sheep;
     }
 
+    public sheep get_sheep_by_id(int id)
+    {
+        return sheep_map[id];
+    }
+
 }

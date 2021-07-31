@@ -6,7 +6,7 @@ using System;
 namespace sheeps
 {
     [Serializable]
-    public class sheep 
+    public class sheep
     {
         public int hp;
         public int attack;
@@ -16,6 +16,7 @@ namespace sheeps
         public string camp;
         public string unit;
         public int id;
+        public GameObject this_sheep;
         public sheep()
         {
         }
@@ -52,6 +53,21 @@ namespace sheeps
         public string get_camp()
         {
             return camp;
+        }
+        public void destroy_self()
+        {
+            if(this_sheep)
+            {
+                UnityEngine.Object.Destroy(this_sheep);
+            }
+        }
+        public void set_pos(int x,int y)
+        {
+            if(this_sheep)
+            {
+                Vector3 pos = new Vector3(x,y,0);
+                this_sheep.transform.position = pos;
+            }
         }
     }
 
