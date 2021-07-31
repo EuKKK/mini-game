@@ -61,9 +61,9 @@ public class BattleMgr : MonoBehaviour
 
 
 
-    private int trapDamage = 2;
-    private int characterDamge = 1;
-    private int barrierDamage = 3;
+    private int trapDamage = 180;
+    private int characterDamge = 180;
+    private int barrierDamage = 180;
 
     enum Direction
     {
@@ -644,6 +644,9 @@ public class BattleMgr : MonoBehaviour
             LoseCheck();
         }
     }
+
+
+
     /// <summary>
     /// Update方法
     /// </summary>
@@ -864,6 +867,8 @@ public class BattleMgr : MonoBehaviour
         }
         ScreenLock = false;
     }
+
+
 
 
 
@@ -1146,6 +1151,7 @@ public class BattleMgr : MonoBehaviour
         {
             Debug.Log("撞到人伤害");
             EnemyDamage(x, y, characterDamge);
+            EnemyDamage(PushX, PushY, characterDamge);
         }
         else if (GamePlayer[PushX, PushY] == -1)
         {
@@ -1171,6 +1177,21 @@ public class BattleMgr : MonoBehaviour
             SkillEffectCheck(PushX, PushY);
         }
     }
+
+    private void Attack()
+    {
+
+    }
+
+    private void AttackSearch()
+    {
+
+    }
+    private void EnemyAttackSearch()
+    {
+        
+    }
+
     public void jump()
     {
 
@@ -1226,6 +1247,24 @@ public class BattleMgr : MonoBehaviour
         enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
+    }
+    public void SheepDamage(int x, int y, int damage)
+    {
+        int pos = getDic(x, y);
+        GameObject g = characterPos[pos];
+        characterSheep[g].hp = characterSheep[g].hp - damage;
+        Debug.Log(characterSheep[g].hp);
+        if (characterSheep[g].hp <= 0) SheepDie(x, y);
+    }
+    public void SheepDie(int x, int y)
+    {
+        int pos = getDic(x, y);
+        GamePlayer[x, y] = 0;
+        GameObject g = characterPos[pos];
+        characterSheep.Remove(g);
+        characterPos.Remove(pos);
+        DestroyImmediate(g);
+        Debug.Log("羊死亡");
     }
 
 
