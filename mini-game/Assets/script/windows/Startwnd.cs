@@ -34,7 +34,7 @@ public class Startwnd : window
     void start_game()
     {
         WindowMgr.Instance.switch_window("Mode");
-        User.Instance.add_test_sheep();
+        User.Instance.init();
     }
     //继续游戏
     void continue_game()

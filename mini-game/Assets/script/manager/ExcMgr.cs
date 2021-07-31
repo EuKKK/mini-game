@@ -48,7 +48,19 @@ public class ExcMgr : MonoBehaviour
     }
     public string get_data(string asset_name, string key_name, string val_type)
     {
-        return assets[asset_name][key_name][val_type];
+        var t1 = assets[asset_name];
+        if(t1!=null)
+        {
+            var t2 = t1[key_name];
+            if(t2!=null)
+            {
+                var t3 = t2[val_type];
+                if(t3!=null)
+                return t3;
+            }
+            return "";
+        }
+        return "";
     }
 
 }

@@ -26,7 +26,9 @@ public class MapMgr : MonoBehaviour
 
     private bool isMouseDown;
     private Vector3 lastMousePosition;
-    public bool Playing = false;
+    private bool Playing = false;
+    List<int[]> play_pos ;
+    int monster_num;
 
     void Start()
     {
@@ -34,7 +36,7 @@ public class MapMgr : MonoBehaviour
 
     }
 
-    public void GetMap(int level)
+    public void GetMap()
     {
         //初始化地图数据
         map_init();
@@ -67,17 +69,21 @@ public class MapMgr : MonoBehaviour
             {
                 switch (tag)
                 {
-                    /*
+                    
                     case "character":
-                        GamePlayer[x, y] = 1;
-                        g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
-                        characterPos.Add(getDic(x, y), g);
+                        int[] pos = new int[2];
+                        pos[0] = GetPosition(x);
+                        pos[1] = GetPosition(y);
+                        play_pos.Add(pos);
+                        //GamePlayer[x, y] = 1;
+                        //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
+                        //characterPos.Add(getDic(x, y), g);
                         break;
-                    */
+                    
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
-                        sheep enter_sheep = new sheep();
+                        sheep enter_sheep = new sheep(i.ToString());
                         enter_sheep.hp = 10;
                         enter_sheep.move_range = 5;
                         enter_sheep.cordon = 5;
@@ -87,6 +93,7 @@ public class MapMgr : MonoBehaviour
                         foreach (Transform child in father)
                             child.gameObject.layer = 9;
                         enemy_GO[enter_sheep.this_sheep] = enter_sheep;
+
                         enemyPos.Add(getDic(x, y), g);
                         break;
                     case "barrier":
@@ -109,6 +116,28 @@ public class MapMgr : MonoBehaviour
             }
         }
 
+        //特殊处理第一关和第二关的不选人
+        if(User.Instance.level == "6001" )
+        {
+            for(int i = 1;i <= 3; i++)
+            {
+                FormationMgr.Instance.enter_team(play_pos[i-1][0], play_pos[i-1][1], User.Instance.get_sheep_by_id(i));
+            }
+            GetSheep();
+            WindowMgr.Instance.switch_window("Battle");
+            BattleMgr.Instance.GameStart();
+        }
+        if (User.Instance.level == "6002")
+        {
+            for(int i = 1;i <= 4; i++)
+            {
+                FormationMgr.Instance.enter_team(play_pos[i-1][0], play_pos[i-1][1], User.Instance.get_sheep_by_id(i));
+            }
+            GetSheep();
+            WindowMgr.Instance.switch_window("Battle");
+            BattleMgr.Instance.GameStart();
+        }
+
     }
 
     public void GetSheep()
@@ -127,7 +156,8 @@ public class MapMgr : MonoBehaviour
 
     void map_init()
     {
-        mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/e4"));
+        string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level, "地图");
+        mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + map_name));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
             child.gameObject.layer = 9;
@@ -140,9 +170,11 @@ public class MapMgr : MonoBehaviour
 
         maxX = 0;
         maxY = 0;
+        monster_num = 1;
 
         MapInfo = new int[35, 35];
         GamePlayer = new int[35, 35];
+        play_pos = new List<int[]>();
     }
 
     public int GetLocation(float pos)
@@ -173,10 +205,10 @@ public class MapMgr : MonoBehaviour
         {
             OnMouseMove();
         }
-        if (!GetComponent<BattleMgr>().ScreenLock)
-        {
-            ScreenMove();
-        }
+        // if (!GetComponent<BattleMgr>().ScreenLock)
+        // {
+        //     ScreenMove();
+        // }
     }
     private void OnMouseMove()
     {
@@ -186,12 +218,12 @@ public class MapMgr : MonoBehaviour
             Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rh;
             bool hit = Physics.Raycast(ray, out rh);
-
+            
             if (hit)
             {
 
                 GameObject target = rh.collider.gameObject;
-
+                Debug.Log(target.name);
                 locationX = GetLocation(target.transform.position.x);
                 locationY = GetLocation(target.transform.position.y);
 
@@ -229,8 +261,10 @@ public class MapMgr : MonoBehaviour
         {
             map_pos = new int[2];
             GameObject target = rh.collider.gameObject;
+            
             if (target.layer != 9) return null;
             if (!target.name.Contains("character")) return null; 
+
             locationX = GetLocation(target.transform.position.x);
             locationY = GetLocation(target.transform.position.y);
             map_pos[0] = locationX;
@@ -255,10 +289,10 @@ public class MapMgr : MonoBehaviour
         {
             if (lastMousePosition != Vector3.zero)
             {
-                Vector3 offset = BattleCamera.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
+                Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
                 mapInfo.transform.position += offset;
             }
-            lastMousePosition = BattleCamera.ScreenToWorldPoint(Input.mousePosition);
+            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
     public void leave_battle()

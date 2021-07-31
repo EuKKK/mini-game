@@ -36,7 +36,7 @@ public class Modewnd : window
     void battle_start()
     {
         WindowMgr.Instance.switch_window("Battlestandby");
-        MapMgr.Instance.GetMap(1);
+        MapMgr.Instance.GetMap();
     }
 
     //打开商店

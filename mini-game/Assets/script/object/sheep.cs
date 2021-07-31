@@ -16,14 +16,22 @@ namespace sheeps
         public int cordon;
         public string camp;
         public string unit;
-        public int id;
-        public bool isUsed;
-        public bool isSkilled;
+        public string id;
+        public bool isUsed = false;
+        public bool isSkilled = false;
         public string skill;
+        public string charc_level;
+        public int star;
+        public string img;
+        public string hp_index;
+        public string attack_index;
+        public string class_id;
         public GameObject this_sheep;
 
-        public sheep()
+
+        public sheep(string u_id)
         {
+            id = u_id;
         }
         // Start is called before the first frame update
         void Start()
@@ -51,14 +59,6 @@ namespace sheeps
             isUsed = false;
             isSkilled = false;
         }
-        public int get_id()
-        {
-            return id;
-        }
-        public void set_id(int u_id)
-        {
-            id = u_id;
-        }
         public string get_camp()
         {
             return camp;
@@ -77,6 +77,22 @@ namespace sheeps
                 Vector3 pos = new Vector3(x, y, -1);
                 this_sheep.transform.position = pos;
             }
+        }
+        public void load_data(string sheep_id)
+        {
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "星级"), out star);
+            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ?"our":"enemy";
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "hp"), out hp);
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "移动范围"), out move_range);
+            skill = "push";
+            cordon = 5;
+            class_id = sheep_id;
+        }
+        public string get_id()
+        {
+            return id;
         }
     }
 

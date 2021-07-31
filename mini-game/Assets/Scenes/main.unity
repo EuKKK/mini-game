@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 25403026}
   - component: {fileID: 25403027}
   - component: {fileID: 25403028}
+  - component: {fileID: 25403029}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: 0
-  level: 0
+  level: 
   character_num: 0
 --- !u!114 &25403026
 MonoBehaviour:
@@ -348,6 +349,18 @@ MonoBehaviour:
   ScreenLock: 0
   CharacterX: 0
   CharacterY: 0
+--- !u!114 &25403029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25403022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0f80868d12d1e4e86d7138f32ed88c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &40434526
 GameObject:
   m_ObjectHideFlags: 0
