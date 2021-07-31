@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36f316ad70f5034f9ac87728113d680, type: 3}
+  m_Name: environment
+  m_EditorClassIdentifier: 
+  maps:
+  - out_map:
+      key: land_id
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: land_id
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: land_name
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: 'land_effect '
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: land_attrib
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: land_img
+      - key: 
+        val: 
+  - out_map:
+      key: 3001
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3001
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u5E73\u5730"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u65E0"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3002
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3002
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u6811\u6728"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u51CF\u7F13\u79FB\u901F"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3003
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3003
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u6C34"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u81F4\u6B7B"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3004
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3004
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u6805\u680F"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u7F8A\u53EF\u8D8A\uFF0C\u5176\u4ED6\u4E0D\u53EF"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3005
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3005
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u8346\u68D8"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u6263\u8840"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3006
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3006
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u9677\u9631"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u6263\u8840"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 3007
+      imaps:
+      - key: "\u5730\u5F62id"
+        val: 3007
+      - key: "\u5730\u5F62\u540D\u5B57"
+        val: "\u7BDD\u706B"
+      - key: "\u5730\u5F62\u6548\u679C"
+        val: "\u6263\u8840"
+      - key: "\u5730\u5F62\u5C5E\u6027"
+        val: 
+      - key: "\u5730\u5F62\u56FE\u7247"
+        val: 
+      - key: 
+        val: 

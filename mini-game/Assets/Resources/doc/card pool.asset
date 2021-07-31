@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36f316ad70f5034f9ac87728113d680, type: 3}
+  m_Name: card pool
+  m_EditorClassIdentifier: 
+  maps:
+  - out_map:
+      key: pool_id
+      imaps:
+      - key: "\u7F8A\u5708id"
+        val: pool_id
+      - key: "\u7F8A\u5708\u7B49\u7EA7"
+        val: pool_level
+      - key: "\u8FDB\u9636\u6240\u9700\u91D1\u5E01"
+        val: levelup_money
+      - key: "\u989D\u5916\u53EF\u4E0A\u573A\u5355\u4F4D\u6570\u91CF"
+        val: extra_units
+      - key: "\u5237\u65B0\u91D1\u5E01"
+        val: refresh
+      - key: 
+        val: 
+  - out_map:
+      key: 5001
+      imaps:
+      - key: "\u7F8A\u5708id"
+        val: 5001
+      - key: "\u7F8A\u5708\u7B49\u7EA7"
+        val: 1
+      - key: "\u8FDB\u9636\u6240\u9700\u91D1\u5E01"
+        val: 6
+      - key: "\u989D\u5916\u53EF\u4E0A\u573A\u5355\u4F4D\u6570\u91CF"
+        val: 1
+      - key: "\u5237\u65B0\u91D1\u5E01"
+        val: 3
+      - key: 
+        val: 
+  - out_map:
+      key: 5002
+      imaps:
+      - key: "\u7F8A\u5708id"
+        val: 5002
+      - key: "\u7F8A\u5708\u7B49\u7EA7"
+        val: 2
+      - key: "\u8FDB\u9636\u6240\u9700\u91D1\u5E01"
+        val: 10
+      - key: "\u989D\u5916\u53EF\u4E0A\u573A\u5355\u4F4D\u6570\u91CF"
+        val: 2
+      - key: "\u5237\u65B0\u91D1\u5E01"
+        val: 3
+      - key: 
+        val: 
+  - out_map:
+      key: 5003
+      imaps:
+      - key: "\u7F8A\u5708id"
+        val: 5003
+      - key: "\u7F8A\u5708\u7B49\u7EA7"
+        val: 3
+      - key: "\u8FDB\u9636\u6240\u9700\u91D1\u5E01"
+        val: 14
+      - key: "\u989D\u5916\u53EF\u4E0A\u573A\u5355\u4F4D\u6570\u91CF"
+        val: 3
+      - key: "\u5237\u65B0\u91D1\u5E01"
+        val: 3
+      - key: 
+        val: 
+  - out_map:
+      key: 5004
+      imaps:
+      - key: "\u7F8A\u5708id"
+        val: 5004
+      - key: "\u7F8A\u5708\u7B49\u7EA7"
+        val: 4
+      - key: "\u8FDB\u9636\u6240\u9700\u91D1\u5E01"
+        val: 18
+      - key: "\u989D\u5916\u53EF\u4E0A\u573A\u5355\u4F4D\u6570\u91CF"
+        val: 4
+      - key: "\u5237\u65B0\u91D1\u5E01"
+        val: 3
+      - key: 
+        val: 

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36f316ad70f5034f9ac87728113d680, type: 3}
+  m_Name: test
+  m_EditorClassIdentifier: 
+  maps:
+  - out_map:
+      key: 1
+      imaps:
+      - key: A
+        val: 1
+      - key: B
+        val: 2
+      - key: C
+        val: 3
+      - key: D
+        val: 4
+  - out_map:
+      key: 21
+      imaps:
+      - key: A
+        val: 21
+      - key: B
+        val: 22
+      - key: C
+        val: 23
+      - key: D
+        val: 24

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36f316ad70f5034f9ac87728113d680, type: 3}
+  m_Name: stage
+  m_EditorClassIdentifier: 
+  maps:
+  - out_map:
+      key: stage_id
+      imaps:
+      - key: "\u5173\u5361id"
+        val: stage_id
+      - key: "\u5173\u5361"
+        val: stage
+      - key: "\u5730\u56FE"
+        val: map
+      - key: 
+        val: 
+  - out_map:
+      key: 6001
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6001
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u4E00\u5173"
+      - key: "\u5730\u56FE"
+        val: e4
+      - key: 
+        val: 
+  - out_map:
+      key: 6002
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6002
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u4E8C\u5173"
+      - key: "\u5730\u56FE"
+        val: e1
+      - key: 
+        val: 
+  - out_map:
+      key: 6003
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6003
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u4E09\u5173"
+      - key: "\u5730\u56FE"
+        val: e2
+      - key: 
+        val: 
+  - out_map:
+      key: 6004
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6004
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u56DB\u5173"
+      - key: "\u5730\u56FE"
+        val: e3
+      - key: 
+        val: 
+  - out_map:
+      key: 6005
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6005
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u4E94\u5173"
+      - key: "\u5730\u56FE"
+        val: n1
+      - key: 
+        val: 
+  - out_map:
+      key: 6006
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6006
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u516D\u5173"
+      - key: "\u5730\u56FE"
+        val: 
+      - key: 
+        val: 
+  - out_map:
+      key: 6007
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6007
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u4E03\u5173"
+      - key: "\u5730\u56FE"
+        val: h1
+      - key: 
+        val: 
+  - out_map:
+      key: 6008
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6008
+      - key: "\u5173\u5361"
+        val: "\u7B2C\u516B\u5173"
+      - key: "\u5730\u56FE"
+        val: 
+      - key: 
+        val: 

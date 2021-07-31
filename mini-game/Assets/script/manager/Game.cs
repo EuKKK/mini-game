@@ -57,25 +57,5 @@ public class Game : MonoBehaviour
         }
 
     }
-    public void test_asset()
-    {
-        holder asset = Resources.Load("doc/test") as holder;
-        List<HolderData> map = asset.maps;
-        Dictionary<string, Dictionary<string , string >> m =new Dictionary<string, Dictionary<string, string>>();
-        for (int i = 0; i< map.Count; i++)
-        {
-            string m_id = map[i].out_map.key;
-            Dictionary<string, string > m_map = new Dictionary<string, string>(); 
-            for(int k = 0; k < map[i].out_map.imaps.Count; k++)
-                m_map[map[i].out_map.imaps[k].key] = map[i].out_map.imaps[k].val;
-            m[m_id] = m_map;
-        }
-        foreach(string id in m.Keys)
-        {
-            foreach(string id_2 in m[id].Keys)
-            {
-                Debug.Log(m[id][id_2]);
-            }
-        }
-    }
+ 
 }
