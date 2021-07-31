@@ -13,23 +13,28 @@ namespace sheeps
         public int mana;
         public int move_range;
         public int attack_range;
+        public int cordon;
         public string camp;
         public string unit;
         public int id;
+        public bool isUsed;
+        public bool isSkilled;
+        public string skill;
         public GameObject this_sheep;
+
         public sheep()
         {
         }
         // Start is called before the first frame update
         void Start()
         {
-            
+
         }
 
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
         public void test()
@@ -41,6 +46,10 @@ namespace sheeps
             attack_range = 5;
             camp = "our";
             unit = "ground";
+            skill = "attract";
+            cordon = 5;
+            isUsed = false;
+            isSkilled = false;
         }
         public int get_id()
         {
@@ -56,16 +65,16 @@ namespace sheeps
         }
         public void destroy_self()
         {
-            if(this_sheep)
+            if (this_sheep)
             {
                 UnityEngine.Object.Destroy(this_sheep);
             }
         }
-        public void set_pos(int x,int y)
+        public void set_pos(int x, int y)
         {
-            if(this_sheep)
+            if (this_sheep)
             {
-                Vector3 pos = new Vector3(x,y,0);
+                Vector3 pos = new Vector3(x, y, -1);
                 this_sheep.transform.position = pos;
             }
         }

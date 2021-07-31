@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using sheeps;
 
 public class BattleMgr : MonoBehaviour
 {
+    public static BattleMgr Instance { get; private set; }
     public const int MAX_NUMBER = 30;
     public GameObject highLight;
     public GameObject highLightD;
@@ -16,8 +18,8 @@ public class BattleMgr : MonoBehaviour
     public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> characterPos = new Dictionary<int, GameObject>();
-    public Dictionary<GameObject, Sheep> characterSheep = new Dictionary<GameObject, Sheep>();
-    public Dictionary<GameObject, Monster> characterMonster = new Dictionary<GameObject, Monster>();
+    public Dictionary<GameObject, sheep> characterSheep = new Dictionary<GameObject, sheep>();
+    public Dictionary<GameObject, sheep> characterMonster = new Dictionary<GameObject, sheep>();
     public int characterAttackX = 0;
     public int characterAttackY = 0;
     public int healthToAttack = 10;
@@ -32,11 +34,10 @@ public class BattleMgr : MonoBehaviour
     private int step = 0;
     public int[,] HighLight = new int[35, 35];
     private GameObject moveEnemy;
-    private bool isWalk;
-    private bool isEnemyWalk;
+    private bool isWalk = false;
+    private bool isEnemyWalk = false;
     private bool walkType;
     private List<int> enemyPosList = new List<int>();
-    private List<GameObject> sheepList = new List<GameObject>();
     public bool ScreenLock = false;
     private float rotX;
     private float rotY;
@@ -46,14 +47,8 @@ public class BattleMgr : MonoBehaviour
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
     private bool check = true;
-    int enemyRange = 4;
-    int enemyAttackRange = 1;
-    int enemyMaxMove = 3;
-    int maxMove = 3;
     public int CharacterX;
     public int CharacterY;
-    private int locationX;
-    private int locationY;
 
     private int t;
     private int round;
@@ -64,6 +59,13 @@ public class BattleMgr : MonoBehaviour
     private GameObject enemy;
     private int enemyCount;
     private bool enemyWalkAdimit = false;
+
+
+
+    private int trapDamage = 2;
+    private int characterDamge = 1;
+    private int barrierDamage = 3;
+
 
     enum Direction
     {
@@ -78,68 +80,34 @@ public class BattleMgr : MonoBehaviour
         public int movePoint;
         public Direction direction;
     }
-    public struct Sheep
-    {
-        public int attack;
-        public int health;
-        public int movePoint;
-        public int attack_range;
-        public string skill;
-    }
-    public struct Monster
-    {
-        public int attack;
-        public int health;
-        public int movePoint;
-        public int cordon;
-        public int attack_range;
-    }
 
-    private void test()
-    {
-        Sheep sheep1 = new Sheep();
-        sheep1.health = 2;
-        sheep1.movePoint = 3;
-        sheep1.skill = "attract";
-        Sheep sheep2 = new Sheep();
-        sheep2.health = 3;
-        sheep2.movePoint = 5;
-        sheep2.skill = "push";
-        Monster monster1 = new Monster();
-        monster1.health = 2;
-        monster1.movePoint = 2;
-        monster1.cordon = 3;
-        Monster monster2 = new Monster();
-        monster2.health = 2;
-        monster2.movePoint = 3;
-        monster2.cordon = 5;
-        characterSheep.Add(characterPos[getDic(4, 4)], sheep1);
-        characterSheep.Add(characterPos[getDic(3, 4)], sheep2);
-        characterMonster.Add(enemyPos[getDic(14, 2)], monster1);
-        characterMonster.Add(enemyPos[getDic(12, 10)], monster2);
-    }
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
 
+    }
+
+    public void GameStart()
+    {
+        characterSheep = FormationMgr.Instance.sheep_GO;
+        characterMonster = MapMgr.Instance.enemy_GO;
         rotX = ex.transform.eulerAngles.x;
         rotY = ex.transform.eulerAngles.y;
         rotZ = ex.transform.eulerAngles.z;
         highLight = (GameObject)Resources.Load("Prefab/HighLight");
         highLightD = (GameObject)Resources.Load("Prefab/HighLightD");
         highLightS = (GameObject)Resources.Load("Prefab/HighLightS");
-        MapInfo = GetComponent<MapMgr>().MapInfo;
-        mapInfo = GetComponent<MapMgr>().mapInfo;
-        GamePlayer = GetComponent<MapMgr>().GamePlayer;
-        landformPos = GetComponent<MapMgr>().landformPos;
-        enemyPos = GetComponent<MapMgr>().enemyPos;
-        characterPos = GetComponent<MapMgr>().characterPos;
-        maxX = GetComponent<MapMgr>().maxX;
-        maxY = GetComponent<MapMgr>().maxY;
-        RoundStart();
-
-        test();
-
+        MapInfo = MapMgr.Instance.MapInfo;
+        mapInfo = MapMgr.Instance.mapInfo;
+        GamePlayer = MapMgr.Instance.GamePlayer;
+        landformPos = MapMgr.Instance.landformPos;
+        enemyPos = MapMgr.Instance.enemyPos;
+        characterPos = MapMgr.Instance.characterPos;
+        maxX = MapMgr.Instance.maxX;
+        maxY = MapMgr.Instance.maxY;
+        //RoundStart();
+        //test();
         round = 0;
         camp = true;
     }
@@ -155,17 +123,16 @@ public class BattleMgr : MonoBehaviour
 
         if (GamePlayer[locationX, locationY] == 1)
         {
-            int indexGo = sheepList.IndexOf(target);
-            if (indexGo != -1)
+            if (!characterSheep[target].isUsed)
             {
                 character = target;
                 MapRouteInit();
                 HighLightDestroy();
                 mapRoute[locationX, locationY].direction = Direction.stand;
-                mapRoute[locationX, locationY].movePoint = characterSheep[target].movePoint;
+                mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
                 CharacterX = locationX;
                 CharacterY = locationY;
-                CharacterMove(locationX, locationY, true, characterSheep[target].movePoint);
+                CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
                 check = true;
             }
         }
@@ -186,8 +153,8 @@ public class BattleMgr : MonoBehaviour
             trapCount = 999;
             MapRouteInit();
             mapRoute[CharacterX, CharacterY].direction = Direction.stand;
-            mapRoute[CharacterX, CharacterY].movePoint = characterSheep[character].movePoint;
-            DangerousWayWalk(CharacterX, CharacterY, locationX, locationY, characterSheep[character].movePoint, 0, true);
+            mapRoute[CharacterX, CharacterY].movePoint = characterSheep[character].move_range;
+            DangerousWayWalk(CharacterX, CharacterY, locationX, locationY, characterSheep[character].move_range, 0, true);
 
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
@@ -502,10 +469,11 @@ public class BattleMgr : MonoBehaviour
             EnemyAttackSearch(enemyPosX, enemyPosY, characterMonster[enemy].cordon);
             if (characterAttackX > -100)
             {
+
                 MapRouteInit();
                 step = 0;
                 trapCount = 100;
-                mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].movePoint;
+                mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
                 int s = GamePlayer[characterAttackX, characterAttackY];
                 GamePlayer[characterAttackX, characterAttackY] = 0;
                 DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
@@ -526,8 +494,7 @@ public class BattleMgr : MonoBehaviour
             camp = !camp;
             RoundStart();
             round++;
-            //Debug.Log("第" + round + "回合结束");
-            //Debug.Log("第" + (round + 1) + "回合开始");
+            Debug.Log("我方回合");
         }
     }
     private void EnemyAttackSearch(int _x, int _y, int point)
@@ -555,8 +522,8 @@ public class BattleMgr : MonoBehaviour
     {
         step = 1;
         getPoint = false;
-        _x = GetLocation(enemy.transform.position.x - mapInfo.transform.position.x);
-        _y = GetLocation(enemy.transform.position.y - mapInfo.transform.position.y);
+        _x = GetLocation(enemy.transform.position.x);
+        _y = GetLocation(enemy.transform.position.y);
         enemyPos.Remove(getDic(_x, _y));
         isEnemyWalk = true;
     }
@@ -576,30 +543,33 @@ public class BattleMgr : MonoBehaviour
             {
                 if (HighLight[i, j] == 1)
                 {
-                    float insX = GetPosition(i) + mapInfo.transform.position.x;
-                    float insY = GetPosition(j) + mapInfo.transform.position.y;
+                    float insX = GetPosition(i);
+                    float insY = GetPosition(j);
                     GameObject g = Instantiate(highLight, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    g.layer = 9;
                     t++;
                     highLightObj.Add(t, g);
                     g.transform.SetParent(mapInfo.transform);
                 }
                 if (HighLight[i, j] == 2)
                 {
-                    float insX = GetPosition(i) + mapInfo.transform.position.x;
-                    float insY = GetPosition(j) + mapInfo.transform.position.y;
+                    float insX = GetPosition(i);
+                    float insY = GetPosition(j);
                     GameObject g = Instantiate(highLightD, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    g.layer = 9;
                     t++;
                     highLightObj.Add(t, g);
                     g.transform.SetParent(mapInfo.transform);
                 }
                 if (HighLight[i, j] == 3)
                 {
-                    float insX = GetPosition(i) + mapInfo.transform.position.x;
-                    float insY = GetPosition(j) + mapInfo.transform.position.y;
+                    float insX = GetPosition(i);
+                    float insY = GetPosition(j);
                     GameObject g = Instantiate(highLightS, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                    g.layer = 9;
                     t++;
                     highLightObj.Add(t, g);
                     g.transform.SetParent(mapInfo.transform);
@@ -668,10 +638,10 @@ public class BattleMgr : MonoBehaviour
     }
     private void RoundStart()
     {
-        sheepList.Clear();
-        foreach (GameObject g in characterPos.Values)
+        foreach (GameObject g in characterSheep.Keys)
         {
-            sheepList.Add(g);
+            characterSheep[g].isUsed = false;
+            characterSheep[g].isSkilled = false;
         }
     }
     private void Walk(bool safe)
@@ -681,7 +651,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (step > 0)
             {
-                if (sleep >= (int)(0.1f / Time.deltaTime))
+                if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
                     switch (way[step])
                     {
@@ -709,7 +679,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                sheepList.Remove(character);
+                characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -717,7 +687,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (step < wayCount)
             {
-                if (sleep >= (int)(0.1f / Time.deltaTime))
+                if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
                     step++;
                     switch (way[step])
@@ -748,7 +718,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                sheepList.Remove(character);
+                characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -757,10 +727,10 @@ public class BattleMgr : MonoBehaviour
     private void EnemyWalk()
     {
         ScreenLock = true;
-        if (step <= wayCount && step <= characterMonster[enemy].movePoint && !getPoint)
+        if (step <= wayCount && step <= characterMonster[enemy].move_range && !getPoint)
         {
 
-            if (sleep >= (int)(0.1f / Time.deltaTime))
+            if (sleep >= (int)(0.05f / Time.deltaTime))
             {
                 switch (way[step])
                 {
@@ -831,7 +801,7 @@ public class BattleMgr : MonoBehaviour
         }
         else
         {
-            enemyPos.Add(getDic(GetLocation(enemy.transform.position.x - mapInfo.transform.position.x), GetLocation(enemy.transform.position.y - mapInfo.transform.position.y)), enemy);
+            enemyPos.Add(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)), enemy);
             isEnemyWalk = false;
             sleep = 0;
             t++;
@@ -889,8 +859,8 @@ public class BattleMgr : MonoBehaviour
     }
     public void SkillUse(int CharacterX, int CharacterY, int locationX, int locationY, GameObject gameObject, bool sure)
     {
-        int indexGo = sheepList.IndexOf(gameObject);
-        if (indexGo != -1)
+
+        if (!characterSheep[gameObject].isSkilled)
         {
             switch (characterSheep[gameObject].skill)
             {
@@ -906,9 +876,10 @@ public class BattleMgr : MonoBehaviour
                 case "stay":
                     break;
             }
-        }
-        if (sure) sheepList.Remove(gameObject);
 
+        }
+        if (sure) SkillEffectCheck();
+        if (sure) characterSheep[gameObject].isSkilled = true;
     }
     public void Attract(int x, int y, bool sure)
     {
@@ -1106,19 +1077,24 @@ public class BattleMgr : MonoBehaviour
     {
         if (MapInfo[PushX, PushY] == 0)
         {
-            Debug.Log("推出地图");
+
+            EnemyDie(x, y);
         }
         else if (GamePlayer[PushX, PushY] == 1)
         {
             Debug.Log("撞到人伤害");
+            EnemyDamage(x, y, characterDamge);
         }
         else if (GamePlayer[PushX, PushY] == -1)
         {
             Debug.Log("撞到敌人伤害");
+            EnemyDamage(x, y, characterDamge);
+            EnemyDamage(PushX, PushY, characterDamge);
         }
         else if (MapInfo[PushX, PushY] == 900)
         {
             Debug.Log("撞到栅栏伤害");
+            EnemyDamage(x, y, barrierDamage);
         }
         else
         {
@@ -1136,6 +1112,59 @@ public class BattleMgr : MonoBehaviour
     {
 
     }
+    public void SkillEffectCheck()
+    {
+
+        List<int> P = new List<int>();
+        foreach (int i in enemyPos.Keys)
+        {
+            P.Add(i);
+            int x = DicX(i);
+            int y = DicY(i);
+            int lanformInfo = MapInfo[x, y];
+            switch (lanformInfo)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 900:
+                    EnemyDie(x, y);
+                    break;
+                case 500:
+                    Debug.Log("怪物受伤");
+                    EnemyDamage(x, y, trapDamage);
+                    break;
+                case 9999:
+                    EnemyDie(x, y);
+                    break;
+            }
+        }
+        for (int i = 0; i < P.Count; i++)
+        {
+            GameObject g = enemyPos[P[i]];
+            if (g == null) enemyPos.Remove(P[i]);
+        }
+    }
+    public void EnemyDamage(int x, int y, int damage)
+    {
+        int pos = getDic(x, y);
+        GameObject g = enemyPos[pos];
+        characterMonster[g].hp = characterMonster[g].hp - damage;
+        Debug.Log(characterMonster[g].hp);
+        if (characterMonster[g].hp <= 0) EnemyDie(x, y);
+    }
+    public void EnemyDie(int x, int y)
+    {
+        int pos = getDic(x, y);
+        GamePlayer[x, y] = 0;
+        GameObject g = enemyPos[pos];
+        characterMonster.Remove(g);
+
+        DestroyImmediate(g);
+        Debug.Log("怪物死亡");
+    }
+
 
 
     /// <summary>

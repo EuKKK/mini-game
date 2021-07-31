@@ -16,8 +16,10 @@ public class FormationMgr : MonoBehaviour
 
     public static FormationMgr Instance { get; private set; }
     public Dictionary<int, sheep> sheep_formation;
-    public GameObject charactor ;
-    
+    public Dictionary<int, sheep> sheep_position;
+    public Dictionary<GameObject, sheep> sheep_GO;
+    public GameObject charactor;
+
 
     void Awake()
     {
@@ -27,28 +29,38 @@ public class FormationMgr : MonoBehaviour
     {
 
     }
-    
+
     public void init_formation()
     {
         sheep_formation = new Dictionary<int, sheep>();
+        sheep_position = new Dictionary<int, sheep>();
+        sheep_GO = new Dictionary<GameObject, sheep>();
     }
     public void enter_team(int x, int y, sheep enter_sheep)
     {
-        int world_pos_x = MapMgr.Instance.GetPosition(x);
-        int world_pos_y = MapMgr.Instance.GetPosition(y);
+        int world_pos_x = MapMgr.Instance.GetLocation(x);
+        int world_pos_y = MapMgr.Instance.GetLocation(y);
+        int PosID = MapMgr.Instance.getDic(world_pos_x, world_pos_y);
 
         int id = enter_sheep.get_id();
-        if(sheep_formation.ContainsKey(id))
+        if (sheep_formation.ContainsKey(id))
             leave_team(id);
         enter_sheep.this_sheep = Instantiate(charactor);
-        enter_sheep.set_pos(world_pos_x, world_pos_y);
+        enter_sheep.this_sheep.layer = 9;
+        Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
+        foreach (Transform child in father)
+            child.gameObject.layer = 9;
+        enter_sheep.set_pos(x, y);
+
+        sheep_position[PosID] = enter_sheep;
+        sheep_GO[enter_sheep.this_sheep] = enter_sheep;
         sheep_formation[id] = enter_sheep;
     }
     public void leave_team(int id)
     {
         sheep_formation[id].destroy_self();
         sheep_formation[id] = null;
-        
+
     }
 
 
