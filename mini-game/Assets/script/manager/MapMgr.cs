@@ -26,8 +26,8 @@ public class MapMgr : MonoBehaviour
 
     private bool isMouseDown;
     private Vector3 lastMousePosition;
-    private bool Playing = false;
-    List<int[]> play_pos ;
+    public bool Playing = false;
+    List<int[]> play_pos;
     int monster_num;
 
     void Start()
@@ -69,7 +69,7 @@ public class MapMgr : MonoBehaviour
             {
                 switch (tag)
                 {
-                    
+
                     case "character":
                         int[] pos = new int[2];
                         pos[0] = GetPosition(x);
@@ -79,7 +79,7 @@ public class MapMgr : MonoBehaviour
                         //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         //characterPos.Add(getDic(x, y), g);
                         break;
-                    
+
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
@@ -117,11 +117,11 @@ public class MapMgr : MonoBehaviour
         }
 
         //特殊处理第一关和第二关的不选人
-        if(User.Instance.level == "6001" )
+        if (User.Instance.level == "6001")
         {
-            for(int i = 1;i <= 3; i++)
+            for (int i = 1; i <= 3; i++)
             {
-                FormationMgr.Instance.enter_team(play_pos[i-1][0], play_pos[i-1][1], User.Instance.get_sheep_by_id(i));
+                FormationMgr.Instance.enter_team(play_pos[i - 1][0], play_pos[i - 1][1], User.Instance.get_sheep_by_id(i));
             }
             GetSheep();
             WindowMgr.Instance.switch_window("Battle");
@@ -129,9 +129,9 @@ public class MapMgr : MonoBehaviour
         }
         if (User.Instance.level == "6002")
         {
-            for(int i = 1;i <= 4; i++)
+            for (int i = 1; i <= 4; i++)
             {
-                FormationMgr.Instance.enter_team(play_pos[i-1][0], play_pos[i-1][1], User.Instance.get_sheep_by_id(i));
+                FormationMgr.Instance.enter_team(play_pos[i - 1][0], play_pos[i - 1][1], User.Instance.get_sheep_by_id(i));
             }
             GetSheep();
             WindowMgr.Instance.switch_window("Battle");
@@ -218,7 +218,7 @@ public class MapMgr : MonoBehaviour
             Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rh;
             bool hit = Physics.Raycast(ray, out rh);
-            
+
             if (hit)
             {
 
@@ -261,9 +261,9 @@ public class MapMgr : MonoBehaviour
         {
             map_pos = new int[2];
             GameObject target = rh.collider.gameObject;
-            
+
             if (target.layer != 9) return null;
-            if (!target.name.Contains("character")) return null; 
+            if (!target.name.Contains("character")) return null;
 
             locationX = GetLocation(target.transform.position.x);
             locationY = GetLocation(target.transform.position.y);
