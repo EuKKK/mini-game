@@ -63,4 +63,37 @@ public class ExcMgr : MonoBehaviour
         return "";
     }
 
+    public string get_array_data(string asset_name, string key_name, string val_type, int num)
+    {
+        var t1 = assets[asset_name];
+        if(t1!=null)
+        {
+            var t2 = t1[key_name];
+            if(t2!=null)
+            {
+                var t3 = t2[val_type];
+                if(t3!=null)
+                {   
+                    string res = "";
+                    int point = 0;
+                    for(int i = 0; i <= t3.Length;i++)
+                    {
+                        if(t3[i] != ',')
+                            res += t3[i];
+                        else{
+                            point ++;
+                            if(point == num) return res;
+                            res = "";
+                        }
+                    }
+                    if(point!=num) return null;
+                    return res;
+                }
+
+            }
+            return "";
+        }
+        return "";
+    }
+
 }
