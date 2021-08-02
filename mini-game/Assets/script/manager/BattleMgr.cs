@@ -133,10 +133,10 @@ public class BattleMgr : MonoBehaviour
         {
             sheep = true;
         }
-        Debug.Log(locationX + "," + locationY);
+
         if (GamePlayer[locationX, locationY] == 1)
         {
-            if (!characterSheep[target].isUsed)
+            if (!characterSheep[target].isUsed && !characterSheep[target].isSkilled)
             {
                 character = target;
                 MapRouteInit();
@@ -1448,7 +1448,7 @@ public class BattleMgr : MonoBehaviour
         int pos = getDic(x, y);
         GameObject g = characterPos[pos];
         characterSheep[g].hp = characterSheep[g].hp - damage;
-        Debug.Log("羊受伤：剩余血量为" + characterSheep[g].hp);
+        Debug.Log("我方角色受伤：剩余血量为" + characterSheep[g].hp);
         if (characterSheep[g].hp <= 0) SheepDie(x, y);
     }
     public void SheepDie(int x, int y)
@@ -1459,7 +1459,7 @@ public class BattleMgr : MonoBehaviour
         characterSheep.Remove(g);
         characterPos.Remove(pos);
         DestroyImmediate(g);
-        Debug.Log("羊死亡");
+        Debug.Log("我方角色死亡");
         isWalk = false;
     }
 

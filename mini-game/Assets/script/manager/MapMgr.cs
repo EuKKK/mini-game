@@ -12,15 +12,21 @@ public class MapMgr : MonoBehaviour
     public Dictionary<int, GameObject> enemyPos;
     public Dictionary<int, GameObject> characterPos;
     public Dictionary<GameObject, sheep> enemy_GO = new Dictionary<GameObject, sheep>();
+    List<GameObject> highLightS = new List<GameObject>();
     public GameObject mapInfo;
     public GameObject map;
     public GameObject landform;
+    public GameObject highLightSheep;
+    public GameObject ex;
     public int locationX;
     public int locationY;
     public int maxX;
     public int maxY;
     public float InitX;
     public float InitY;
+    private float rotX;
+    private float rotY;
+    private float rotZ;
 
     public static MapMgr Instance { get; private set; }
     public Camera BattleCamera;
@@ -45,6 +51,10 @@ public class MapMgr : MonoBehaviour
         map_init();
         InitX = mapInfo.transform.position.x;
         InitY = mapInfo.transform.position.y;
+        rotX = ex.transform.eulerAngles.x;
+        rotY = ex.transform.eulerAngles.y;
+        rotZ = ex.transform.eulerAngles.z;
+        highLightSheep = (GameObject)Resources.Load("Prefab/HighLightSheep");
         for (int i = 0; i < 35; i++)
         {
             for (int j = 0; j < 35; j++)
@@ -80,6 +90,10 @@ public class MapMgr : MonoBehaviour
                         pos[1] = GetPositionY(y);
                         play_pos.Add(pos);
                         Destroy(g);
+                        GameObject HS = Instantiate(highLightSheep, new Vector3(pos[0], pos[1], -0.5f), new Quaternion(0, 0, 0, 0));
+                        HS.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
+                        HS.layer = 9;
+                        highLightS.Add(HS);
                         //GamePlayer[x, y] = 1;
                         //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         //characterPos.Add(getDic(x, y), g);
@@ -134,7 +148,7 @@ public class MapMgr : MonoBehaviour
                 if (enemyPos.ContainsKey(getDic(i, j)))
                 {
                     t++;
-                    GameObject enemy_ob =  enemyPos[getDic(i, j)];
+                    GameObject enemy_ob = enemyPos[getDic(i, j)];
                     sheep enemy_sheep = new sheep(true);
                     string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
                     GlobalFuncMgr.set_model_sprite(enemy_ob.transform.Find("test1").gameObject, ExcMgr.Instance.get_data("character", class_id, "人物图片"));
@@ -184,12 +198,19 @@ public class MapMgr : MonoBehaviour
 
         }
         Playing = true;
+        foreach (GameObject g in highLightS)
+        {
+            Destroy(g);
+        }
+        highLightS.Clear();
     }
 
     void map_init()
     {
+
         string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level.ToString(), "地图");
         mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + map_name));
+        //mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + "ceshi2"));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
             child.gameObject.layer = 9;
@@ -263,7 +284,7 @@ public class MapMgr : MonoBehaviour
             {
 
                 GameObject target = rh.collider.gameObject;
-                Debug.Log(target.name);
+
                 locationX = GetLocationX(target.transform.position.x);
                 locationY = GetLocationY(target.transform.position.y);
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
