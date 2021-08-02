@@ -104,18 +104,18 @@ public class MapMgr : MonoBehaviour
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         enemyPos.Add(getDic(x, y), g);
 
-                        sheep enter_sheep = new sheep(true);
-                        enter_sheep.hp = 200;
-                        enter_sheep.attack = 80;
-                        enter_sheep.attack_range = 1;
-                        enter_sheep.move_range = 5;
-                        enter_sheep.cordon = 5;
-                        enter_sheep.this_sheep = g;
-                        enter_sheep.this_sheep.layer = 9;
-                        Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
-                        foreach (Transform child in father)
-                            child.gameObject.layer = 9;
-                        enemy_GO[enter_sheep.this_sheep] = enter_sheep;
+                        // sheep enter_sheep = new sheep(true);
+                        // enter_sheep.hp = 200;
+                        // enter_sheep.attack = 80;
+                        // enter_sheep.attack_range = 1;
+                        // enter_sheep.move_range = 5;
+                        // enter_sheep.cordon = 5;
+                        // enter_sheep.this_sheep = g;
+                        // enter_sheep.this_sheep.layer = 9;
+                        // Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
+                        // foreach (Transform child in father)
+                        //     child.gameObject.layer = 9;
+                        // enemy_GO[enter_sheep.this_sheep] = enter_sheep;
 
 
                         break;
@@ -151,16 +151,15 @@ public class MapMgr : MonoBehaviour
                     GameObject enemy_ob = enemyPos[getDic(i, j)];
                     sheep enemy_sheep = new sheep(true);
                     string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
-                    GlobalFuncMgr.set_model_sprite(enemy_ob.transform.Find("test1").gameObject, ExcMgr.Instance.get_data("character", class_id, "人物图片"));
+                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject;
+                    GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片"));
+                    sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1);
                     enemy_sheep.load_data(class_id);
                     enemy_GO[enemy_ob] = enemy_sheep;
 
                 }
             }
         }
-
-
-
 
         //特殊处理第一关和第二关的不选人
         if (User.Instance.level == 6001)
