@@ -19,6 +19,8 @@ public class MapMgr : MonoBehaviour
     public int locationY;
     public int maxX;
     public int maxY;
+    public float InitX;
+    public float InitY;
 
     public static MapMgr Instance { get; private set; }
     public Camera BattleCamera;
@@ -40,7 +42,8 @@ public class MapMgr : MonoBehaviour
     {
         //初始化地图数据
         map_init();
-
+        InitX = mapInfo.transform.position.x;
+        InitY = mapInfo.transform.position.y;
         for (int i = 0; i < 35; i++)
         {
             for (int j = 0; j < 35; j++)
@@ -75,6 +78,7 @@ public class MapMgr : MonoBehaviour
                         pos[0] = GetPosition(x);
                         pos[1] = GetPosition(y);
                         play_pos.Add(pos);
+                        Destroy(g);
                         //GamePlayer[x, y] = 1;
                         //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         //characterPos.Add(getDic(x, y), g);
@@ -83,8 +87,12 @@ public class MapMgr : MonoBehaviour
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
+
+
                         sheep enter_sheep = new sheep(true);
-                        enter_sheep.hp = 10;
+                        enter_sheep.hp = 200;
+                        enter_sheep.attack = 80;
+                        enter_sheep.attack_range = 1;
                         enter_sheep.move_range = 5;
                         enter_sheep.cordon = 5;
                         enter_sheep.this_sheep = g;
@@ -115,6 +123,26 @@ public class MapMgr : MonoBehaviour
                 }
             }
         }
+
+        int t = 0;
+        //敌人gameobject修改和enemyGo添加
+        for (int i = 0; i < 35; i++)
+        {
+            for (int j = 0; j < 35; j++)
+            {
+                if (enemyPos.ContainsKey(getDic(i, j)))
+                {
+                    enemyPos[getDic(i, j)] =;
+                    enemy_GO[]=;
+
+                    t++;
+                }
+            }
+        }
+
+
+
+
 
         //特殊处理第一关和第二关的不选人
         if (User.Instance.level == "6001")
@@ -205,10 +233,10 @@ public class MapMgr : MonoBehaviour
         {
             OnMouseMove();
         }
-        // if (!GetComponent<BattleMgr>().ScreenLock)
-        // {
-        //     ScreenMove();
-        // }
+        if (!GetComponent<BattleMgr>().ScreenLock)
+        {
+            ScreenMove();
+        }
     }
     private void OnMouseMove()
     {
@@ -226,7 +254,7 @@ public class MapMgr : MonoBehaviour
                 Debug.Log(target.name);
                 locationX = GetLocation(target.transform.position.x);
                 locationY = GetLocation(target.transform.position.y);
-
+                //Debug.Log(mapInfo.transform.position.x);
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
 
             }
@@ -289,11 +317,19 @@ public class MapMgr : MonoBehaviour
         {
             if (lastMousePosition != Vector3.zero)
             {
-                Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
+                Vector3 offset = BattleCamera.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
                 mapInfo.transform.position += offset;
             }
-            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            lastMousePosition = BattleCamera.ScreenToWorldPoint(Input.mousePosition);
         }
+    }
+    public float GetMapInfoY()
+    {
+        return InitX - mapInfo.transform.position.x;
+    }
+    public float GetMapInfoX()
+    {
+        return InitY - mapInfo.transform.position.y;
     }
     public void leave_battle()
     {
