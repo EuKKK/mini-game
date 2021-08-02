@@ -53,7 +53,7 @@ public class Game : MonoBehaviour
         {
             sheep_id = sheep_ex + i.ToString();
             sheep u_sheep = JsonUtility.FromJson<sheep>(PlayerPrefs.GetString(sheep_id));
-            User.Instance.add_sheep(i, u_sheep);
+            User.Instance.add_sheep(u_sheep);
         }
 
     }

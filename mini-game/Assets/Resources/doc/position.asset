@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36f316ad70f5034f9ac87728113d680, type: 3}
+  m_Name: position
+  m_EditorClassIdentifier: 
+  maps:
+  - out_map:
+      key: stage_id
+      imaps:
+      - key: "\u5173\u5361id"
+        val: stage_id
+      - key: "\u9B54\u7269id"
+        val: monster_id
+      - key: 
+        val: 
+  - out_map:
+      key: 6001
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6001
+      - key: "\u9B54\u7269id"
+        val: 1101, 1103, 1101
+      - key: 
+        val: 
+  - out_map:
+      key: 6002
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6002
+      - key: "\u9B54\u7269id"
+        val: 1101, 1101, 1102, 1103
+      - key: 
+        val: 
+  - out_map:
+      key: 6003
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6003
+      - key: "\u9B54\u7269id"
+        val: 1103, 1104, 1104, 1101, 1102, 1105
+      - key: 
+        val: 

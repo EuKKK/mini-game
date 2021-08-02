@@ -6,6 +6,7 @@ using BaseObject;
 using UnityEditor;
 public class GlobalFuncMgr 
 {
+    static int sheep_id = 0;
     void Start()
     {
         //test_asset();
@@ -17,5 +18,10 @@ public class GlobalFuncMgr
         SpriteRenderer sheep_renderer = model.GetComponent<SpriteRenderer>();
         Texture2D new_sprite = Resources.Load(sprite_name) as Texture2D;
         sheep_renderer.sprite = Sprite.Create(new_sprite, new Rect(0, 0, new_sprite.width, new_sprite.height), new Vector2(.5f, .5f));
+    }
+    public static int new_sheep_id()
+    {
+        sheep_id ++;
+        return sheep_id;
     }
 }

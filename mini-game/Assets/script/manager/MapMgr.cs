@@ -83,7 +83,7 @@ public class MapMgr : MonoBehaviour
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
-                        sheep enter_sheep = new sheep(i.ToString());
+                        sheep enter_sheep = new sheep(true);
                         enter_sheep.hp = 10;
                         enter_sheep.move_range = 5;
                         enter_sheep.cordon = 5;

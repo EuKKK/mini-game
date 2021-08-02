@@ -16,7 +16,7 @@ namespace sheeps
         public int cordon;
         public string camp;
         public string unit;
-        public string id;
+        public int id;
         public bool isUsed = false;
         public bool isSkilled = false;
         public string skill;
@@ -29,9 +29,10 @@ namespace sheeps
         public GameObject this_sheep;
 
 
-        public sheep(string u_id)
+        public sheep(bool is_monster = false)
         {
-            id = u_id;
+            if (!is_monster)
+                id = GlobalFuncMgr.new_sheep_id();
         }
         // Start is called before the first frame update
         void Start()
@@ -43,21 +44,6 @@ namespace sheeps
         void Update()
         {
 
-        }
-
-        public void test()
-        {
-            hp = 10;
-            attack = 1;
-            mana = 10;
-            move_range = 5;
-            attack_range = 5;
-            camp = "our";
-            unit = "ground";
-            skill = "push";
-            cordon = 5;
-            isUsed = false;
-            isSkilled = false;
         }
         public string get_camp()
         {
@@ -90,7 +76,7 @@ namespace sheeps
             cordon = 5;
             class_id = sheep_id;
         }
-        public string get_id()
+        public int get_id()
         {
             return id;
         }

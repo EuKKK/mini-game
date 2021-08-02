@@ -42,7 +42,7 @@ public class Modewnd : window
     //打开商店
     void open_shop()
     {
-        WindowMgr.Instance.switch_window("shop");
+        WindowMgr.Instance.switch_window("Shop");
     }
     //打开指引
     void open_guide()

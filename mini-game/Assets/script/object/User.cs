@@ -44,9 +44,10 @@ public class User : MonoBehaviour
     {
         return sheep_map;
     }
-    public void add_sheep(int id, sheep u_sheep)
+    public void add_sheep(sheep u_sheep)
     {
-        sheep_map[id] = u_sheep;
+        int sheep_id = u_sheep.get_id();
+        sheep_map[sheep_id] = u_sheep;
     }
 
     public sheep get_sheep_by_id(int id)
@@ -57,9 +58,9 @@ public class User : MonoBehaviour
     {
         level = "6001";
         money = 0;
-        sheep new_sheep_1 = new sheep("1");
-        sheep new_sheep_2 = new sheep("2");
-        sheep new_sheep_3 = new sheep("3");
+        sheep new_sheep_1 = new sheep();
+        sheep new_sheep_2 = new sheep();
+        sheep new_sheep_3 = new sheep();
         new_sheep_1.load_data("1201");
         new_sheep_2.load_data("1005");
         new_sheep_3.load_data("1007");
