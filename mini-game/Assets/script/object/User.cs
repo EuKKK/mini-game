@@ -68,5 +68,10 @@ public class User : MonoBehaviour
         sheep_map[2] = new_sheep_2;
         sheep_map[3] = new_sheep_3;
     }
+    public void dele_sheep(sheep u_sheep)
+    {
+        if(sheep_map[u_sheep.id] != null)
+            sheep_map.Remove(u_sheep.id);
+    }
 
 }

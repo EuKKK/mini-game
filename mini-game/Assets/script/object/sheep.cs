@@ -23,8 +23,8 @@ namespace sheeps
         public string charc_level;
         public int star;
         public string img;
-        public string hp_index;
-        public string attack_index;
+        public float hp_index;
+        public float attack_index;
         public string class_id;
         public GameObject this_sheep;
 
@@ -56,7 +56,7 @@ namespace sheeps
                 UnityEngine.Object.Destroy(this_sheep);
             }
         }
-        public void set_pos(float x, float y)
+        public void set_pos(int x, int y)
         {
             if (this_sheep)
             {
@@ -64,15 +64,23 @@ namespace sheeps
                 this_sheep.transform.position = pos;
             }
         }
-        public void load_data(string sheep_id)
+        public void load_data(string sheep_id, int new_star = 1)
         {
-            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "星级"), out star);
-            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ? "our" : "enemy";
+            star = new_star;
+            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ?"our":"enemy";
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "hp"), out hp);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "移动范围"), out move_range);
-            skill = "cannon";
+            float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星血量提升系数"), out hp_index);
+            float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星攻击提升"), out attack_index);
+
+            if(star == 2)
+            {
+                hp = (int)(hp*hp_index);
+                attack = (int)(attack*attack_index);
+            }
+            skill = "push";
             cordon = 5;
             class_id = sheep_id;
         }

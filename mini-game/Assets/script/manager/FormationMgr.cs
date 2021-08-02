@@ -49,8 +49,7 @@ public class FormationMgr : MonoBehaviour
 
 
         string sheep_class_id = enter_sheep.class_id;
-        string character_path = "Image/" + ExcMgr.Instance.get_data("character", sheep_class_id, "人物图片");
-        GlobalFuncMgr.set_model_sprite(enter_sheep.this_sheep.transform.Find("characterTexture").gameObject, character_path);
+        GlobalFuncMgr.set_model_sprite(enter_sheep.this_sheep.transform.Find("characterTexture").gameObject, ExcMgr.Instance.get_data("character", sheep_class_id, "人物图片"));
 
 
         enter_sheep.this_sheep.layer = 9;
