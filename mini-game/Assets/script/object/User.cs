@@ -10,20 +10,20 @@ public class User : MonoBehaviour
     public int level;
     public int character_num;
     public static User Instance { get; private set; }
-    public Dictionary <int, sheep> sheep_map = new Dictionary<int, sheep>();
-    
+    public Dictionary<int, sheep> sheep_map = new Dictionary<int, sheep>();
+
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
         //Game.Instance.load_saves();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void test()
@@ -40,7 +40,7 @@ public class User : MonoBehaviour
     //         new_sheep.set_id(i);
     //     }
     // }
-    public Dictionary <int, sheep> get_sheeps()
+    public Dictionary<int, sheep> get_sheeps()
     {
         return sheep_map;
     }
@@ -70,16 +70,16 @@ public class User : MonoBehaviour
     }
     public void dele_sheep(sheep u_sheep)
     {
-        if(sheep_map[u_sheep.id] != null)
+        if (sheep_map[u_sheep.id] != null)
             sheep_map.Remove(u_sheep.id);
     }
 
     public void level_up()
     {
         int new_level = level + 1;
-        if(new_level <= 6008)
+        if (new_level <= 6008)
             level = new_level;
-        if(level == 6002)
+        if (level == 6002)
         {
             sheep new_sheep = new sheep();
             new_sheep.load_data("1005");

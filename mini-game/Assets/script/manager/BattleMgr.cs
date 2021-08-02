@@ -63,7 +63,7 @@ public class BattleMgr : MonoBehaviour
 
 
 
-    private int trapDamage = 180;
+    private int trapDamage = 192;
     private int characterDamge = 180;
     private int barrierDamage = 180;
 

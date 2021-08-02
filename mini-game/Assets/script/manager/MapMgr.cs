@@ -47,6 +47,7 @@ public class MapMgr : MonoBehaviour
 
     public void GetMap()
     {
+
         //初始化地图数据
         map_init();
         InitX = mapInfo.transform.position.x;
@@ -72,6 +73,7 @@ public class MapMgr : MonoBehaviour
             if (y > maxY) maxY = y;
             MapInfo[x, y] = 1;
         }
+        enemyPos.Clear();
         for (int i = 0; i < landform.transform.childCount; i++)
         {
             GameObject g = landform.transform.GetChild(i).gameObject;
@@ -94,6 +96,7 @@ public class MapMgr : MonoBehaviour
                         HS.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                         HS.layer = 9;
                         highLightS.Add(HS);
+                        HS.transform.SetParent(mapInfo.transform);
                         //GamePlayer[x, y] = 1;
                         //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         //characterPos.Add(getDic(x, y), g);
@@ -104,19 +107,20 @@ public class MapMgr : MonoBehaviour
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         enemyPos.Add(getDic(x, y), g);
 
-                        // sheep enter_sheep = new sheep(true);
-                        // enter_sheep.hp = 200;
-                        // enter_sheep.attack = 80;
-                        // enter_sheep.attack_range = 1;
-                        // enter_sheep.move_range = 5;
-                        // enter_sheep.cordon = 5;
-                        // enter_sheep.this_sheep = g;
-                        // enter_sheep.this_sheep.layer = 9;
-                        // Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
-                        // foreach (Transform child in father)
-                        //     child.gameObject.layer = 9;
-                        // enemy_GO[enter_sheep.this_sheep] = enter_sheep;
-
+                        /*
+                        sheep enter_sheep = new sheep(true);
+                        enter_sheep.hp = 200;
+                        enter_sheep.attack = 80;
+                        enter_sheep.attack_range = 1;
+                        enter_sheep.move_range = 5;
+                        enter_sheep.cordon = 5;
+                        enter_sheep.this_sheep = g;
+                        enter_sheep.this_sheep.layer = 9;
+                        Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
+                        foreach (Transform child in father)
+                            child.gameObject.layer = 9;
+                        enemy_GO[enter_sheep.this_sheep] = enter_sheep;
+                        */
 
                         break;
                     case "barrier":
@@ -141,9 +145,9 @@ public class MapMgr : MonoBehaviour
 
         int t = 0;
         //敌人gameobject修改和enemyGo添加
-        for (int i = 0; i < 35; i++)
+        for (int j = 0; j < 31; j++)
         {
-            for (int j = 0; j < 35; j++)
+            for (int i = 0; i < 31; i++)
             {
                 if (enemyPos.ContainsKey(getDic(i, j)))
                 {
@@ -151,10 +155,7 @@ public class MapMgr : MonoBehaviour
                     GameObject enemy_ob = enemyPos[getDic(i, j)];
                     sheep enemy_sheep = new sheep(true);
                     string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
-                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject;
-                    GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片"));
-                    sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1);
-                    enemy_sheep.load_data(class_id);
+                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject;                    GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片"));                    sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1);                    enemy_sheep.load_data(class_id);
                     enemy_GO[enemy_ob] = enemy_sheep;
 
                 }
@@ -247,15 +248,15 @@ public class MapMgr : MonoBehaviour
     }
     public int getDic(int x, int y)
     {
-        return x * MAX_NUMBER + y;
-    }
-    public int DicX(int dicNumber)
-    {
-        return (dicNumber - 1) / MAX_NUMBER;
+        return y * MAX_NUMBER + x;
     }
     public int DicY(int dicNumber)
     {
-        return dicNumber - DicX(dicNumber) * MAX_NUMBER;
+        return (dicNumber - 1) / MAX_NUMBER;
+    }
+    public int DicX(int dicNumber)
+    {
+        return dicNumber - DicY(dicNumber) * MAX_NUMBER;
     }
 
 
