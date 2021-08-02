@@ -28,7 +28,7 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6001
       - key: "\u9B54\u7269id"
-        val: 1101, 1103, 1101
+        val: 1101,1103,1101
       - key: 
         val: 
   - out_map:
@@ -37,7 +37,7 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6002
       - key: "\u9B54\u7269id"
-        val: 1101, 1101, 1102, 1103
+        val: 1101,1101,1102,1103
       - key: 
         val: 
   - out_map:
@@ -46,6 +46,42 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6003
       - key: "\u9B54\u7269id"
-        val: 1103, 1104, 1104, 1101, 1102, 1105
+        val: 1103,1104,1104,1101,1102,1105
+      - key: 
+        val: 
+  - out_map:
+      key: 6004
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6004
+      - key: "\u9B54\u7269id"
+        val: 1108,1104,1106,1107,1102,1102
+      - key: 
+        val: 
+  - out_map:
+      key: 6005
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6005
+      - key: "\u9B54\u7269id"
+        val: 1106,1104,1106,1104,1107,1105,1109,1108,1107
+      - key: 
+        val: 
+  - out_map:
+      key: 6006
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6006
+      - key: "\u9B54\u7269id"
+        val: 1102,1106,1112,1107,1107,1108,1102,1106,1105,1109
+      - key: 
+        val: 
+  - out_map:
+      key: 6007
+      imaps:
+      - key: "\u5173\u5361id"
+        val: 6007
+      - key: "\u9B54\u7269id"
+        val: 1108,1104,1106,1107,1102,1102
       - key: 
         val: 

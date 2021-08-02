@@ -729,6 +729,7 @@ public class BattleMgr : MonoBehaviour
                 }
             }
             WindowMgr.Instance.active_window("Result");
+            User.Instance.level_up();
             MapMgr.Instance.Playing = false;
         }
     }
@@ -749,6 +750,7 @@ public class BattleMgr : MonoBehaviour
                 Destroy(characterPos[i]);
             }
             WindowMgr.Instance.active_window("Result");
+            User.Instance.level_up();
             MapMgr.Instance.Playing = false;
         }
     }

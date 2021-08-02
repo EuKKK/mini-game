@@ -7,7 +7,7 @@ using System;
 public class User : MonoBehaviour
 {
     public int money;
-    public string level;
+    public int level;
     public int character_num;
     public static User Instance { get; private set; }
     public Dictionary <int, sheep> sheep_map = new Dictionary<int, sheep>();
@@ -56,7 +56,7 @@ public class User : MonoBehaviour
     }
     public void init()
     {
-        level = "6001";
+        level = 6001;
         money = 0;
         sheep new_sheep_1 = new sheep();
         sheep new_sheep_2 = new sheep();
@@ -72,6 +72,19 @@ public class User : MonoBehaviour
     {
         if(sheep_map[u_sheep.id] != null)
             sheep_map.Remove(u_sheep.id);
+    }
+
+    public void level_up()
+    {
+        int new_level = level + 1;
+        if(new_level <= 6008)
+            level = new_level;
+        if(level == 6002)
+        {
+            sheep new_sheep = new sheep();
+            new_sheep.load_data("1005");
+            sheep_map[4] = new_sheep;
+        }
     }
 
 }

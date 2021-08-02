@@ -76,7 +76,7 @@ public class ExcMgr : MonoBehaviour
                 {   
                     string res = "";
                     int point = 0;
-                    for(int i = 0; i <= t3.Length;i++)
+                    for(int i = 0; i < t3.Length;i++)
                     {
                         if(t3[i] != ',')
                             res += t3[i];
@@ -86,7 +86,6 @@ public class ExcMgr : MonoBehaviour
                             res = "";
                         }
                     }
-                    if(point!=num) return null;
                     return res;
                 }
 

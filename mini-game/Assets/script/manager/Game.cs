@@ -25,7 +25,7 @@ public class Game : MonoBehaviour
     public void player_save()
     {
         PlayerPrefs.SetInt("player_money", User.Instance.money);
-        PlayerPrefs.SetString("player_level", User.Instance.level);
+        PlayerPrefs.SetInt("player_level", User.Instance.level);
         PlayerPrefs.SetInt("player_character_num", User.Instance.character_num);
         Dictionary<int,sheep> sheeps = User.Instance.get_sheeps();
         string sheep_ex = "sheep_";
@@ -44,7 +44,7 @@ public class Game : MonoBehaviour
     public void load_saves()
     {
         User.Instance.money = PlayerPrefs.GetInt("player_money");
-        User.Instance.level = PlayerPrefs.GetString("player_level");
+        User.Instance.level = PlayerPrefs.GetInt("player_level");
         User.Instance.character_num = PlayerPrefs.GetInt("player_character_num");
         int cnt = PlayerPrefs.GetInt("sheep_count");
         string sheep_ex = "sheep_";

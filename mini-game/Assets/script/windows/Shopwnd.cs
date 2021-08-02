@@ -23,6 +23,7 @@ public class Shopwnd : window
    public Button buy_sheep3;
    public bool need_refresh = false;
    Dictionary<int, GameObject> shop_sheep_map = new Dictionary<int, GameObject>();
+   Dictionary<int, string> buttons = new Dictionary<int, string>();
 
     void Start()
     {

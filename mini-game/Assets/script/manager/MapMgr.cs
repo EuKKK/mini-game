@@ -29,7 +29,7 @@ public class MapMgr : MonoBehaviour
     private bool isMouseDown;
     private Vector3 lastMousePosition;
     public bool Playing = false;
-    List<float[]> play_pos;
+    List<int[]> play_pos;
     int monster_num;
 
     void Start()
@@ -55,8 +55,8 @@ public class MapMgr : MonoBehaviour
         for (int i = 0; i < map.transform.childCount; i++)
         {
             GameObject g = map.transform.GetChild(i).gameObject;
-            int x = GetLocationX(g.transform.position.x);
-            int y = GetLocationY(g.transform.position.y);
+            int x = GetLocation(g.transform.position.x);
+            int y = GetLocation(g.transform.position.y);
             if (x > maxX) maxX = x;
             if (y > maxY) maxY = y;
             MapInfo[x, y] = 1;
@@ -65,8 +65,8 @@ public class MapMgr : MonoBehaviour
         {
             GameObject g = landform.transform.GetChild(i).gameObject;
             string tag = g.tag;
-            int x = GetLocationX(g.transform.position.x);
-            int y = GetLocationY(g.transform.position.y);
+            int x = GetLocation(g.transform.position.x);
+            int y = GetLocation(g.transform.position.y);
 
             if (MapInfo[x, y] == 1)
             {
@@ -74,9 +74,9 @@ public class MapMgr : MonoBehaviour
                 {
 
                     case "character":
-                        float[] pos = new float[2];
-                        pos[0] = GetPositionX(x);
-                        pos[1] = GetPositionY(y);
+                        int[] pos = new int[2];
+                        pos[0] = GetPosition(x);
+                        pos[1] = GetPosition(y);
                         play_pos.Add(pos);
                         Destroy(g);
                         //GamePlayer[x, y] = 1;
@@ -87,22 +87,8 @@ public class MapMgr : MonoBehaviour
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
+
                         enemyPos.Add(getDic(x, y), g);
-
-                        sheep enter_sheep = new sheep(true);
-                        enter_sheep.hp = 200;
-                        enter_sheep.attack = 80;
-                        enter_sheep.attack_range = 1;
-                        enter_sheep.move_range = 5;
-                        enter_sheep.cordon = 5;
-                        enter_sheep.this_sheep = g;
-                        enter_sheep.this_sheep.layer = 9;
-                        Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
-                        foreach (Transform child in father)
-                            child.gameObject.layer = 9;
-                        enemy_GO[enter_sheep.this_sheep] = enter_sheep;
-
-
                         break;
                     case "barrier":
                         MapInfo[x, y] = 900;
@@ -124,7 +110,6 @@ public class MapMgr : MonoBehaviour
             }
         }
 
-        /*
         int t = 0;
         //敌人gameobject修改和enemyGo添加
         for (int i = 0; i < 35; i++)
@@ -133,22 +118,20 @@ public class MapMgr : MonoBehaviour
             {
                 if (enemyPos.ContainsKey(getDic(i, j)))
                 {
-                    GameObject g = enemyPos[getDic(i, j)];
-                    enemyPos[getDic(i, j)] =;
-                    Destroy(g);
-                    enemy_GO[]=;
-
                     t++;
+                    GameObject enemy_ob =  enemyPos[getDic(i, j)];
+                    sheep enemy_sheep = new sheep(true);
+                    string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
+                    Debug.Log(enemy_ob.transform.Find("test1").gameObject);
+                    GlobalFuncMgr.set_model_sprite(enemy_ob.transform.Find("test1").gameObject, ExcMgr.Instance.get_data("character", class_id, "人物图片"));
+                    enemy_sheep.load_data(class_id);
+                    enemy_GO[enemy_ob] = enemy_sheep;
                 }
             }
         }
-        */
-
-
-
 
         //特殊处理第一关和第二关的不选人
-        if (User.Instance.level == "6001")
+        if (User.Instance.level == 6001)
         {
             for (int i = 1; i <= 3; i++)
             {
@@ -158,7 +141,7 @@ public class MapMgr : MonoBehaviour
             WindowMgr.Instance.switch_window("Battle");
             BattleMgr.Instance.GameStart();
         }
-        if (User.Instance.level == "6002")
+        if (User.Instance.level == 6002)
         {
             for (int i = 1; i <= 4; i++)
             {
@@ -187,7 +170,7 @@ public class MapMgr : MonoBehaviour
 
     void map_init()
     {
-        string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level, "地图");
+        string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level.ToString(), "地图");
         mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + map_name));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
@@ -205,24 +188,16 @@ public class MapMgr : MonoBehaviour
 
         MapInfo = new int[35, 35];
         GamePlayer = new int[35, 35];
-        play_pos = new List<float[]>();
+        play_pos = new List<int[]>();
     }
 
-    public int GetLocationX(float pos)
+    public int GetLocation(float pos)
     {
-        return ((int)(pos + InitX - mapInfo.transform.position.x) - 20) / 40 + 1;
+        return ((int)pos - 20) / 40 + 1;
     }
-    public int GetLocationY(float pos)
+    public int GetPosition(int loc)
     {
-        return ((int)(pos + InitY - mapInfo.transform.position.y) - 20) / 40 + 1;
-    }
-    public float GetPositionX(int loc)
-    {
-        return (loc - 1) * 40 + 20 - InitX + mapInfo.transform.position.x;
-    }
-    public float GetPositionY(int loc)
-    {
-        return (loc - 1) * 40 + 20 - InitY + mapInfo.transform.position.y;
+        return (loc - 1) * 40 + 20;
     }
     public int getDic(int x, int y)
     {
@@ -263,8 +238,9 @@ public class MapMgr : MonoBehaviour
 
                 GameObject target = rh.collider.gameObject;
                 Debug.Log(target.name);
-                locationX = GetLocationX(target.transform.position.x);
-                locationY = GetLocationY(target.transform.position.y);
+                locationX = GetLocation(target.transform.position.x);
+                locationY = GetLocation(target.transform.position.y);
+                //Debug.Log(mapInfo.transform.position.x);
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
 
             }
@@ -278,8 +254,8 @@ public class MapMgr : MonoBehaviour
             if (hit)
             {
                 GameObject target = rh.collider.gameObject;
-                locationX = GetLocationX(target.transform.position.x);
-                locationY = GetLocationY(target.transform.position.y);
+                locationX = GetLocation(target.transform.position.x);
+                locationY = GetLocation(target.transform.position.y);
 
 
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 1);
@@ -303,8 +279,8 @@ public class MapMgr : MonoBehaviour
             if (target.layer != 9) return null;
             if (!target.name.Contains("character")) return null;
 
-            locationX = GetLocationX(target.transform.position.x);
-            locationY = GetLocationY(target.transform.position.y);
+            locationX = GetLocation(target.transform.position.x);
+            locationY = GetLocation(target.transform.position.y);
             map_pos[0] = locationX;
             map_pos[1] = locationY;
         }
@@ -332,6 +308,14 @@ public class MapMgr : MonoBehaviour
             }
             lastMousePosition = BattleCamera.ScreenToWorldPoint(Input.mousePosition);
         }
+    }
+    public float GetMapInfoY()
+    {
+        return InitX - mapInfo.transform.position.x;
+    }
+    public float GetMapInfoX()
+    {
+        return InitY - mapInfo.transform.position.y;
     }
     public void leave_battle()
     {

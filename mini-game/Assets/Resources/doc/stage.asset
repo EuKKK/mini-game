@@ -54,7 +54,7 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E09\u5173"
       - key: "\u5730\u56FE"
-        val: e2
+        val: ceshi2
       - key: 
         val: 
   - out_map:
@@ -65,7 +65,7 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u56DB\u5173"
       - key: "\u5730\u56FE"
-        val: e3
+        val: ceshi1
       - key: 
         val: 
   - out_map:
@@ -76,7 +76,7 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E94\u5173"
       - key: "\u5730\u56FE"
-        val: n1
+        val: e3
       - key: 
         val: 
   - out_map:
@@ -87,7 +87,7 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u516D\u5173"
       - key: "\u5730\u56FE"
-        val: 
+        val: ceshi-big
       - key: 
         val: 
   - out_map:
@@ -98,7 +98,7 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E03\u5173"
       - key: "\u5730\u56FE"
-        val: h1
+        val: n1
       - key: 
         val: 
   - out_map:
@@ -109,6 +109,6 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u516B\u5173"
       - key: "\u5730\u56FE"
-        val: 
+        val: h1
       - key: 
         val: 
