@@ -72,7 +72,7 @@ namespace sheeps
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "移动范围"), out move_range);
-            skill = "push";
+            skill = "attack";
             cordon = 5;
             class_id = sheep_id;
         }

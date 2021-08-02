@@ -106,7 +106,7 @@ public class BattleMgr : MonoBehaviour
         maxY = MapMgr.Instance.maxY;
         RoundStart();
 
-        round = 0;
+        round = 1;
         camp = true;
     }
 
@@ -139,15 +139,16 @@ public class BattleMgr : MonoBehaviour
             step = 0;
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
+
             wayWalk(locationX, locationY, CharacterX, CharacterY);
             isWalk = true;
             walkType = true;
-            //Walk(walkType);
             HighLightDestroy();
         }
         else if (HighLight[locationX, locationY] == 2)
         {
             step = 0;
+            wayCount = 0;
             trapCount = 999;
             MapRouteInit();
             mapRoute[CharacterX, CharacterY].direction = Direction.stand;
@@ -156,10 +157,10 @@ public class BattleMgr : MonoBehaviour
 
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
+
             step = 0;
             isWalk = true;
             walkType = false;
-            //Walk(walkType);
             HighLightDestroy();
         }
         else
@@ -251,6 +252,7 @@ public class BattleMgr : MonoBehaviour
     }
     public void DangerousWayWalk(int _x, int _y, int targetX, int targetY, int point, int count, bool sheep)
     {
+
         int upPoint = 0;
         int downPoint = 0;
         int leftPoint = 0;
@@ -302,6 +304,7 @@ public class BattleMgr : MonoBehaviour
 
         if (_x == targetX && _y == targetY)
         {
+
             if (count < trapCount)
             {
                 wayCount = step;
@@ -425,6 +428,8 @@ public class BattleMgr : MonoBehaviour
     }
 
 
+
+
     private void MapRouteInit()
     {
         for (int i = 0; i < 35; i++)
@@ -440,6 +445,8 @@ public class BattleMgr : MonoBehaviour
             way[i] = Direction.stand;
         }
     }
+
+
 
 
     /// <summary>
@@ -464,26 +471,37 @@ public class BattleMgr : MonoBehaviour
             int enemyPosY = DicY(enemyPosList[t]);
             int enemyPosX = DicX(enemyPosList[t]);
             enemy = enemyPos[enemyPosList[t]];
-            EnemyAttackSearch(enemyPosX, enemyPosY, characterMonster[enemy].cordon);
-            if (characterAttackX > -100)
+
+            bool attack = EnemyAttack(enemyPosX, enemyPosY, characterMonster[enemy].attack_range, false);
+
+            if (!attack)
             {
 
-                MapRouteInit();
-                step = 0;
-                trapCount = 100;
-                mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
-                int s = GamePlayer[characterAttackX, characterAttackY];
-                GamePlayer[characterAttackX, characterAttackY] = 0;
-                DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
-                GamePlayer[characterAttackX, characterAttackY] = s;
-                moveEnemy = enemyPos[getDic(enemyPosX, enemyPosY)];
-                step = wayCount;
+                EnemyAttackSearch(enemyPosX, enemyPosY, characterMonster[enemy].cordon);
+                if (characterAttackX > -100)
+                {
 
-                EnemyWalkSetting();
-            }
-            else
-            {
-                t++;
+                    MapRouteInit();
+                    step = 0;
+                    wayCount = 0;
+                    trapCount = 100;
+                    mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
+                    int s = GamePlayer[characterAttackX, characterAttackY];
+
+                    GamePlayer[characterAttackX, characterAttackY] = 0;
+
+                    DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
+
+                    GamePlayer[characterAttackX, characterAttackY] = s;
+
+                    step = wayCount;
+
+                    EnemyWalkSetting();
+                }
+                else
+                {
+                    t++;
+                }
             }
         }
         else
@@ -508,16 +526,42 @@ public class BattleMgr : MonoBehaviour
             {
                 if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
                 {
+
                     int pos = getDic(_x + i, _y + j);
                     GameObject g = characterPos[pos];
-                    if (characterSheep[g].hp <= health)
+                    bool r = EnemyReach(_x, _y, _x + i, _y + j, 15, 0, false);
+
+                    if (characterSheep[g].hp <= health && r)
                     {
                         characterAttackX = i + _x;
                         characterAttackY = j + _y;
                         health = characterSheep[g].hp;
+
                     }
                 }
             }
+        }
+    }
+    private bool EnemyReach(int _x, int _y, int targetX, int targetY, int point, int count, bool sheep)
+    {
+        MapRouteInit();
+        step = 0;
+        wayCount = 0;
+        trapCount = 100;
+        mapRoute[_x, _y].movePoint = point;
+        int s = GamePlayer[targetX, targetY];
+        GamePlayer[targetX, targetY] = 0;
+        DangerousWayWalk(_x, _y, targetX, targetY, point, count, sheep);
+        GamePlayer[targetX, targetY] = s;
+        step = wayCount;
+
+        if (step > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     private void EnemyWalkSetting()
@@ -526,7 +570,7 @@ public class BattleMgr : MonoBehaviour
         getPoint = false;
         _x = GetLocation(enemy.transform.position.x);
         _y = GetLocation(enemy.transform.position.y);
-        enemyPos.Remove(getDic(_x, _y));
+        //enemyPos.Remove(getDic(_x, _y));
         isEnemyWalk = true;
     }
 
@@ -680,10 +724,9 @@ public class BattleMgr : MonoBehaviour
         {
             if (g != null)
             {
-                if (g.tag == "player") lose = false;
+                if (g.tag == "character") lose = false;
             }
         }
-        /*
         if (lose)
         {
             foreach (int i in characterPos.Keys)
@@ -693,7 +736,6 @@ public class BattleMgr : MonoBehaviour
             WindowMgr.Instance.active_window("Result");
             MapMgr.Instance.Playing = false;
         }
-        */
     }
     private void RoundStart()
     {
@@ -712,6 +754,7 @@ public class BattleMgr : MonoBehaviour
             {
                 if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
+                    characterPos.Remove(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)));
                     switch (way[step])
                     {
                         case Direction.up:
@@ -726,6 +769,11 @@ public class BattleMgr : MonoBehaviour
                         case Direction.left:
                             character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
                             break;
+                    }
+                    characterPos.Add(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)), character);
+                    if (MapInfo[GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)] == 500)
+                    {
+                        SheepDamage(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y), trapDamage);
                     }
                     step--;
                     sleep = 0;
@@ -738,7 +786,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                //characterSheep[character].isUsed = true;
+                characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -749,6 +797,7 @@ public class BattleMgr : MonoBehaviour
                 if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
                     step++;
+                    characterPos.Remove(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)));
                     switch (way[step])
                     {
                         case Direction.up:
@@ -767,6 +816,11 @@ public class BattleMgr : MonoBehaviour
                             character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
                             break;
                     }
+                    characterPos.Add(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)), character);
+                    if (MapInfo[GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)] == 500)
+                    {
+                        SheepDamage(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y), trapDamage);
+                    }
                     sleep = 0;
                 }
                 else
@@ -777,7 +831,7 @@ public class BattleMgr : MonoBehaviour
             else
             {
                 isWalk = false;
-                //characterSheep[character].isUsed = true;
+                characterSheep[character].isUsed = true;
                 sleep = 0;
             }
         }
@@ -789,8 +843,11 @@ public class BattleMgr : MonoBehaviour
         if (step <= wayCount && step <= characterMonster[enemy].move_range && !getPoint)
         {
 
+
             if (sleep >= (int)(0.05f / Time.deltaTime))
             {
+                enemyPos.Remove(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)));
+
                 switch (way[step])
                 {
                     case Direction.up:
@@ -851,6 +908,11 @@ public class BattleMgr : MonoBehaviour
                         break;
                 }
                 step++;
+                enemyPos.Add(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)), enemy);
+                if (MapInfo[GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)] == 500)
+                {
+                    EnemyDamage(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y), trapDamage);
+                }
                 sleep = 0;
             }
             else
@@ -860,8 +922,8 @@ public class BattleMgr : MonoBehaviour
         }
         else
         {
-            enemyPos.Add(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)), enemy);
             isEnemyWalk = false;
+            EnemyAttack(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y), characterMonster[enemy].attack_range, true);
             sleep = 0;
             t++;
         }
@@ -934,11 +996,20 @@ public class BattleMgr : MonoBehaviour
                 case "push":
                     Push(CharacterX, CharacterY, locationX, locationY, sure);
                     break;
+                case "attack":
+                    GameObject g = characterPos[getDic(CharacterX, CharacterY)];
+                    int point = characterSheep[g].attack_range;
+                    Attack(CharacterX, CharacterY, locationX, locationY, point, sure);
+                    break;
                 case "stay":
                     break;
             }
         }
-        //if (sure) characterSheep[gameObject].isSkilled = true;
+        try
+        {
+            if (sure) characterSheep[gameObject].isSkilled = true;
+        }
+        catch { }
     }
     public void Attract(int x, int y, bool sure)
     {
@@ -1177,21 +1248,65 @@ public class BattleMgr : MonoBehaviour
             SkillEffectCheck(PushX, PushY);
         }
     }
-
-    private void Attack()
+    private void Attack(int x, int y, int AttackX, int AttackY, int Attack_Range, bool sure)
     {
-
+        if (!sure)
+        {
+            for (int i = -Attack_Range; i <= Attack_Range; i++)
+            {
+                int absI = Attack_Range - Mathf.Abs(i);
+                for (int j = -absI; j <= absI; j++)
+                {
+                    if (x + i >= 1 && x + i <= 30 && y + j >= 1 && y + j <= 30)
+                    {
+                        HighLight[x + i, y + j] = 3;
+                    }
+                }
+            }
+            HighLightShow();
+        }
+        else
+        {
+            if (GamePlayer[AttackX, AttackY] == -1)
+            {
+                GameObject g = characterPos[getDic(x, y)];
+                EnemyDamage(AttackX, AttackY, characterSheep[g].attack);
+                try
+                {
+                    GameObject _g = enemyPos[getDic(AttackX, AttackY)];
+                    if (Mathf.Abs(x - AttackX) + Mathf.Abs(y - AttackY) <= characterMonster[_g].attack_range)
+                    {
+                        SheepDamage(x, y, characterMonster[_g].attack);
+                    }
+                }
+                catch { }
+            }
+            HighLightDestroy();
+        }
     }
-
-    private void AttackSearch()
+    private bool EnemyAttack(int x, int y, int point, bool walking)
     {
-
+        EnemyAttackSearch(x, y, point);
+        if (characterAttackX > -100)
+        {
+            SheepDamage(characterAttackX, characterAttackY, characterMonster[enemy].attack);
+            try
+            {
+                GameObject _g = characterPos[getDic(characterAttackX, characterAttackY)];
+                if (Mathf.Abs(x - characterAttackX) + Mathf.Abs(y - characterAttackY) <= characterSheep[_g].attack_range)
+                {
+                    EnemyDamage(x, y, characterSheep[_g].attack);
+                }
+            }
+            catch { }
+            if (!walking) t++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    private void EnemyAttackSearch()
-    {
-        
-    }
-
     public void jump()
     {
 
@@ -1230,12 +1345,21 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
+
+
+
+    /// <summary>
+    /// 伤害模块
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="damage"></param>
     public void EnemyDamage(int x, int y, int damage)
     {
         int pos = getDic(x, y);
         GameObject g = enemyPos[pos];
         characterMonster[g].hp = characterMonster[g].hp - damage;
-        Debug.Log(characterMonster[g].hp);
+        Debug.Log("怪物受伤:剩余血量为" + characterMonster[g].hp);
         if (characterMonster[g].hp <= 0) EnemyDie(x, y);
     }
     public void EnemyDie(int x, int y)
@@ -1247,13 +1371,15 @@ public class BattleMgr : MonoBehaviour
         enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
+        isEnemyWalk = false;
+        t++;
     }
     public void SheepDamage(int x, int y, int damage)
     {
         int pos = getDic(x, y);
         GameObject g = characterPos[pos];
         characterSheep[g].hp = characterSheep[g].hp - damage;
-        Debug.Log(characterSheep[g].hp);
+        Debug.Log("羊受伤：剩余血量为" + characterSheep[g].hp);
         if (characterSheep[g].hp <= 0) SheepDie(x, y);
     }
     public void SheepDie(int x, int y)
@@ -1265,7 +1391,10 @@ public class BattleMgr : MonoBehaviour
         characterPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("羊死亡");
+        isWalk = false;
     }
+
+
 
 
 
