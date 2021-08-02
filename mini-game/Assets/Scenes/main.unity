@@ -322,6 +322,8 @@ MonoBehaviour:
   locationY: 0
   maxX: 0
   maxY: 0
+  InitX: 0
+  InitY: 0
   BattleCamera: {fileID: 2094289982}
   Playing: 0
 --- !u!114 &25403028
@@ -347,6 +349,8 @@ MonoBehaviour:
   maxX: 0
   maxY: 0
   ScreenLock: 0
+  InitX: 0
+  InitY: 0
   CharacterX: 0
   CharacterY: 0
 --- !u!114 &25403029

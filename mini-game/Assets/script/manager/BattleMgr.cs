@@ -731,6 +731,7 @@ public class BattleMgr : MonoBehaviour
             WindowMgr.Instance.active_window("Result");
             User.Instance.level_up();
             MapMgr.Instance.Playing = false;
+            MapMgr.Instance.isWin = true;
         }
     }
     private void LoseCheck()
@@ -752,6 +753,7 @@ public class BattleMgr : MonoBehaviour
             WindowMgr.Instance.active_window("Result");
             User.Instance.level_up();
             MapMgr.Instance.Playing = false;
+            MapMgr.Instance.isWin = false;
         }
     }
     private void RoundStart()
@@ -969,6 +971,7 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
+
 
 
 
@@ -1374,7 +1377,6 @@ public class BattleMgr : MonoBehaviour
             return false;
         }
     }
-
     public void SkillEffectCheck(int x, int y)
     {
         GameObject g;
@@ -1409,6 +1411,9 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
+
+
+
 
 
 
@@ -1485,14 +1490,14 @@ public class BattleMgr : MonoBehaviour
     }
     private int getDic(int x, int y)//得到索引数字
     {
-        return y * MAX_NUMBER + x;
+        return x * MAX_NUMBER + y;
     }
-    private int DicY(int dicNumber)//从索引数字得到坐标信息Y
+    private int DicX(int dicNumber)//从索引数字得到坐标信息Y
     {
         return (dicNumber - 1) / MAX_NUMBER;
     }
-    private int DicX(int dicNumber)//从索引数字得到坐标信息X
+    private int DicY(int dicNumber)//从索引数字得到坐标信息X
     {
-        return dicNumber - DicY(dicNumber) * MAX_NUMBER;
+        return dicNumber - DicX(dicNumber) * MAX_NUMBER;
     }
 }

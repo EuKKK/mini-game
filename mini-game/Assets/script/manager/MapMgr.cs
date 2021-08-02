@@ -29,6 +29,7 @@ public class MapMgr : MonoBehaviour
     private bool isMouseDown;
     private Vector3 lastMousePosition;
     public bool Playing = false;
+    public bool isWin = false;
     List<float[]> play_pos;
     int monster_num;
 
@@ -226,15 +227,15 @@ public class MapMgr : MonoBehaviour
     }
     public int getDic(int x, int y)
     {
-        return y * MAX_NUMBER + x;
-    }
-    public int DicY(int dicNumber)
-    {
-        return (dicNumber - 1) / MAX_NUMBER;
+        return x * MAX_NUMBER + y;
     }
     public int DicX(int dicNumber)
     {
-        return dicNumber - DicY(dicNumber) * MAX_NUMBER;
+        return (dicNumber - 1) / MAX_NUMBER;
+    }
+    public int DicY(int dicNumber)
+    {
+        return dicNumber - DicX(dicNumber) * MAX_NUMBER;
     }
 
 
