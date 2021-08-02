@@ -36,7 +36,7 @@ MonoBehaviour:
       - key: "\u6280\u80FDid"
         val: 2001
       - key: "\u6280\u80FD\u540D\u5B57"
-        val: "\u5438 "
+        val: attract
       - key: "\u89D2\u8272id"
         val: 1007
       - key: "\u6280\u80FD\u6548\u679C"
@@ -53,7 +53,7 @@ MonoBehaviour:
       - key: "\u6280\u80FDid"
         val: 2002
       - key: "\u6280\u80FD\u540D\u5B57"
-        val: "\u8F6C"
+        val: rotate
       - key: "\u89D2\u8272id"
         val: 1008
       - key: "\u6280\u80FD\u6548\u679C"
@@ -70,7 +70,7 @@ MonoBehaviour:
       - key: "\u6280\u80FDid"
         val: 2003
       - key: "\u6280\u80FD\u540D\u5B57"
-        val: "\u63A8"
+        val: push
       - key: "\u89D2\u8272id"
         val: 1009
       - key: "\u6280\u80FD\u6548\u679C"
@@ -87,7 +87,7 @@ MonoBehaviour:
       - key: "\u6280\u80FDid"
         val: 2004
       - key: "\u6280\u80FD\u540D\u5B57"
-        val: "\u8DF3"
+        val: cannon
       - key: "\u89D2\u8272id"
         val: 1010
       - key: "\u6280\u80FD\u6548\u679C"

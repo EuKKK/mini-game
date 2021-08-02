@@ -56,7 +56,7 @@ namespace sheeps
                 UnityEngine.Object.Destroy(this_sheep);
             }
         }
-        public void set_pos(int x, int y)
+        public void set_pos(float x, float y)
         {
             if (this_sheep)
             {
@@ -80,7 +80,11 @@ namespace sheeps
                 hp = (int)(hp*hp_index);
                 attack = (int)(attack*attack_index);
             }
-            skill = "push";
+            string skill_id = ExcMgr.Instance.get_data("character", sheep_id, "技能id");
+            if(skill_id!=null&&skill_id!="")
+                skill = ExcMgr.Instance.get_data("skill", skill_id, "技能名字");
+            else
+                skill = "attack";
             cordon = 5;
             class_id = sheep_id;
         }
