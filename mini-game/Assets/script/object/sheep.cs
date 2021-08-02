@@ -56,7 +56,7 @@ namespace sheeps
                 UnityEngine.Object.Destroy(this_sheep);
             }
         }
-        public void set_pos(int x, int y)
+        public void set_pos(float x, float y)
         {
             if (this_sheep)
             {
@@ -67,12 +67,12 @@ namespace sheeps
         public void load_data(string sheep_id)
         {
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "星级"), out star);
-            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ?"our":"enemy";
+            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ? "our" : "enemy";
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "hp"), out hp);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "移动范围"), out move_range);
-            skill = "attack";
+            skill = "cannon";
             cordon = 5;
             class_id = sheep_id;
         }

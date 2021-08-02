@@ -36,18 +36,18 @@ public class FormationMgr : MonoBehaviour
         sheep_position = new Dictionary<int, sheep>();
         sheep_GO = new Dictionary<GameObject, sheep>();
     }
-    public void enter_team(int x, int y, sheep enter_sheep)
+    public void enter_team(float x, float y, sheep enter_sheep)
     {
-        int world_pos_x = MapMgr.Instance.GetLocation(x);
-        int world_pos_y = MapMgr.Instance.GetLocation(y);
+        int world_pos_x = MapMgr.Instance.GetLocationX(x);
+        int world_pos_y = MapMgr.Instance.GetLocationY(y);
         int PosID = MapMgr.Instance.getDic(world_pos_x, world_pos_y);
 
         int id = enter_sheep.get_id();
         if (sheep_formation.ContainsKey(id))
             leave_team(id);
         enter_sheep.this_sheep = Instantiate(charactor);
-        
-        
+
+
         string sheep_class_id = enter_sheep.class_id;
         string character_path = "Image/" + ExcMgr.Instance.get_data("character", sheep_class_id, "人物图片");
         GlobalFuncMgr.set_model_sprite(enter_sheep.this_sheep.transform.Find("characterTexture").gameObject, character_path);

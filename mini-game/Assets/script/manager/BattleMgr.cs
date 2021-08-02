@@ -41,6 +41,8 @@ public class BattleMgr : MonoBehaviour
     private float rotX;
     private float rotY;
     private float rotZ;
+    public float InitX;
+    public float InitY;
     private int sleep;
 
 
@@ -64,6 +66,8 @@ public class BattleMgr : MonoBehaviour
     private int trapDamage = 180;
     private int characterDamge = 180;
     private int barrierDamage = 180;
+
+
 
     enum Direction
     {
@@ -104,6 +108,8 @@ public class BattleMgr : MonoBehaviour
         characterPos = MapMgr.Instance.characterPos;
         maxX = MapMgr.Instance.maxX;
         maxY = MapMgr.Instance.maxY;
+        InitX = MapMgr.Instance.InitX;
+        InitY = MapMgr.Instance.InitY;
         RoundStart();
 
         round = 1;
@@ -118,7 +124,16 @@ public class BattleMgr : MonoBehaviour
     /// <param name="y"></param>
     public void CharacterCheck(int locationX, int locationY, ref GameObject target)
     {
-
+        bool sheep = false;
+        if (target.tag == "character")
+        {
+            sheep = false;
+        }
+        else if (target.tag == "sheep")
+        {
+            sheep = true;
+        }
+        Debug.Log(locationX + "," + locationY);
         if (GamePlayer[locationX, locationY] == 1)
         {
             if (!characterSheep[target].isUsed)
@@ -568,8 +583,8 @@ public class BattleMgr : MonoBehaviour
     {
         step = 1;
         getPoint = false;
-        _x = GetLocation(enemy.transform.position.x);
-        _y = GetLocation(enemy.transform.position.y);
+        _x = GetLocationX(enemy.transform.position.x);
+        _y = GetLocationY(enemy.transform.position.y);
         //enemyPos.Remove(getDic(_x, _y));
         isEnemyWalk = true;
     }
@@ -589,8 +604,8 @@ public class BattleMgr : MonoBehaviour
             {
                 if (HighLight[i, j] == 1)
                 {
-                    float insX = GetPosition(i);
-                    float insY = GetPosition(j);
+                    float insX = GetPositionX(i);
+                    float insY = GetPositionY(j);
                     GameObject g = Instantiate(highLight, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     g.layer = 9;
@@ -600,8 +615,8 @@ public class BattleMgr : MonoBehaviour
                 }
                 if (HighLight[i, j] == 2)
                 {
-                    float insX = GetPosition(i);
-                    float insY = GetPosition(j);
+                    float insX = GetPositionX(i);
+                    float insY = GetPositionY(j);
                     GameObject g = Instantiate(highLightD, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     g.layer = 9;
@@ -611,8 +626,8 @@ public class BattleMgr : MonoBehaviour
                 }
                 if (HighLight[i, j] == 3)
                 {
-                    float insX = GetPosition(i);
-                    float insY = GetPosition(j);
+                    float insX = GetPositionX(i);
+                    float insY = GetPositionY(j);
                     GameObject g = Instantiate(highLightS, new Vector3(insX, insY, -1), new Quaternion(0, 0, 0, 0));
                     g.transform.eulerAngles = new Vector3(rotX, rotY, rotZ);
                     g.layer = 9;
@@ -754,7 +769,7 @@ public class BattleMgr : MonoBehaviour
             {
                 if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
-                    characterPos.Remove(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)));
+                    characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
                     switch (way[step])
                     {
                         case Direction.up:
@@ -770,10 +785,10 @@ public class BattleMgr : MonoBehaviour
                             character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
                             break;
                     }
-                    characterPos.Add(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)), character);
-                    if (MapInfo[GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)] == 500)
+                    characterPos.Add(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)), character);
+                    if (MapInfo[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] == 500)
                     {
-                        SheepDamage(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y), trapDamage);
+                        SheepDamage(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y), trapDamage);
                     }
                     step--;
                     sleep = 0;
@@ -797,7 +812,7 @@ public class BattleMgr : MonoBehaviour
                 if (sleep >= (int)(0.05f / Time.deltaTime))
                 {
                     step++;
-                    characterPos.Remove(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)));
+                    characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
                     switch (way[step])
                     {
                         case Direction.up:
@@ -816,10 +831,10 @@ public class BattleMgr : MonoBehaviour
                             character.transform.position = new Vector3(character.transform.position.x - 40, character.transform.position.y, character.transform.position.z);
                             break;
                     }
-                    characterPos.Add(getDic(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)), character);
-                    if (MapInfo[GetLocation(character.transform.position.x), GetLocation(character.transform.position.y)] == 500)
+                    characterPos.Add(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)), character);
+                    if (MapInfo[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] == 500)
                     {
-                        SheepDamage(GetLocation(character.transform.position.x), GetLocation(character.transform.position.y), trapDamage);
+                        SheepDamage(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y), trapDamage);
                     }
                     sleep = 0;
                 }
@@ -846,7 +861,7 @@ public class BattleMgr : MonoBehaviour
 
             if (sleep >= (int)(0.05f / Time.deltaTime))
             {
-                enemyPos.Remove(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)));
+                enemyPos.Remove(getDic(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)));
 
                 switch (way[step])
                 {
@@ -908,10 +923,10 @@ public class BattleMgr : MonoBehaviour
                         break;
                 }
                 step++;
-                enemyPos.Add(getDic(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)), enemy);
-                if (MapInfo[GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y)] == 500)
+                enemyPos.Add(getDic(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)), enemy);
+                if (MapInfo[GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)] == 500)
                 {
-                    EnemyDamage(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y), trapDamage);
+                    EnemyDamage(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y), trapDamage);
                 }
                 sleep = 0;
             }
@@ -923,7 +938,7 @@ public class BattleMgr : MonoBehaviour
         else
         {
             isEnemyWalk = false;
-            EnemyAttack(GetLocation(enemy.transform.position.x), GetLocation(enemy.transform.position.y), characterMonster[enemy].attack_range, true);
+            EnemyAttack(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y), characterMonster[enemy].attack_range, true);
             sleep = 0;
             t++;
         }
@@ -1000,6 +1015,9 @@ public class BattleMgr : MonoBehaviour
                     GameObject g = characterPos[getDic(CharacterX, CharacterY)];
                     int point = characterSheep[g].attack_range;
                     Attack(CharacterX, CharacterY, locationX, locationY, point, sure);
+                    break;
+                case "cannon":
+                    Cannon(CharacterX, CharacterY, locationX, locationY, sure);
                     break;
                 case "stay":
                     break;
@@ -1171,9 +1189,9 @@ public class BattleMgr : MonoBehaviour
         if (!sure)
         {
             if (x + 1 <= maxX) HighLight[x + 1, y] = 3;
-            if (x - 1 >= 0) HighLight[x - 1, y] = 3;
+            if (x - 1 > 0) HighLight[x - 1, y] = 3;
             if (y + 1 <= maxY) HighLight[x, y + 1] = 3;
-            if (y - 1 >= 0) HighLight[x, y - 1] = 3;
+            if (y - 1 > 0) HighLight[x, y - 1] = 3;
             HighLightShow();
         }
         else
@@ -1210,6 +1228,53 @@ public class BattleMgr : MonoBehaviour
             HighLightDestroy();
         }
 
+    }
+    public void Cannon(int x, int y, int targetX, int targetY, bool sure)
+    {
+        if (!sure)
+        {
+
+            if (x + 1 <= maxX && MapInfo[x + 1, y] > 1)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    if (x + 1 + i <= maxX) HighLight[x + 1 + i, y] = 3;
+                }
+            }
+            if (x - 1 > 0 && MapInfo[x - 1, y] > 1)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    if (x - 1 - i > 0) HighLight[x - 1 - i, y] = 3;
+                }
+            }
+            if (y + 1 <= maxY && MapInfo[x, y + 1] > 1)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    if (y + 1 + i <= maxY) HighLight[x, y + 1 + i] = 3;
+                }
+            }
+            if (y - 1 > 0 && MapInfo[x, y - 1] > 1)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    if (y - 1 - i > 0) HighLight[x, y - 1 - i] = 3;
+                }
+            }
+            HighLightShow();
+        }
+        else
+        {
+            int _x = targetX - x;
+            int _y = targetY - y;
+            if (_x != 0) _x = _x / Mathf.Abs(_x);
+            if (_y != 0) _y = _y / Mathf.Abs(_y);
+            Debug.Log(_x + "," + _y);
+            int PushX = targetX - _x;
+            int PushY = targetY - _y;
+            Push(PushX, PushY, targetX, targetY, sure);
+        }
     }
     private void PushCheck(int x, int y, int PushX, int PushY)
     {
@@ -1307,10 +1372,7 @@ public class BattleMgr : MonoBehaviour
             return false;
         }
     }
-    public void jump()
-    {
 
-    }
     public void SkillEffectCheck(int x, int y)
     {
         GameObject g;
@@ -1403,13 +1465,21 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public int GetLocation(float pos) //得到坐标信息
+    public int GetLocationX(float pos) //得到坐标信息
     {
-        return ((int)pos - 20) / 40 + 1;
+        return ((int)(pos + InitX - mapInfo.transform.position.x) - 20) / 40 + 1;
     }
-    public int GetPosition(int loc) //得到位置信息
+    public int GetLocationY(float pos) //得到坐标信息
     {
-        return (loc - 1) * 40 + 20;
+        return ((int)(pos + InitY - mapInfo.transform.position.y) - 20) / 40 + 1;
+    }
+    public float GetPositionX(int loc) //得到位置信息
+    {
+        return (loc - 1) * 40 + 20 - InitX + mapInfo.transform.position.x;
+    }
+    public float GetPositionY(int loc) //得到位置信息
+    {
+        return (loc - 1) * 40 + 20 - InitY + mapInfo.transform.position.y;
     }
     private int getDic(int x, int y)//得到索引数字
     {

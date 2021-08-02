@@ -29,7 +29,7 @@ public class MapMgr : MonoBehaviour
     private bool isMouseDown;
     private Vector3 lastMousePosition;
     public bool Playing = false;
-    List<int[]> play_pos;
+    List<float[]> play_pos;
     int monster_num;
 
     void Start()
@@ -55,8 +55,8 @@ public class MapMgr : MonoBehaviour
         for (int i = 0; i < map.transform.childCount; i++)
         {
             GameObject g = map.transform.GetChild(i).gameObject;
-            int x = GetLocation(g.transform.position.x);
-            int y = GetLocation(g.transform.position.y);
+            int x = GetLocationX(g.transform.position.x);
+            int y = GetLocationY(g.transform.position.y);
             if (x > maxX) maxX = x;
             if (y > maxY) maxY = y;
             MapInfo[x, y] = 1;
@@ -65,8 +65,8 @@ public class MapMgr : MonoBehaviour
         {
             GameObject g = landform.transform.GetChild(i).gameObject;
             string tag = g.tag;
-            int x = GetLocation(g.transform.position.x);
-            int y = GetLocation(g.transform.position.y);
+            int x = GetLocationX(g.transform.position.x);
+            int y = GetLocationY(g.transform.position.y);
 
             if (MapInfo[x, y] == 1)
             {
@@ -74,9 +74,9 @@ public class MapMgr : MonoBehaviour
                 {
 
                     case "character":
-                        int[] pos = new int[2];
-                        pos[0] = GetPosition(x);
-                        pos[1] = GetPosition(y);
+                        float[] pos = new float[2];
+                        pos[0] = GetPositionX(x);
+                        pos[1] = GetPositionY(y);
                         play_pos.Add(pos);
                         Destroy(g);
                         //GamePlayer[x, y] = 1;
@@ -87,7 +87,7 @@ public class MapMgr : MonoBehaviour
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
-
+                        enemyPos.Add(getDic(x, y), g);
 
                         sheep enter_sheep = new sheep(true);
                         enter_sheep.hp = 200;
@@ -102,7 +102,7 @@ public class MapMgr : MonoBehaviour
                             child.gameObject.layer = 9;
                         enemy_GO[enter_sheep.this_sheep] = enter_sheep;
 
-                        enemyPos.Add(getDic(x, y), g);
+
                         break;
                     case "barrier":
                         MapInfo[x, y] = 900;
@@ -124,6 +124,7 @@ public class MapMgr : MonoBehaviour
             }
         }
 
+        /*
         int t = 0;
         //敌人gameobject修改和enemyGo添加
         for (int i = 0; i < 35; i++)
@@ -132,14 +133,16 @@ public class MapMgr : MonoBehaviour
             {
                 if (enemyPos.ContainsKey(getDic(i, j)))
                 {
+                    GameObject g = enemyPos[getDic(i, j)];
                     enemyPos[getDic(i, j)] =;
+                    Destroy(g);
                     enemy_GO[]=;
 
                     t++;
                 }
             }
         }
-
+        */
 
 
 
@@ -202,16 +205,24 @@ public class MapMgr : MonoBehaviour
 
         MapInfo = new int[35, 35];
         GamePlayer = new int[35, 35];
-        play_pos = new List<int[]>();
+        play_pos = new List<float[]>();
     }
 
-    public int GetLocation(float pos)
+    public int GetLocationX(float pos)
     {
-        return ((int)pos - 20) / 40 + 1;
+        return ((int)(pos + InitX - mapInfo.transform.position.x) - 20) / 40 + 1;
     }
-    public int GetPosition(int loc)
+    public int GetLocationY(float pos)
     {
-        return (loc - 1) * 40 + 20;
+        return ((int)(pos + InitY - mapInfo.transform.position.y) - 20) / 40 + 1;
+    }
+    public float GetPositionX(int loc)
+    {
+        return (loc - 1) * 40 + 20 - InitX + mapInfo.transform.position.x;
+    }
+    public float GetPositionY(int loc)
+    {
+        return (loc - 1) * 40 + 20 - InitY + mapInfo.transform.position.y;
     }
     public int getDic(int x, int y)
     {
@@ -252,9 +263,8 @@ public class MapMgr : MonoBehaviour
 
                 GameObject target = rh.collider.gameObject;
                 Debug.Log(target.name);
-                locationX = GetLocation(target.transform.position.x);
-                locationY = GetLocation(target.transform.position.y);
-                //Debug.Log(mapInfo.transform.position.x);
+                locationX = GetLocationX(target.transform.position.x);
+                locationY = GetLocationY(target.transform.position.y);
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
 
             }
@@ -268,8 +278,8 @@ public class MapMgr : MonoBehaviour
             if (hit)
             {
                 GameObject target = rh.collider.gameObject;
-                locationX = GetLocation(target.transform.position.x);
-                locationY = GetLocation(target.transform.position.y);
+                locationX = GetLocationX(target.transform.position.x);
+                locationY = GetLocationY(target.transform.position.y);
 
 
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 1);
@@ -293,8 +303,8 @@ public class MapMgr : MonoBehaviour
             if (target.layer != 9) return null;
             if (!target.name.Contains("character")) return null;
 
-            locationX = GetLocation(target.transform.position.x);
-            locationY = GetLocation(target.transform.position.y);
+            locationX = GetLocationX(target.transform.position.x);
+            locationY = GetLocationY(target.transform.position.y);
             map_pos[0] = locationX;
             map_pos[1] = locationY;
         }
@@ -322,14 +332,6 @@ public class MapMgr : MonoBehaviour
             }
             lastMousePosition = BattleCamera.ScreenToWorldPoint(Input.mousePosition);
         }
-    }
-    public float GetMapInfoY()
-    {
-        return InitX - mapInfo.transform.position.x;
-    }
-    public float GetMapInfoX()
-    {
-        return InitY - mapInfo.transform.position.y;
     }
     public void leave_battle()
     {
