@@ -16,6 +16,7 @@ TagManager:
   - character
   - MapInfo
   - shopcharac
+  - sellcharac
   layers:
   - Default
   - TransparentFX
