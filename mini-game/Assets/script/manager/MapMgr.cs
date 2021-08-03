@@ -155,7 +155,7 @@ public class MapMgr : MonoBehaviour
                     GameObject enemy_ob = enemyPos[getDic(i, j)];
                     sheep enemy_sheep = new sheep(true);
                     string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
-                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject;                    GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片"));                    sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1);                    enemy_sheep.load_data(class_id);
+                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject; GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片")); sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1); enemy_sheep.load_data(class_id);
                     enemy_GO[enemy_ob] = enemy_sheep;
 
                 }
@@ -209,8 +209,9 @@ public class MapMgr : MonoBehaviour
     {
 
         string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level.ToString(), "地图");
+        Debug.Log(map_name);
         mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + map_name));
-        //mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + "ceshi2"));
+        //mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + "ceshi1"));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();
         foreach (Transform child in father)
             child.gameObject.layer = 9;
