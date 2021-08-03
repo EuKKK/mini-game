@@ -14,6 +14,7 @@ public class Game : MonoBehaviour
     }
     void Start()
     {
+        SheepMgr.init_store();
         //test_asset();
     }
 

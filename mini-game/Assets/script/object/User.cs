@@ -9,6 +9,7 @@ public class User : MonoBehaviour
     public int money;
     public int level;
     public int character_num;
+    public int user_level = 1;
     public static User Instance { get; private set; }
     public Dictionary<int, sheep> sheep_map = new Dictionary<int, sheep>();
 

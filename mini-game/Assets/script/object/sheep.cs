@@ -9,6 +9,7 @@ namespace sheeps
     public class sheep
     {
         public int hp;
+        public int max_hp;
         public int attack;
         public int mana;
         public int move_range;
@@ -74,6 +75,7 @@ namespace sheeps
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "移动范围"), out move_range);
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星血量提升系数"), out hp_index);
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星攻击提升"), out attack_index);
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "警戒范围"), out cordon);
 
             if (star == 2)
             {
@@ -85,8 +87,8 @@ namespace sheeps
                 skill = ExcMgr.Instance.get_data("skill", skill_id, "技能名字");
             else
                 skill = "attack";
-            cordon = 5;
             class_id = sheep_id;
+            
         }
         public int get_id()
         {

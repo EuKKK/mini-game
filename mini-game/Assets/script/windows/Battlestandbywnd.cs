@@ -75,7 +75,7 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
     {
         GameObject new_sheep_ob = GameObject.Instantiate(sheep_prefab);
         new_sheep_ob.name = "sheep" + name;
-        new_sheep_ob.transform.SetParent(this.gameObject.transform.Find("charactorscroll/Viewport/Content"));
+        new_sheep_ob.transform.SetParent(this.gameObject.transform.Find("characterscroll/Viewport/Content"));
         sheep_prefabs.Add(new_sheep_ob);
         GlobalFuncMgr.set_image(new_sheep_ob, ExcMgr.Instance.get_data("character", u_sheep.class_id, "人物图片"));
     }
