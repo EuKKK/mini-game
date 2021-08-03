@@ -47,6 +47,7 @@ public class BattleMgr : MonoBehaviour
     public float InitY;
     private int sleep;
     public bool exit;
+    private int gold;
 
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
@@ -117,6 +118,7 @@ public class BattleMgr : MonoBehaviour
         InitY = MapMgr.Instance.InitY;
         RoundStart();
         exit = false;
+        gold = 0;
 
         round = 1;
         camp = true;
@@ -988,6 +990,11 @@ public class BattleMgr : MonoBehaviour
     {
         return round;
     }
+    public int GetGold()
+    {
+        return gold;
+    }
+
 
 
 
@@ -1556,6 +1563,7 @@ public class BattleMgr : MonoBehaviour
         enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
+        gold = gold + 4;
         isEnemyWalk = false;
         t++;
     }

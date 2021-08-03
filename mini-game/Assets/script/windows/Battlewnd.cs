@@ -10,8 +10,10 @@ public class Battlewnd : window
 {
     public GameObject battle_btn_ob;
     public GameObject sheep_prefab;
+    public GameObject stay_btn_ob;
+    public GameObject skill_btn_ob;
     public Button menu;
-    
+
     Dictionary<int, GameObject> sheep_prefabs = new Dictionary<int, GameObject>();
 
     // Start is called before the first frame update
@@ -23,7 +25,11 @@ public class Battlewnd : window
     void register_btn_click()
     {
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
+        Button skill_btn = battle_btn_ob.GetComponent<Button>();
+        Button stay_btn = stay_btn_ob.GetComponent<Button>();
         battle_btn.onClick.AddListener(battle_end);
+        skill_btn.onClick.AddListener(skillBtn);
+        stay_btn.onClick.AddListener(stayBtn);
         //menu.onClick.AddListener(active_menu);
     }
 
@@ -32,20 +38,26 @@ public class Battlewnd : window
     {
         WindowMgr.Instance.active_window("Result");
     }
+    void skillBtn()
+    {
 
+    }
+    void stayBtn()
+    {
 
+    }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override void redraw(GameObject window = null)
     {
-        if(!window)
+        if (!window)
             window = this.gameObject;
         base.redraw(window);
-        
+
         //获取所有的羊
         foreach (int id in User.Instance.get_sheeps().Keys)
         {
