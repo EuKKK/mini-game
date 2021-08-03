@@ -28,6 +28,7 @@ namespace sheeps
         public float attack_index;
         public string class_id;
         public GameObject this_sheep;
+        bool is_user = false;
 
 
         public sheep(bool is_monster = false)
@@ -93,6 +94,10 @@ namespace sheeps
         public int get_id()
         {
             return id;
+        }
+        public void set_is_user(bool val)
+        {
+            is_user = val;
         }
     }
 

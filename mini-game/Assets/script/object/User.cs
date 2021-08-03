@@ -63,6 +63,7 @@ public class User : MonoBehaviour
         sheep new_sheep_2 = new sheep();
         sheep new_sheep_3 = new sheep();
         new_sheep_1.load_data("1201");
+        new_sheep_1.set_is_user(true);
         new_sheep_2.load_data("1005");
         new_sheep_3.load_data("1007");
         sheep_map[1] = new_sheep_1;

@@ -4,8 +4,6 @@ using UnityEngine;
 using BaseObject;
 using System.IO;
 using sheeps;
-
-
 /*
 /////////////////
 定义阵容管理器
@@ -38,13 +36,16 @@ public class FormationMgr : MonoBehaviour
     }
     public void enter_team(float x, float y, sheep enter_sheep)
     {
+        int id = enter_sheep.get_id();
+        if (sheep_formation.ContainsKey(id))
+            leave_team(id);
+        int this_map_charac_count = Mathf.Min(5+User.Instance.user_level-1, int.Parse(ExcMgr.Instance.get_data("stage", User.Instance.level.ToString(), "上阵人数")));
+        if(sheep_formation.Count>=this_map_charac_count) return;
+
         int world_pos_x = MapMgr.Instance.GetLocationX(x);
         int world_pos_y = MapMgr.Instance.GetLocationY(y);
         int PosID = MapMgr.Instance.getDic(world_pos_x, world_pos_y);
 
-        int id = enter_sheep.get_id();
-        if (sheep_formation.ContainsKey(id))
-            leave_team(id);
         enter_sheep.this_sheep = Instantiate(charactor);
 
 
@@ -66,7 +67,7 @@ public class FormationMgr : MonoBehaviour
     public void leave_team(int id)
     {
         sheep_formation[id].destroy_self();
-        sheep_formation[id] = null;
+        sheep_formation.Remove(id);
 
     }
 

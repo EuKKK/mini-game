@@ -8,9 +8,9 @@ using sheeps;
 
 public class Battlewnd : window
 {
-    public GameObject menu;
     public GameObject battle_btn_ob;
     public GameObject sheep_prefab;
+    public Button menu;
     
     Dictionary<int, GameObject> sheep_prefabs = new Dictionary<int, GameObject>();
 
@@ -23,8 +23,8 @@ public class Battlewnd : window
     void register_btn_click()
     {
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
-
         battle_btn.onClick.AddListener(battle_end);
+        //menu.onClick.AddListener(active_menu);
     }
 
     //结束战斗
@@ -71,5 +71,9 @@ public class Battlewnd : window
         {
             Destroy(sheep_prefabs[id]);
         }
+    }
+    void active_menu()
+    {
+        WindowMgr.Instance.active_window("BattleMenu");
     }
 }
