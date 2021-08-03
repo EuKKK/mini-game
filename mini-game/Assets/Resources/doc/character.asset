@@ -76,7 +76,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 3
       - key: "\u552E\u4EF7"
@@ -84,13 +84,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u5C04\u624B1"
       - key: "\u5E93\u5B58"
         val: 3
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -117,7 +117,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 5
       - key: "\u552E\u4EF7"
@@ -125,13 +125,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u5C04\u624B2"
       - key: "\u5E93\u5B58"
         val: 3
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -158,7 +158,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 3
       - key: "\u552E\u4EF7"
@@ -166,13 +166,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6218\u58EB1"
       - key: "\u5E93\u5B58"
         val: 3
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -199,7 +199,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 5
       - key: "\u552E\u4EF7"
@@ -207,13 +207,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6218\u58EB2"
       - key: "\u5E93\u5B58"
         val: 3
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -240,7 +240,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 3
       - key: "\u552E\u4EF7"
@@ -248,13 +248,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u9A91\u58EB1"
       - key: "\u5E93\u5B58"
         val: 2
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -281,7 +281,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 5
       - key: "\u552E\u4EF7"
@@ -289,13 +289,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u9A91\u58EB2"
       - key: "\u5E93\u5B58"
         val: 3
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -314,7 +314,7 @@ MonoBehaviour:
       - key: hp
         val: 432
       - key: "\u653B\u51FB"
-        val: 
+        val: 0
       - key: "\u6280\u80FDid"
         val: 2001
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -322,7 +322,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 10
       - key: "\u552E\u4EF7"
@@ -330,13 +330,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E081"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -355,7 +355,7 @@ MonoBehaviour:
       - key: hp
         val: 432
       - key: "\u653B\u51FB"
-        val: 
+        val: 0
       - key: "\u6280\u80FDid"
         val: 2002
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -363,7 +363,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 10
       - key: "\u552E\u4EF7"
@@ -371,13 +371,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E082"
       - key: "\u5E93\u5B58"
         val: 1
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -396,7 +396,7 @@ MonoBehaviour:
       - key: hp
         val: 432
       - key: "\u653B\u51FB"
-        val: 
+        val: 0
       - key: "\u6280\u80FDid"
         val: 2003
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -404,7 +404,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 10
       - key: "\u552E\u4EF7"
@@ -412,13 +412,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E083"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -437,7 +437,7 @@ MonoBehaviour:
       - key: hp
         val: 432
       - key: "\u653B\u51FB"
-        val: 
+        val: 0
       - key: "\u6280\u80FDid"
         val: 2004
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -445,7 +445,7 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
         val: 10
       - key: "\u552E\u4EF7"
@@ -453,13 +453,13 @@ MonoBehaviour:
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E084"
       - key: "\u5E93\u5B58"
         val: 1
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
         val: 1.5
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
@@ -486,11 +486,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -498,13 +498,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u4E09\u5934\u72AC"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1102
       imaps:
@@ -527,11 +527,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -539,13 +539,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u5730\u72F1\u72AC"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1103
       imaps:
@@ -568,11 +568,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -580,13 +580,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u5DE8\u65A7\u6218\u58EB"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1104
       imaps:
@@ -609,11 +609,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -621,13 +621,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u865A\u7A7A\u5B88\u536B"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1105
       imaps:
@@ -650,11 +650,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -662,13 +662,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u98DF\u68A6\u8005"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1106
       imaps:
@@ -691,11 +691,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -703,13 +703,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6DF1\u7EA2\u5B88\u536B"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1107
       imaps:
@@ -732,11 +732,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -744,13 +744,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6DF1\u7EA2\u5B88\u536B-\u96F6\u5F0F"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1108
       imaps:
@@ -773,11 +773,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -785,13 +785,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u51B0\u4E4B\u5973\u5DEB"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1109
       imaps:
@@ -814,11 +814,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -826,13 +826,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u708E\u9B54"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1110
       imaps:
@@ -855,11 +855,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -867,13 +867,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u56DB\u7687A"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1111
       imaps:
@@ -896,11 +896,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -908,13 +908,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u56DB\u7687B"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1112
       imaps:
@@ -937,11 +937,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 4
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -949,13 +949,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u56DB\u7687C"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1113
       imaps:
@@ -978,11 +978,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -990,13 +990,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u56DB\u7687D"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1114
       imaps:
@@ -1019,11 +1019,11 @@ MonoBehaviour:
       - key: "\u79FB\u52A8\u8303\u56F4"
         val: 5
       - key: "\u7B49\u7EA7"
-        val: 
+        val: 0
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
@@ -1031,13 +1031,13 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6B7B\u4EA1\u9A91\u58EB"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 4
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1201
       imaps:
@@ -1046,7 +1046,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272\u540D\u5B57"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u661F\u7EA7"
-        val: 
+        val: 0
       - key: "\u9635\u8425"
         val: 0
       - key: hp
@@ -1062,23 +1062,23 @@ MonoBehaviour:
       - key: "\u7B49\u7EA7"
         val: 1
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1202
       imaps:
@@ -1087,7 +1087,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272\u540D\u5B57"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u661F\u7EA7"
-        val: 
+        val: 0
       - key: "\u9635\u8425"
         val: 0
       - key: hp
@@ -1103,23 +1103,23 @@ MonoBehaviour:
       - key: "\u7B49\u7EA7"
         val: 2
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1203
       imaps:
@@ -1128,7 +1128,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272\u540D\u5B57"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u661F\u7EA7"
-        val: 
+        val: 0
       - key: "\u9635\u8425"
         val: 0
       - key: hp
@@ -1144,23 +1144,23 @@ MonoBehaviour:
       - key: "\u7B49\u7EA7"
         val: 3
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0
   - out_map:
       key: 1204
       imaps:
@@ -1169,7 +1169,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272\u540D\u5B57"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u661F\u7EA7"
-        val: 
+        val: 0
       - key: "\u9635\u8425"
         val: 0
       - key: hp
@@ -1185,20 +1185,20 @@ MonoBehaviour:
       - key: "\u7B49\u7EA7"
         val: 4
       - key: "\u8D39\u7528"
-        val: 
+        val: 0
       - key: "\u552E\u4EF7"
-        val: 
+        val: 0
       - key: "\u884C\u52A8\u529B"
         val: 1
       - key: "\u8B66\u6212\u8303\u56F4"
-        val: 
+        val: 0
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u7267\u7F8A\u4EBA"
       - key: "\u5E93\u5B58"
-        val: 
+        val: 0
       - key: "\u8D4F\u91D1"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
-        val: 
+        val: 0
       - key: "\u5347\u661F\u653B\u51FB\u63D0\u5347"
-        val: 
+        val: 0

@@ -544,7 +544,7 @@ public class BattleMgr : MonoBehaviour
         else
         {
             enemyWalkAdimit = false;
-            camp = !camp;
+            camp = true;
             RoundStart();
             round++;
             Debug.Log("我方回合");
@@ -710,16 +710,16 @@ public class BattleMgr : MonoBehaviour
         {
             if (!isWalk && !isEnemyWalk)
             {
-                if (!camp && t == -1)
-                {
-                    EnemySearch();
-                }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    camp = !camp;
+                    camp = false;
                     t = -1;
                     Debug.Log("敌人回合");
                     HighLightDestroy();
+                }
+                if (!camp && t == -1)
+                {
+                    EnemySearch();
                 }
             }
 
