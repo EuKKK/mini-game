@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using BaseObject;
 using sheeps;
+using UnityEngine.EventSystems;
 
 
-public class Shopwnd : window
+public class Shopwnd : window, IPointerEnterHandler
 {
    public Text money;
    public GameObject sheep_panel;
@@ -24,8 +25,9 @@ public class Shopwnd : window
    public bool need_refresh = false;
    Dictionary<int, GameObject> shop_sheep_map = new Dictionary<int, GameObject>();
    Dictionary<int, string> buttons = new Dictionary<int, string>();
+   int [] shop_units = new int[3];
 
-    void Start()
+    void Awake()
     {
         register_btn_click();
         initshop();
@@ -89,7 +91,10 @@ public class Shopwnd : window
         window.SetActive(true);
 
         if(need_refresh)
+        {
             refresh_shop();
+            need_refresh = false;
+        }
 
         refresh_user_sheeps();
     }
@@ -106,9 +111,16 @@ public class Shopwnd : window
         {
             index ++;
             GlobalFuncMgr.set_image(shop_sheep_map[index], ExcMgr.Instance.get_data("character", User.Instance.sheep_map[i].class_id, "人物图片"));
+            if(User.Instance.sheep_map[i].star == 2)
+                shop_sheep_map[index].transform.Find("star").gameObject.SetActive(true);
+            else
+                shop_sheep_map[index].transform.Find("star").gameObject.SetActive(false);
         }
         for(int i = index + 1;i<=14;i++)
+        {
             GlobalFuncMgr.set_image(shop_sheep_map[i], "白");
+            shop_sheep_map[i].transform.Find("star").gameObject.SetActive(false);
+        }
 
     }
     void try_level_up()
@@ -143,6 +155,11 @@ public class Shopwnd : window
                 User.Instance.add_sheep(new_sheep);
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        
     }
 
 }
