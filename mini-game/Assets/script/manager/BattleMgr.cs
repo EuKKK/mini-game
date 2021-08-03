@@ -1490,14 +1490,14 @@ public class BattleMgr : MonoBehaviour
     }
     private int getDic(int x, int y)//得到索引数字
     {
-        return x * MAX_NUMBER + y;
+        return y * MAX_NUMBER + x;
     }
-    private int DicX(int dicNumber)//从索引数字得到坐标信息Y
+    private int DicY(int dicNumber)//从索引数字得到坐标信息Y
     {
         return (dicNumber - 1) / MAX_NUMBER;
     }
-    private int DicY(int dicNumber)//从索引数字得到坐标信息X
+    private int DicX(int dicNumber)//从索引数字得到坐标信息X
     {
-        return dicNumber - DicX(dicNumber) * MAX_NUMBER;
+        return dicNumber - DicY(dicNumber) * MAX_NUMBER;
     }
 }
