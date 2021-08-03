@@ -48,6 +48,7 @@ public class BattleMgr : MonoBehaviour
     private int sleep;
     public bool exit;
     private int gold;
+    public int click = 0;
 
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
@@ -68,8 +69,8 @@ public class BattleMgr : MonoBehaviour
 
 
     private int trapDamage = 192;
-    private int characterDamge = 180;
-    private int barrierDamage = 180;
+    private int characterDamge = 192;
+    private int barrierDamage = 192;
 
 
 
@@ -142,23 +143,24 @@ public class BattleMgr : MonoBehaviour
             sheep = true;
         }
 
-        if (GamePlayer[locationX, locationY] == 1)
+        if (GamePlayer[locationX, locationY] == 1 && !characterSheep[target].isSkilled && !characterSheep[target].isUsed)
         {
-            if (!characterSheep[target].isUsed && !characterSheep[target].isSkilled)
-            {
-                character = target;
-                MapRouteInit();
-                HighLightDestroy();
-                mapRoute[locationX, locationY].direction = Direction.stand;
-                mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
-                CharacterX = locationX;
-                CharacterY = locationY;
-                CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
-                check = true;
-            }
+            click = 1;
+
+            character = target;
+            MapRouteInit();
+            HighLightDestroy();
+            mapRoute[locationX, locationY].direction = Direction.stand;
+            mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
+            CharacterX = locationX;
+            CharacterY = locationY;
+            CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
+            check = true;
+
         }
         else if (HighLight[locationX, locationY] == 1)
         {
+            click = 2;
             step = 0;
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
@@ -170,6 +172,7 @@ public class BattleMgr : MonoBehaviour
         }
         else if (HighLight[locationX, locationY] == 2)
         {
+            click = 2;
             step = 0;
             wayCount = 0;
             trapCount = 999;
@@ -188,6 +191,7 @@ public class BattleMgr : MonoBehaviour
         }
         else
         {
+            click = 2;
             HighLightDestroy();
             check = false;
         }
@@ -962,8 +966,9 @@ public class BattleMgr : MonoBehaviour
                 }
                 step++;
                 enemyPos.Add(getDic(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)), enemy);
-                if (MapInfo[GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)] == 500)
+                if (MapInfo[GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)] == 500 && !getPoint)
                 {
+
                     EnemyDamage(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y), trapDamage);
                 }
                 sleep = 0;
@@ -1012,9 +1017,14 @@ public class BattleMgr : MonoBehaviour
                 {
                     Skill(locationX, locationY, gameObject);
                 }
-
             }
         }
+    }
+    public void Stay()
+    {
+        characterSheep[character].isSkilled = true;
+        HighLightDestroy();
+        click = 2;
     }
 
 
@@ -1029,19 +1039,23 @@ public class BattleMgr : MonoBehaviour
     {
         if (HighLight[locationX, locationY] == 3)
         {
+            click = 2;
             SkillUse(CharacterX, CharacterY, locationX, locationY, character, true);
 
         }
         else if (GamePlayer[locationX, locationY] == 1)
         {
+            click = 1;
             HighLightDestroy();
             CharacterX = locationX;
             CharacterY = locationY;
             character = gameObject;
             SkillUse(CharacterX, CharacterY, locationX, locationY, character, false);
+
         }
         else
         {
+            click = 2;
             HighLightDestroy();
         }
     }
@@ -1069,13 +1083,11 @@ public class BattleMgr : MonoBehaviour
                 case "cannon":
                     Cannon(CharacterX, CharacterY, locationX, locationY, sure);
                     break;
-                case "stay":
-                    break;
             }
         }
         try
         {
-            //if (sure) characterSheep[gameObject].isSkilled = true;
+            if (sure) characterSheep[gameObject].isSkilled = true;
         }
         catch { }
     }

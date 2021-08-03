@@ -37,7 +37,9 @@ public class MapMgr : MonoBehaviour
     public bool Playing = false;
     public bool isWin = false;
     List<float[]> play_pos;
-    int monster_num;
+    public int skill;
+
+    GameObject target;
 
     void Start()
     {
@@ -155,7 +157,10 @@ public class MapMgr : MonoBehaviour
                     GameObject enemy_ob = enemyPos[getDic(i, j)];
                     sheep enemy_sheep = new sheep(true);
                     string class_id = ExcMgr.Instance.get_array_data("position", User.Instance.level.ToString(), "魔物id", t);
-                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject; GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片")); sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1); enemy_sheep.load_data(class_id);
+                    GameObject sprite_ob = enemy_ob.transform.Find("test1").gameObject; 
+                    GlobalFuncMgr.set_model_sprite(sprite_ob, ExcMgr.Instance.get_data("character", class_id, "人物图片")); 
+                    sprite_ob.transform.localScale = new Vector3(0.67f, 0.9f, 1); 
+                    enemy_sheep.load_data(class_id);
                     enemy_GO[enemy_ob] = enemy_sheep;
 
                 }
@@ -176,7 +181,7 @@ public class MapMgr : MonoBehaviour
         if (User.Instance.level == 6002)
         {
             //增加跳关容错
-            if(User.Instance.sheep_map.Count<4) 
+            if (User.Instance.sheep_map.Count < 4)
             {
                 sheep new_sheep = new sheep();
                 new_sheep.load_data("1009");
@@ -231,11 +236,12 @@ public class MapMgr : MonoBehaviour
 
         maxX = 0;
         maxY = 0;
-        monster_num = 1;
+        //monster_num = 1;
 
         MapInfo = new int[35, 35];
         GamePlayer = new int[35, 35];
         play_pos = new List<float[]>();
+        User.Instance.reduct_hp();
     }
 
     public int GetLocationX(float pos)
@@ -290,15 +296,17 @@ public class MapMgr : MonoBehaviour
 
             if (hit)
             {
-
-                GameObject target = rh.collider.gameObject;
+                target = rh.collider.gameObject;
 
                 locationX = GetLocationX(target.transform.position.x);
                 locationY = GetLocationY(target.transform.position.y);
-                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
 
+                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
+
+                skill = 0;
             }
         }
+        /*
         if (Input.GetMouseButtonDown(1))
         {
 
@@ -307,16 +315,19 @@ public class MapMgr : MonoBehaviour
             bool hit = Physics.Raycast(ray, out rh);
             if (hit)
             {
-                GameObject target = rh.collider.gameObject;
+                target = rh.collider.gameObject;
                 locationX = GetLocationX(target.transform.position.x);
                 locationY = GetLocationY(target.transform.position.y);
-
-
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 1);
-
             }
-
         }
+        */
+    }
+    public void SkillUsed()
+    {
+        skill = 1;
+        BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
+        
     }
 
     public int[] GetChracPos(Vector3 pos)

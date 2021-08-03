@@ -27,6 +27,7 @@ public class Shopwnd : window, IPointerEnterHandler
    Dictionary<int, sheep> shop_user_sheep_map = new Dictionary<int, sheep>();
    Dictionary<int, string> buttons = new Dictionary<int, string>();
    int [] shop_units = new int[3];
+   public List<GameObject> sell_sheeps = new List<GameObject>();
 
     void Awake()
     {
@@ -80,7 +81,7 @@ public class Shopwnd : window, IPointerEnterHandler
     }
     void buy_sheep_btn(int num)
     {
-        if(shop_units[num] == -1) return;
+        if(shop_units[num] == -1 || shop_units[num] == 0 || User.Instance.sheep_map.Count >= 14) return;
       
         sheep new_sheep = new sheep();
         new_sheep.load_data(shop_units[num].ToString());
@@ -89,6 +90,7 @@ public class Shopwnd : window, IPointerEnterHandler
         SheepMgr.dele_id(shop_units[num]);
 
         shop_units[num] = -1;
+        GlobalFuncMgr.set_image(sell_sheeps[num], "白");
     }
     override public void redraw(GameObject window = null)
     {
@@ -108,6 +110,10 @@ public class Shopwnd : window, IPointerEnterHandler
     void refresh_shop()
     {
         shop_units = SheepMgr.get_random_percent();
+        for(int i=0;i<3;i++)
+        {
+            GlobalFuncMgr.set_image(sell_sheeps[i], ExcMgr.Instance.get_data("character", shop_units[i].ToString(), "人物图片"));
+        }        
     }
     void refresh_user_sheeps()
     {

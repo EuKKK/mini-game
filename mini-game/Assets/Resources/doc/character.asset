@@ -252,7 +252,7 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u9A91\u58EB1"
       - key: "\u5E93\u5B58"
-        val: 3
+        val: 2
       - key: "\u8D4F\u91D1"
         val: 
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
@@ -334,7 +334,7 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E081"
       - key: "\u5E93\u5B58"
-        val: 1
+        val: 
       - key: "\u8D4F\u91D1"
         val: 
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
@@ -416,7 +416,7 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E083"
       - key: "\u5E93\u5B58"
-        val: 1
+        val: 
       - key: "\u8D4F\u91D1"
         val: 
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"

@@ -13,6 +13,7 @@ public class Battlewnd : window
     public GameObject stay_btn_ob;
     public GameObject skill_btn_ob;
     public Button menu;
+    private bool clickSetting = false;
 
     Dictionary<int, GameObject> sheep_prefabs = new Dictionary<int, GameObject>();
 
@@ -25,11 +26,12 @@ public class Battlewnd : window
     void register_btn_click()
     {
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
-        Button skill_btn = battle_btn_ob.GetComponent<Button>();
+        Button skill_btn = skill_btn_ob.GetComponent<Button>();
         Button stay_btn = stay_btn_ob.GetComponent<Button>();
         battle_btn.onClick.AddListener(battle_end);
         skill_btn.onClick.AddListener(skillBtn);
         stay_btn.onClick.AddListener(stayBtn);
+
         //menu.onClick.AddListener(active_menu);
     }
 
@@ -40,16 +42,27 @@ public class Battlewnd : window
     }
     void skillBtn()
     {
-
+        MapMgr.Instance.SkillUsed();
     }
     void stayBtn()
     {
-
+        BattleMgr.Instance.Stay();
     }
     // Update is called once per frame
     void Update()
     {
-
+        if (BattleMgr.Instance.click == 1 && !clickSetting)
+        {
+            skill_btn_ob.SetActive(true);
+            stay_btn_ob.SetActive(true);
+            clickSetting = true;
+        }
+        if (BattleMgr.Instance.click == 2 && clickSetting)
+        {
+            skill_btn_ob.SetActive(false);
+            stay_btn_ob.SetActive(false);
+            clickSetting = false;
+        }
     }
 
     public override void redraw(GameObject window = null)

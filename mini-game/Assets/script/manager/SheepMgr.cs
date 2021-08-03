@@ -22,7 +22,7 @@ public class SheepMgr
         int total_num = 0;
         foreach(int id in sheep_store.Keys)
             total_num += sheep_store[id];
-        for(int i=0;i<3;i++)
+        for(int i=0;i<3&&i<total_num;i++)
         {
             int random = Random.Range(0,total_num);
             int index = 1001;
