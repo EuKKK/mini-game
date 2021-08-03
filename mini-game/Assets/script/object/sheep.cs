@@ -77,7 +77,6 @@ namespace sheeps
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星血量提升系数"), out hp_index);
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星攻击提升"), out attack_index);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "警戒范围"), out cordon);
-
             if (star == 2)
             {
                 hp = (int)(hp * hp_index);
@@ -89,6 +88,8 @@ namespace sheeps
             else
                 skill = "attack";
             class_id = sheep_id;
+
+            max_hp = hp;
             
         }
         public int get_id()

@@ -77,7 +77,7 @@ public class User : MonoBehaviour
     }
 
     public void level_up()
-    {
+{
         int new_level = level + 1;
         if (new_level <= 6008)
             level = new_level;
@@ -86,6 +86,14 @@ public class User : MonoBehaviour
             sheep new_sheep = new sheep();
             new_sheep.load_data("1009");
             sheep_map[4] = new_sheep;
+        }
+    }
+
+    public void reduct_hp()
+    {
+        foreach(int id in sheep_map.Keys)
+        {
+            sheep_map[id].hp = sheep_map[id].max_hp;
         }
     }
 
