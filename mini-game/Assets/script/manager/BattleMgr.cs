@@ -502,8 +502,21 @@ public class BattleMgr : MonoBehaviour
                     mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
                     int s = GamePlayer[characterAttackX, characterAttackY];
                     GamePlayer[characterAttackX, characterAttackY] = 0;
-                    DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
+                    DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].move_range + characterMonster[enemy].attack_range, 0, false);
                     GamePlayer[characterAttackX, characterAttackY] = s;
+                    if (wayCount == 0)
+                    {
+                        Debug.Log(1);
+                        MapRouteInit();
+                        step = 0;
+                        wayCount = 0;
+                        trapCount = 100;
+                        mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
+                        s = GamePlayer[characterAttackX, characterAttackY];
+                        GamePlayer[characterAttackX, characterAttackY] = 0;
+                        DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
+                        GamePlayer[characterAttackX, characterAttackY] = s;
+                    }
                     step = wayCount;
                     EnemyWalkSetting();
                 }
@@ -528,7 +541,8 @@ public class BattleMgr : MonoBehaviour
         characterAttackX = -100;
         characterAttackY = -100;
 
-        int health = 999;
+        int healthC = 999;
+        int healthM = 999;
         for (int i = -point; i <= point; i++)
         {
             int absI = point - Mathf.Abs(i);
@@ -544,22 +558,24 @@ public class BattleMgr : MonoBehaviour
                     bool r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].move_range + characterMonster[enemy].attack_range, 0, false);
                     if (r)
                     {
-                        if (characterSheep[g].hp <= health)
+
+                        if (characterSheep[g].hp <= healthM)
                         {
                             characterAttackX = i + _x;
                             characterAttackY = j + _y;
-                            health = characterSheep[g].hp;
+                            healthM = characterSheep[g].hp;
 
                         }
                     }
                     else
                     {
+
                         r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].cordon, 0, false);
-                        if (characterSheep[g].hp <= health && r)
+                        if (characterSheep[g].hp <= healthC && r && healthM == 999)
                         {
                             characterAttackX = i + _x;
                             characterAttackY = j + _y;
-                            health = characterSheep[g].hp;
+                            healthC = characterSheep[g].hp;
 
                         }
                     }

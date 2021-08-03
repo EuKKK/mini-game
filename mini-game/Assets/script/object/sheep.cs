@@ -85,7 +85,7 @@ namespace sheeps
                 skill = ExcMgr.Instance.get_data("skill", skill_id, "技能名字");
             else
                 skill = "attack";
-            cordon = 7;
+            cordon = 5;
             class_id = sheep_id;
         }
         public int get_id()
