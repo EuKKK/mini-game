@@ -67,7 +67,7 @@ namespace sheeps
         public void load_data(string sheep_id, int new_star = 1)
         {
             star = new_star;
-            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ?"our":"enemy";
+            camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ? "our" : "enemy";
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "hp"), out hp);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
@@ -75,13 +75,13 @@ namespace sheeps
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星血量提升系数"), out hp_index);
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星攻击提升"), out attack_index);
 
-            if(star == 2)
+            if (star == 2)
             {
-                hp = (int)(hp*hp_index);
-                attack = (int)(attack*attack_index);
+                hp = (int)(hp * hp_index);
+                attack = (int)(attack * attack_index);
             }
             string skill_id = ExcMgr.Instance.get_data("character", sheep_id, "技能id");
-            if(skill_id!=null&&skill_id!="")
+            if (skill_id != null && skill_id != "")
                 skill = ExcMgr.Instance.get_data("skill", skill_id, "技能名字");
             else
                 skill = "attack";

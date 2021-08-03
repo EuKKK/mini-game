@@ -14,6 +14,8 @@ public class BattleMgr : MonoBehaviour
     public GameObject character;
     public GameObject ex;
     public GameObject mapInfo;
+    public GameObject testPartical;
+    public GameObject rotatePartical;
     public Dictionary<int, GameObject> highLightObj = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> landformPos = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> enemyPos = new Dictionary<int, GameObject>();
@@ -100,6 +102,8 @@ public class BattleMgr : MonoBehaviour
         highLight = (GameObject)Resources.Load("Prefab/HighLight");
         highLightD = (GameObject)Resources.Load("Prefab/HighLightD");
         highLightS = (GameObject)Resources.Load("Prefab/HighLightS");
+        testPartical = (GameObject)Resources.Load("Prefab/testPartical");
+        rotatePartical = (GameObject)Resources.Load("Prefab/rotatePartical");
         MapInfo = MapMgr.Instance.MapInfo;
         mapInfo = MapMgr.Instance.mapInfo;
         GamePlayer = MapMgr.Instance.GamePlayer;
@@ -1056,27 +1060,48 @@ public class BattleMgr : MonoBehaviour
         }
         try
         {
-            if (sure) characterSheep[gameObject].isSkilled = true;
+            //if (sure) characterSheep[gameObject].isSkilled = true;
         }
         catch { }
     }
     public void Attract(int x, int y, bool sure)
     {
-        if (x > 1 && x < maxX - 1 && y > 1 && y < maxY - 1)
+        if (x > 1 && x < maxX && y > 1 && y < maxY)
         {
             if (!sure)
             {
-                HighLight[x + 2, y] = 3;
-                HighLight[x - 2, y] = 3;
-                HighLight[x, y + 2] = 3;
-                HighLight[x, y - 2] = 3;
+                if (x + 2 <= maxX) HighLight[x + 2, y] = 3;
+                if (x - 2 > 0) HighLight[x - 2, y] = 3;
+                if (y + 2 <= maxY) HighLight[x, y + 2] = 3;
+                if (y - 2 > 0) HighLight[x, y - 2] = 3;
                 HighLightShow();
             }
             else
             {
+
+                GameObject par1 = Instantiate(testPartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par1.transform.position = new Vector3(GetPositionX(x - 1), GetPositionY(y), -1);
+                par1.layer = 9;
+                par1.transform.eulerAngles = new Vector3(0, 90, -90);
+                Destroy(par1, 0.4f);
+                GameObject par2 = Instantiate(testPartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par2.transform.position = new Vector3(GetPositionX(x + 1), GetPositionY(y), -1);
+                par2.layer = 9;
+                par2.transform.eulerAngles = new Vector3(180, 90, -90);
+                Destroy(par2, 0.4f);
+                GameObject par3 = Instantiate(testPartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par3.transform.position = new Vector3(GetPositionX(x), GetPositionY(y - 1), -1);
+                par3.layer = 9;
+                par3.transform.eulerAngles = new Vector3(-90, 90, -90);
+                Destroy(par3, 0.4f);
+                GameObject par4 = Instantiate(testPartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par4.transform.position = new Vector3(GetPositionX(x), GetPositionY(y + 1), -1);
+                par4.layer = 9;
+                par4.transform.eulerAngles = new Vector3(90, 90, -90);
+                Destroy(par4, 0.4f);
+
                 if (MapInfo[x + 1, y] == 1 && MapInfo[x + 2, y] > 1)
                 {
-
                     int gEx = getDic(x + 2, y);
                     int g = getDic(x + 1, y);
                     GameObject go = landformPos[gEx];
@@ -1141,6 +1166,23 @@ public class BattleMgr : MonoBehaviour
             }
             else
             {
+                GameObject par1 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par1.transform.position = new Vector3(GetPositionX(x + 1), GetPositionY(y + 1), -1);
+                par1.layer = 9;
+                Destroy(par1, 1);
+                GameObject par2 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par2.transform.position = new Vector3(GetPositionX(x + 1), GetPositionY(y - 1), -1);
+                par2.layer = 9;
+                Destroy(par2, 1);
+                GameObject par3 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par3.transform.position = new Vector3(GetPositionX(x - 1), GetPositionY(y + 1), -1);
+                par3.layer = 9;
+                Destroy(par3, 1);
+                GameObject par4 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par4.transform.position = new Vector3(GetPositionX(x - 1), GetPositionY(y - 1), -1);
+                par4.layer = 9;
+                Destroy(par4, 1);
+
                 int t;
                 t = MapInfo[x + 1, y + 1];
                 MapInfo[x + 1, y + 1] = MapInfo[x - 1, y + 1];
@@ -1227,6 +1269,17 @@ public class BattleMgr : MonoBehaviour
         }
         else
         {
+
+            GameObject g = Instantiate(testPartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            g.transform.position = new Vector3(GetPositionX(x), GetPositionY(y), -1);
+            g.layer = 9;
+            if (PushX - x == 1) g.transform.eulerAngles = new Vector3(0, 90, -90);
+            if (PushX - x == -1) g.transform.eulerAngles = new Vector3(180, 90, -90);
+            if (PushY - y == 1) g.transform.eulerAngles = new Vector3(-90, 90, -90);
+            if (PushY - y == -1) g.transform.eulerAngles = new Vector3(90, 90, -90);
+            Destroy(g, 0.4f);
+
+
             if (GamePlayer[PushX, PushY] == -1)
             {
                 int PushDisX = PushX - x;
@@ -1311,14 +1364,13 @@ public class BattleMgr : MonoBehaviour
     {
         if (MapInfo[PushX, PushY] == 0)
         {
-
             EnemyDie(x, y);
         }
         else if (GamePlayer[PushX, PushY] == 1)
         {
             Debug.Log("撞到人伤害");
             EnemyDamage(x, y, characterDamge);
-            EnemyDamage(PushX, PushY, characterDamge);
+            SheepDamage(PushX, PushY, characterDamge);
         }
         else if (GamePlayer[PushX, PushY] == -1)
         {
@@ -1410,13 +1462,6 @@ public class BattleMgr : MonoBehaviour
         try
         {
             g = enemyPos[pos];
-        }
-        catch
-        {
-            g = null;
-        }
-        if (g != null)
-        {
             int lanformInfo = MapInfo[x, y];
             switch (lanformInfo)
             {
@@ -1435,6 +1480,35 @@ public class BattleMgr : MonoBehaviour
                     EnemyDie(x, y);
                     break;
             }
+        }
+        catch
+        {
+            g = null;
+        }
+        try
+        {
+            g = characterPos[pos];
+            int lanformInfo = MapInfo[x, y];
+            switch (lanformInfo)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 900:
+                    break;
+                case 500:
+                    Debug.Log("我方受伤");
+                    SheepDamage(x, y, trapDamage);
+                    break;
+                case 9999:
+                    SheepDie(x, y);
+                    break;
+            }
+        }
+        catch
+        {
+            g = null;
         }
     }
 
