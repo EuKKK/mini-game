@@ -984,7 +984,10 @@ public class BattleMgr : MonoBehaviour
     {
         exit = true;
     }
-
+    public int GetRound()
+    {
+        return round;
+    }
 
 
 
@@ -1422,6 +1425,10 @@ public class BattleMgr : MonoBehaviour
         {
             if (GamePlayer[AttackX, AttackY] == -1)
             {
+                GameObject par1 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par1.transform.position = new Vector3(GetPositionX(AttackX), GetPositionY(AttackY), -1);
+                par1.layer = 9;
+                Destroy(par1, 1);
                 GameObject g = characterPos[getDic(x, y)];
                 EnemyDamage(AttackX, AttackY, characterSheep[g].attack);
                 try
@@ -1442,6 +1449,10 @@ public class BattleMgr : MonoBehaviour
         EnemyAttackSearch(x, y, point);
         if (characterAttackX > -100)
         {
+            GameObject par1 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            par1.transform.position = new Vector3(GetPositionX(characterAttackX), GetPositionY(characterAttackY), -1);
+            par1.layer = 9;
+            Destroy(par1, 1);
             SheepDamage(characterAttackX, characterAttackY, characterMonster[enemy].attack);
             try
             {
