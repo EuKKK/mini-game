@@ -16,7 +16,7 @@ public class ExcMgr : MonoBehaviour
     string file_path = "Assets/Resources/doc/";
 
     public static ExcMgr Instance { get; private set; }
-    void Start()
+    void Awake()
     {
         Instance = this;
         init();

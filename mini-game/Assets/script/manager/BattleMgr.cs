@@ -46,6 +46,8 @@ public class BattleMgr : MonoBehaviour
     public float InitX;
     public float InitY;
     private int sleep;
+    public bool exit;
+    private int gold;
 
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
@@ -115,6 +117,8 @@ public class BattleMgr : MonoBehaviour
         InitX = MapMgr.Instance.InitX;
         InitY = MapMgr.Instance.InitY;
         RoundStart();
+        exit = false;
+        gold = 0;
 
         round = 1;
         camp = true;
@@ -774,7 +778,7 @@ public class BattleMgr : MonoBehaviour
                 if (g.tag == "character") lose = false;
             }
         }
-        if (lose)
+        if (lose || exit)
         {
             foreach (int i in characterPos.Keys)
             {
@@ -978,7 +982,18 @@ public class BattleMgr : MonoBehaviour
         }
         ScreenLock = false;
     }
-
+    public void BattleExit()
+    {
+        exit = true;
+    }
+    public int GetRound()
+    {
+        return round;
+    }
+    public int GetGold()
+    {
+        return gold;
+    }
 
 
 
@@ -1417,6 +1432,10 @@ public class BattleMgr : MonoBehaviour
         {
             if (GamePlayer[AttackX, AttackY] == -1)
             {
+                GameObject par1 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                par1.transform.position = new Vector3(GetPositionX(AttackX), GetPositionY(AttackY), -1);
+                par1.layer = 9;
+                Destroy(par1, 1);
                 GameObject g = characterPos[getDic(x, y)];
                 EnemyDamage(AttackX, AttackY, characterSheep[g].attack);
                 try
@@ -1437,6 +1456,10 @@ public class BattleMgr : MonoBehaviour
         EnemyAttackSearch(x, y, point);
         if (characterAttackX > -100)
         {
+            GameObject par1 = Instantiate(rotatePartical, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            par1.transform.position = new Vector3(GetPositionX(characterAttackX), GetPositionY(characterAttackY), -1);
+            par1.layer = 9;
+            Destroy(par1, 1);
             SheepDamage(characterAttackX, characterAttackY, characterMonster[enemy].attack);
             try
             {
@@ -1540,6 +1563,7 @@ public class BattleMgr : MonoBehaviour
         enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
+        gold = gold + 4;
         isEnemyWalk = false;
         t++;
     }

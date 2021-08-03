@@ -22,6 +22,8 @@ MonoBehaviour:
         val: stage
       - key: "\u5730\u56FE"
         val: map
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: number
       - key: 
         val: 
   - out_map:
@@ -33,6 +35,8 @@ MonoBehaviour:
         val: "\u7B2C\u4E00\u5173"
       - key: "\u5730\u56FE"
         val: e4
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 3
       - key: 
         val: 
   - out_map:
@@ -43,7 +47,9 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E8C\u5173"
       - key: "\u5730\u56FE"
-        val: e1
+        val: level2
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 4
       - key: 
         val: 
   - out_map:
@@ -54,7 +60,9 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E09\u5173"
       - key: "\u5730\u56FE"
-        val: ceshi2
+        val: level3
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 5
       - key: 
         val: 
   - out_map:
@@ -65,7 +73,9 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u56DB\u5173"
       - key: "\u5730\u56FE"
-        val: ceishi1
+        val: test-6
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 8
       - key: 
         val: 
   - out_map:
@@ -76,7 +86,9 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E94\u5173"
       - key: "\u5730\u56FE"
-        val: e3
+        val: n1
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 8
       - key: 
         val: 
   - out_map:
@@ -87,7 +99,9 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u516D\u5173"
       - key: "\u5730\u56FE"
-        val: ceshi-big
+        val: test-8
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 8
       - key: 
         val: 
   - out_map:
@@ -98,17 +112,8 @@ MonoBehaviour:
       - key: "\u5173\u5361"
         val: "\u7B2C\u4E03\u5173"
       - key: "\u5730\u56FE"
-        val: n1
-      - key: 
-        val: 
-  - out_map:
-      key: 6008
-      imaps:
-      - key: "\u5173\u5361id"
-        val: 6008
-      - key: "\u5173\u5361"
-        val: "\u7B2C\u516B\u5173"
-      - key: "\u5730\u56FE"
-        val: h1
+        val: e3
+      - key: "\u4E0A\u9635\u4EBA\u6570"
+        val: 8
       - key: 
         val: 

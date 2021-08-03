@@ -22,7 +22,7 @@ public class Shopwnd : window, IPointerEnterHandler
    public Button buy_sheep1;
    public Button buy_sheep2;
    public Button buy_sheep3;
-   public bool need_refresh = false;
+   bool need_refresh = true;
    Dictionary<int, GameObject> shop_sheep_map = new Dictionary<int, GameObject>();
    Dictionary<int, sheep> shop_user_sheep_map = new Dictionary<int, sheep>();
    Dictionary<int, string> buttons = new Dictionary<int, string>();
@@ -42,9 +42,9 @@ public class Shopwnd : window, IPointerEnterHandler
         next_level.GetComponent<Button>().onClick.AddListener(next_level_func);
         sell.GetComponent<Button>().onClick.AddListener(sell_func);
         cancel.GetComponent<Button>().onClick.AddListener(cancel_func);
-        buy_sheep1.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(1); });
-        buy_sheep2.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(2); });
-        buy_sheep3.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(3); });
+        buy_sheep1.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(0); });
+        buy_sheep2.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(1); });
+        buy_sheep3.GetComponent<Button>().onClick.AddListener(delegate () { this.buy_sheep_btn(2); });
     }
     void initshop()
     {
@@ -58,7 +58,7 @@ public class Shopwnd : window, IPointerEnterHandler
     }
     void level_up_func()
     {
-        
+        User.Instance.user_level++;
     }
     void back_func()
     {
@@ -80,10 +80,15 @@ public class Shopwnd : window, IPointerEnterHandler
     }
     void buy_sheep_btn(int num)
     {
+        if(shop_units[num] == -1) return;
+      
         sheep new_sheep = new sheep();
-        new_sheep.load_data("1201");
+        new_sheep.load_data(shop_units[num].ToString());
         User.Instance.add_sheep(new_sheep);
         redraw();
+        SheepMgr.dele_id(shop_units[num]);
+
+        shop_units[num] = -1;
     }
     override public void redraw(GameObject window = null)
     {
@@ -102,7 +107,7 @@ public class Shopwnd : window, IPointerEnterHandler
 
     void refresh_shop()
     {
-        
+        shop_units = SheepMgr.get_random_percent();
     }
     void refresh_user_sheeps()
     {
@@ -169,7 +174,6 @@ public class Shopwnd : window, IPointerEnterHandler
         {
             string ob_name = list[0].gameObject.name;
             int num = int.Parse(ob_name);
-            //WindowMgr.Instance.active_window()
         }
     }
 
