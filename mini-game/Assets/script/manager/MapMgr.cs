@@ -179,7 +179,7 @@ public class MapMgr : MonoBehaviour
             if(User.Instance.sheep_map.Count<4) 
             {
                 sheep new_sheep = new sheep();
-                new_sheep.load_data("1005");
+                new_sheep.load_data("1009");
                 User.Instance.sheep_map[4] = new_sheep;
             }
             for (int i = 1; i <= 4; i++)
@@ -331,7 +331,7 @@ public class MapMgr : MonoBehaviour
             GameObject target = rh.collider.gameObject;
 
             if (target.layer != 9) return null;
-            if (!target.name.Contains("character")) return null;
+            if (!target.name.Contains("HighLightSheep")) return null;
 
             locationX = GetLocationX(target.transform.position.x);
             locationY = GetLocationY(target.transform.position.y);

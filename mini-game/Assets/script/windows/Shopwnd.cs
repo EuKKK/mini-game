@@ -24,6 +24,7 @@ public class Shopwnd : window, IPointerEnterHandler
    public Button buy_sheep3;
    public bool need_refresh = false;
    Dictionary<int, GameObject> shop_sheep_map = new Dictionary<int, GameObject>();
+   Dictionary<int, sheep> shop_user_sheep_map = new Dictionary<int, sheep>();
    Dictionary<int, string> buttons = new Dictionary<int, string>();
    int [] shop_units = new int[3];
 
@@ -115,11 +116,14 @@ public class Shopwnd : window, IPointerEnterHandler
                 shop_sheep_map[index].transform.Find("star").gameObject.SetActive(true);
             else
                 shop_sheep_map[index].transform.Find("star").gameObject.SetActive(false);
+
+            shop_user_sheep_map[index] = User.Instance.sheep_map[i];
         }
         for(int i = index + 1;i<=14;i++)
         {
             GlobalFuncMgr.set_image(shop_sheep_map[i], "白");
             shop_sheep_map[i].transform.Find("star").gameObject.SetActive(false);
+            shop_user_sheep_map[i] = null;
         }
 
     }
@@ -159,7 +163,14 @@ public class Shopwnd : window, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        List<RaycastResult> list = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, list);
+        if (list[0].gameObject.tag == "shopcharac")
+        {
+            string ob_name = list[0].gameObject.name;
+            int num = int.Parse(ob_name);
+            //WindowMgr.Instance.active_window()
+        }
     }
 
 }

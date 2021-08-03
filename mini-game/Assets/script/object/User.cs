@@ -82,7 +82,7 @@ public class User : MonoBehaviour
         if (level == 6002)
         {
             sheep new_sheep = new sheep();
-            new_sheep.load_data("1005");
+            new_sheep.load_data("1009");
             sheep_map[4] = new_sheep;
         }
     }
