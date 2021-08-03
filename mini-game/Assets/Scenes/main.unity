@@ -6614,6 +6614,10 @@ MonoBehaviour:
   buy_sheep1: {fileID: 799255283}
   buy_sheep2: {fileID: 254744056}
   buy_sheep3: {fileID: 891937898}
+  sell_sheeps:
+  - {fileID: 799255281}
+  - {fileID: 254744054}
+  - {fileID: 891937896}
 --- !u!114 &1117347119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6835,7 +6839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.00018311, y: -251}
+  m_AnchoredPosition: {x: -0.00018310547, y: -251}
   m_SizeDelta: {x: 150.4, y: 160}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1136113567
