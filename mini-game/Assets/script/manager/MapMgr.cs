@@ -37,7 +37,9 @@ public class MapMgr : MonoBehaviour
     public bool Playing = false;
     public bool isWin = false;
     List<float[]> play_pos;
-    int monster_num;
+    public int skill;
+
+    GameObject target;
 
     void Start()
     {
@@ -179,7 +181,7 @@ public class MapMgr : MonoBehaviour
         if (User.Instance.level == 6002)
         {
             //增加跳关容错
-            if(User.Instance.sheep_map.Count<4) 
+            if (User.Instance.sheep_map.Count < 4)
             {
                 sheep new_sheep = new sheep();
                 new_sheep.load_data("1009");
@@ -234,7 +236,7 @@ public class MapMgr : MonoBehaviour
 
         maxX = 0;
         maxY = 0;
-        monster_num = 1;
+        //monster_num = 1;
 
         MapInfo = new int[35, 35];
         GamePlayer = new int[35, 35];
@@ -294,15 +296,17 @@ public class MapMgr : MonoBehaviour
 
             if (hit)
             {
-
-                GameObject target = rh.collider.gameObject;
+                target = rh.collider.gameObject;
 
                 locationX = GetLocationX(target.transform.position.x);
                 locationY = GetLocationY(target.transform.position.y);
-                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 0);
 
+                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
+
+                skill = 0;
             }
         }
+        /*
         if (Input.GetMouseButtonDown(1))
         {
 
@@ -311,16 +315,19 @@ public class MapMgr : MonoBehaviour
             bool hit = Physics.Raycast(ray, out rh);
             if (hit)
             {
-                GameObject target = rh.collider.gameObject;
+                target = rh.collider.gameObject;
                 locationX = GetLocationX(target.transform.position.x);
                 locationY = GetLocationY(target.transform.position.y);
-
-
                 BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 1);
-
             }
-
         }
+        */
+    }
+    public void SkillUsed()
+    {
+        skill = 1;
+        BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
+        
     }
 
     public int[] GetChracPos(Vector3 pos)
