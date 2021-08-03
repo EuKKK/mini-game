@@ -143,20 +143,22 @@ public class BattleMgr : MonoBehaviour
             sheep = true;
         }
 
-        if (GamePlayer[locationX, locationY] == 1 && !characterSheep[target].isSkilled && !characterSheep[target].isUsed)
+        if (GamePlayer[locationX, locationY] == 1)
         {
             click = 1;
 
-            character = target;
-            MapRouteInit();
-            HighLightDestroy();
-            mapRoute[locationX, locationY].direction = Direction.stand;
-            mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
-            CharacterX = locationX;
-            CharacterY = locationY;
-            CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
-            check = true;
-
+            if (!characterSheep[target].isSkilled && !characterSheep[target].isUsed)
+            {
+                character = target;
+                MapRouteInit();
+                HighLightDestroy();
+                mapRoute[locationX, locationY].direction = Direction.stand;
+                mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
+                CharacterX = locationX;
+                CharacterY = locationY;
+                CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
+                check = true;
+            }
         }
         else if (HighLight[locationX, locationY] == 1)
         {
