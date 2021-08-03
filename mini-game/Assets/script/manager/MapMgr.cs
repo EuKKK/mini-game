@@ -216,7 +216,7 @@ public class MapMgr : MonoBehaviour
     {
 
         string map_name = ExcMgr.Instance.get_data("stage", User.Instance.level.ToString(), "地图");
-        Debug.Log(map_name);
+
         mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + map_name));
         //mapInfo = Instantiate((GameObject)Resources.Load("MapPrefab/" + "ceshi1"));
         Transform[] father = mapInfo.GetComponentsInChildren<Transform>();

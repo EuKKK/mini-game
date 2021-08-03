@@ -488,7 +488,6 @@ public class BattleMgr : MonoBehaviour
             enemy = enemyPos[enemyPosList[t]];
 
             bool attack = EnemyAttack(enemyPosX, enemyPosY, characterMonster[enemy].attack_range, false);
-
             if (!attack)
             {
 
@@ -502,21 +501,17 @@ public class BattleMgr : MonoBehaviour
                     trapCount = 100;
                     mapRoute[enemyPosX, enemyPosY].movePoint = characterMonster[enemy].move_range;
                     int s = GamePlayer[characterAttackX, characterAttackY];
-
                     GamePlayer[characterAttackX, characterAttackY] = 0;
-
                     DangerousWayWalk(enemyPosX, enemyPosY, characterAttackX, characterAttackY, characterMonster[enemy].cordon, 0, false);
-
                     GamePlayer[characterAttackX, characterAttackY] = s;
-
                     step = wayCount;
-
                     EnemyWalkSetting();
                 }
                 else
                 {
                     t++;
                 }
+
             }
         }
         else
@@ -539,19 +534,34 @@ public class BattleMgr : MonoBehaviour
             int absI = point - Mathf.Abs(i);
             for (int j = -absI; j <= absI; j++)
             {
+
                 if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
                 {
 
                     int pos = getDic(_x + i, _y + j);
                     GameObject g = characterPos[pos];
-                    bool r = EnemyReach(_x, _y, _x + i, _y + j, 15, 0, false);
-
-                    if (characterSheep[g].hp <= health && r)
+                    //bool t = false;
+                    bool r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].move_range + characterMonster[enemy].attack_range, 0, false);
+                    if (r)
                     {
-                        characterAttackX = i + _x;
-                        characterAttackY = j + _y;
-                        health = characterSheep[g].hp;
+                        if (characterSheep[g].hp <= health)
+                        {
+                            characterAttackX = i + _x;
+                            characterAttackY = j + _y;
+                            health = characterSheep[g].hp;
 
+                        }
+                    }
+                    else
+                    {
+                        r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].cordon, 0, false);
+                        if (characterSheep[g].hp <= health && r)
+                        {
+                            characterAttackX = i + _x;
+                            characterAttackY = j + _y;
+                            health = characterSheep[g].hp;
+
+                        }
                     }
                 }
             }
