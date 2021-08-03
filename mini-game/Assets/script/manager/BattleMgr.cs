@@ -46,6 +46,7 @@ public class BattleMgr : MonoBehaviour
     public float InitX;
     public float InitY;
     private int sleep;
+    public bool exit;
 
 
     private RouteObject[,] mapRoute = new RouteObject[35, 35];
@@ -115,6 +116,7 @@ public class BattleMgr : MonoBehaviour
         InitX = MapMgr.Instance.InitX;
         InitY = MapMgr.Instance.InitY;
         RoundStart();
+        exit = false;
 
         round = 1;
         camp = true;
@@ -774,7 +776,7 @@ public class BattleMgr : MonoBehaviour
                 if (g.tag == "character") lose = false;
             }
         }
-        if (lose)
+        if (lose || exit)
         {
             foreach (int i in characterPos.Keys)
             {
@@ -978,7 +980,10 @@ public class BattleMgr : MonoBehaviour
         }
         ScreenLock = false;
     }
-
+    public void BattleExit()
+    {
+        exit = true;
+    }
 
 
 
