@@ -824,7 +824,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (step > 0)
             {
-                if (sleep >= (int)(0.05f / Time.deltaTime))
+                if (sleep >= (int)(0.07f / Time.deltaTime))
                 {
                     characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
                     switch (way[step])
@@ -866,7 +866,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (step < wayCount)
             {
-                if (sleep >= (int)(0.05f / Time.deltaTime))
+                if (sleep >= (int)(0.07f / Time.deltaTime))
                 {
                     step++;
                     characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
@@ -916,7 +916,7 @@ public class BattleMgr : MonoBehaviour
         {
 
 
-            if (sleep >= (int)(0.05f / Time.deltaTime))
+            if (sleep >= (int)(0.07f / Time.deltaTime))
             {
                 enemyPos.Remove(getDic(GetLocationX(enemy.transform.position.x), GetLocationY(enemy.transform.position.y)));
 
