@@ -222,6 +222,7 @@ public class Shopwnd : window, IPointerDownHandler
             sheep_infos[1].GetComponent<Text>().text = "生命值:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "hp");
             sheep_infos[2].GetComponent<Text>().text = "攻击范围:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击范围");
             sheep_infos[3].GetComponent<Text>().text = "移动范围:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "移动范围");
+            sheep_infos[5].GetComponent<Text>().text = "售价:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "售价");
             if (sheep_info.skill == "attack")
                 sheep_infos[4].GetComponent<Text>().text = "攻击:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击");
             else
@@ -239,6 +240,7 @@ public class Shopwnd : window, IPointerDownHandler
             sheep_infos[1].GetComponent<Text>().text = "生命值:" + ExcMgr.Instance.get_data("character", class_id, "hp");
             sheep_infos[2].GetComponent<Text>().text = "攻击范围:" + ExcMgr.Instance.get_data("character", class_id, "攻击范围");
             sheep_infos[3].GetComponent<Text>().text = "移动范围:" + ExcMgr.Instance.get_data("character", class_id, "移动范围");
+            sheep_infos[5].GetComponent<Text>().text = "售价:" + ExcMgr.Instance.get_data("character", class_id, "费用");
             string skill = ExcMgr.Instance.get_data("character", class_id, "技能id");
             if (skill != null && skill != "")
                 sheep_infos[4].GetComponent<Text>().text = "技能效果:" + ExcMgr.Instance.get_data("skill", skill, "技能效果");

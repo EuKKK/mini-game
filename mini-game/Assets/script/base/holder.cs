@@ -14,6 +14,7 @@ namespace BaseObject
     public class holder:ScriptableObject
     {
         public List<HolderData> maps = new List<HolderData>();
+        public string file_name = "";
         public void init(Dictionary<string, Dictionary<string, string >> map)
         {
             foreach(string key in map.Keys)

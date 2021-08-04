@@ -17,6 +17,9 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
     Vector3 pre_pos;
     ArrayList sheep_prefabs = new ArrayList();
     public Camera main_camera;
+    public Button left;
+    public Button right;
+    int left_num = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,8 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
 
         battle_btn.onClick.AddListener(battle_start);
+        left.onClick.AddListener(left_btn);
+        right.onClick.AddListener(right_btn);
     }
 
     //开始战斗
@@ -51,14 +56,29 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
         window.SetActive(true);
         FormationMgr.Instance.init_formation();
 
-        //获取所有的羊
-        user_sheeps = User.Instance.get_sheeps();
-        foreach (int id in user_sheeps.Keys)
-        {
-            draw_sheep(id.ToString(), user_sheeps[id]);
-        }
+        redraw_sheeps();
 
         //FormationMgr.Instance.enter_test(user_sheeps);
+    }
+    void redraw_sheeps()
+    {
+        foreach (GameObject u_sheep in sheep_prefabs)
+            Destroy(u_sheep);
+        //获取所有的羊
+        user_sheeps = User.Instance.get_sheeps();
+        int now_sheep_cnt = 0;
+        foreach (int id in user_sheeps.Keys)
+        {
+            if(left_num>0) left_num--;
+            else
+            {
+                if(now_sheep_cnt<5)
+                {
+                    now_sheep_cnt ++;
+                    draw_sheep(id.ToString(), user_sheeps[id]);
+                }
+            }
+        }
     }
 
     public override void close(GameObject window = null)
@@ -117,5 +137,15 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
                 FormationMgr.Instance.enter_team(x, y, User.Instance.get_sheep_by_id(int.Parse(sheep_id)));
             }
         }
+    }
+    public void left_btn()
+    {
+        if(left_num-5>0) left_num-=5;
+        redraw_sheeps();
+    }
+    public void right_btn()
+    {
+        if(left_num+5<User.Instance.sheep_map.Count) left_num+=5;
+        redraw_sheeps();
     }
 }

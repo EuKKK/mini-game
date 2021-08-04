@@ -24,6 +24,7 @@ public class BuildAssets : EditorWindow
                 holder asset_holder = ExcelAccess.SelectMenuTable(file_path + files[i].Name);
                 string name = files[i].Name.Replace(".xlsx", "");
                 string asset_path = file_path + name + ".asset";
+                asset_holder.file_name = name;
                 AssetDatabase.CreateAsset(asset_holder, asset_path);
                 AssetDatabase.Refresh();                
                 //Debug.Log( "Name:" + files[i].Name );  
