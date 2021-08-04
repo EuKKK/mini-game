@@ -1128,7 +1128,7 @@ public class BattleMgr : MonoBehaviour
                     Rotate(CharacterX, CharacterY, sure);
                     break;
                 case "push":
-                    Push(CharacterX, CharacterY, locationX, locationY, sure);
+                    Push(CharacterX, CharacterY, locationX, locationY, sure, false);
                     break;
                 case "attack":
                     GameObject g = characterPos[getDic(CharacterX, CharacterY)];
@@ -1339,7 +1339,7 @@ public class BattleMgr : MonoBehaviour
             }
         }
     }
-    public void Push(int x, int y, int PushX, int PushY, bool sure)
+    public void Push(int x, int y, int PushX, int PushY, bool sure, bool cannon)
     {
         if (!sure)
         {
@@ -1369,11 +1369,11 @@ public class BattleMgr : MonoBehaviour
                 if (PushDisX != 0)
                 {
                     PushCheck(x + PushDisX, y, x + 2 * PushDisX, y);
-                    if (GamePlayer[x + PushDisX, y + 1] == -1)
+                    if (GamePlayer[x + PushDisX, y + 1] == -1 && !cannon)
                     {
                         PushCheck(x + PushDisX, y + 1, x + 2 * PushDisX, y + 1);
                     }
-                    if (GamePlayer[x + PushDisX, y - 1] == -1)
+                    if (GamePlayer[x + PushDisX, y - 1] == -1 && !cannon)
                     {
                         PushCheck(x + PushDisX, y - 1, x + 2 * PushDisX, y - 1);
                     }
@@ -1381,11 +1381,11 @@ public class BattleMgr : MonoBehaviour
                 if (PushDisY != 0)
                 {
                     PushCheck(x, y + PushDisY, x, y + 2 * PushDisY);
-                    if (GamePlayer[x + 1, y + PushDisY] == -1)
+                    if (GamePlayer[x + 1, y + PushDisY] == -1 && !cannon)
                     {
                         PushCheck(x + 1, y + PushDisY, x + 1, y + 2 * PushDisY);
                     }
-                    if (GamePlayer[x - 1, y + PushDisY] == -1)
+                    if (GamePlayer[x - 1, y + PushDisY] == -1 && !cannon)
                     {
                         PushCheck(x - 1, y + PushDisY, x - 1, y + 2 * PushDisY);
                     }
@@ -1439,7 +1439,7 @@ public class BattleMgr : MonoBehaviour
             Debug.Log(_x + "," + _y);
             int PushX = targetX - _x;
             int PushY = targetY - _y;
-            Push(PushX, PushY, targetX, targetY, sure);
+            Push(PushX, PushY, targetX, targetY, sure, true);
         }
     }
     private void PushCheck(int x, int y, int PushX, int PushY)
