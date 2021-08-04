@@ -57,4 +57,9 @@ public class WindowMgr : MonoBehaviour
     {
         window_map[window_name].redraw();
     }
+    public void close_window(string window_name)
+    {
+        window_map[window_name].close();
+    }
+
 }

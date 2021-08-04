@@ -159,6 +159,7 @@ public class MapMgr : MonoBehaviour
             }
             GetSheep();
             WindowMgr.Instance.switch_window("Battle");
+            StoryMgr.Instance.start_story(1);
             BattleMgr.Instance.GameStart();
         }
         if (User.Instance.level == 6002)
@@ -167,7 +168,7 @@ public class MapMgr : MonoBehaviour
             if (User.Instance.sheep_map.Count < 4)
             {
                 sheep new_sheep = new sheep();
-                new_sheep.load_data("1009");
+                new_sheep.load_data("1008");
                 User.Instance.sheep_map[4] = new_sheep;
             }
             for (int i = 1; i <= 4; i++)
