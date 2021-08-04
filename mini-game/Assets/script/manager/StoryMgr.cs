@@ -31,7 +31,7 @@ public class StoryMgr:MonoBehaviour
         if(now_stroy_num!=-1)
         {
             story_num ++;
-            if(story_num == story_chapters[now_stroy_num])
+            if(story_num == story_chapters[now_stroy_num]-1)
                 end_stroy();
             else
                 WindowMgr.Instance.active_window("Story");
