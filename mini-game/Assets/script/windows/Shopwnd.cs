@@ -114,10 +114,16 @@ public class Shopwnd : window, IPointerDownHandler
         if(first_enter)
         {
             first_enter = false;
-            StoryMgr.Instance.start_story(4);
+            StartCoroutine(start_story_async());
         }
 
         refresh_user_sheeps();
+    }
+
+    IEnumerator start_story_async()
+    {
+        yield return null;
+        StoryMgr.Instance.start_story(4);
     }
 
     void refresh_shop()
