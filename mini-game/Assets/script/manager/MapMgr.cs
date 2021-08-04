@@ -184,13 +184,13 @@ public class MapMgr : MonoBehaviour
 
     public void GetSheep()
     {
-        foreach (int i in FormationMgr.Instance.sheep_position.Keys)
+        foreach (KeyValuePair<sheep, int> this_sheep in FormationMgr.Instance.sheep_position)
         {
-            int x = DicX(i);
-            int y = DicY(i);
+            int x = DicX(this_sheep.Value);
+            int y = DicY(this_sheep.Value);
 
             GamePlayer[x, y] = 1;
-            characterPos.Add(i, FormationMgr.Instance.sheep_position[i].this_sheep);
+            characterPos.Add(this_sheep.Value, this_sheep.Key.this_sheep);
 
         }
         Playing = true;
@@ -271,15 +271,6 @@ public class MapMgr : MonoBehaviour
     }
     private void OnMouseMove()
     {
-        /*
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("在UI上");
-            }
-        }
-        */
 
 
         if (Input.GetMouseButtonDown(0))

@@ -72,6 +72,7 @@ namespace sheeps
         {
             star = new_star;
             camp = ExcMgr.Instance.get_data("character", sheep_id, "阵营") == "0" ? "our" : "enemy";
+            name = ExcMgr.Instance.get_data("character", sheep_id, "角色名字");
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "hp"), out hp);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击"), out attack);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "攻击范围"), out attack_range);
