@@ -100,7 +100,9 @@ public class BattleMgr : MonoBehaviour
     public void GameStart()
     {
         characterSheep = FormationMgr.Instance.sheep_GO;
+        characterPos.Clear();
         characterMonster = MapMgr.Instance.enemy_GO;
+        enemyPos.Clear();
         rotX = ex.transform.eulerAngles.x;
         rotY = ex.transform.eulerAngles.y;
         rotZ = ex.transform.eulerAngles.z;
@@ -121,7 +123,7 @@ public class BattleMgr : MonoBehaviour
         InitY = MapMgr.Instance.InitY;
         RoundStart();
         exit = false;
-        gold = 0;
+        gold = User.Instance.money;
 
         round = 1;
         camp = true;
