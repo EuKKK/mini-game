@@ -7014,7 +7014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1013368636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7085,10 +7085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc5a31a1233d7b4389a51b821d3437a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 1013368635}
+  menu: {fileID: 0}
   battle_btn_ob: {fileID: 483828517}
   shop_btn_ob: {fileID: 72512484}
-  guide_btn_ob: {fileID: 0}
   back_btn_ob: {fileID: 42495057}
   level_text: {fileID: 1732208422}
 --- !u!1 &1056417612
@@ -7159,7 +7158,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5237\u65B0"
+  m_Text: "\u5237\u65B0\n\uFFE53"
 --- !u!222 &1056417615
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7771,7 +7770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9103774, g: 1, b: 0.9197689, a: 1}
+  m_Color: {r: 0.972549, g: 0.8745098, b: 0.45490196, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12099,7 +12098,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5347\u7EA7"
+  m_Text: "\u5347\u7EA7\n\uFFE510"
 --- !u!222 &1948927619
 CanvasRenderer:
   m_ObjectHideFlags: 0
