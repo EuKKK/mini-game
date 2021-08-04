@@ -51,7 +51,7 @@ public class Startwnd : window
     //退出游戏
     void exit_game()
     {
-
+        Application.Quit();
     }
 
     // Update is called once per frame

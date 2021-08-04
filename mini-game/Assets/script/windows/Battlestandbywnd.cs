@@ -72,7 +72,7 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
             if(left_num>0) left_num--;
             else
             {
-                if(now_sheep_cnt<5)
+                if(now_sheep_cnt<4)
                 {
                     now_sheep_cnt ++;
                     draw_sheep(id.ToString(), user_sheeps[id]);
@@ -140,7 +140,7 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
     }
     public void left_btn()
     {
-        if(left_num-5>0) left_num-=5;
+        if(left_num-4>0) left_num-=4;
         redraw_sheeps();
     }
     public void right_btn()
