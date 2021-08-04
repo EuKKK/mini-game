@@ -145,7 +145,7 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
     }
     public void right_btn()
     {
-        if (left_num + 5 < User.Instance.sheep_map.Count) left_num += 5;
+        if (left_num + 4 < User.Instance.sheep_map.Count) left_num += 4;
         redraw_sheeps();
     }
 }
