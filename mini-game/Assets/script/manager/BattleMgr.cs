@@ -123,7 +123,7 @@ public class BattleMgr : MonoBehaviour
         InitY = MapMgr.Instance.InitY;
         RoundStart();
         exit = false;
-        gold = User.Instance.money;
+        gold = 0;
 
         round = 1;
         camp = true;
@@ -1012,7 +1012,7 @@ public class BattleMgr : MonoBehaviour
     }
     public int GetGold()
     {
-        return gold;
+        return gold + User.Instance.money;
     }
     public void CampChange()
     {
