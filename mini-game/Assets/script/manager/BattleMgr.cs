@@ -797,6 +797,7 @@ public class BattleMgr : MonoBehaviour
             {
                 Destroy(characterPos[i]);
             }
+            if(!exit)
             WindowMgr.Instance.active_window("Result");
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isLose = true;

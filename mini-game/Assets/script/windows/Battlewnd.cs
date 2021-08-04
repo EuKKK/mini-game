@@ -17,6 +17,7 @@ public class Battlewnd : window
     public GameObject round;
     public GameObject gold;
     public Button menu;
+    public Text level_name;
     private int clickSetting = 0;
 
     Dictionary<int, GameObject> sheep_prefabs = new Dictionary<int, GameObject>();
@@ -38,7 +39,7 @@ public class Battlewnd : window
         skill_btn.onClick.AddListener(skillBtn);
         stay_btn.onClick.AddListener(stayBtn);
         end_btn.onClick.AddListener(endBtn);
-        //menu.onClick.AddListener(active_menu);
+        menu.onClick.AddListener(active_menu);
     }
 
     //结束战斗
@@ -158,6 +159,7 @@ public class Battlewnd : window
             draw_sheep(id, User.Instance.get_sheeps()[id]);
         }
         Game.Instance.switch_music("battle");
+        level_name.text = "关卡"+ (User.Instance.level - 6001 + 1).ToString();
     }
 
     void draw_sheep(int id, sheep u_sheep)

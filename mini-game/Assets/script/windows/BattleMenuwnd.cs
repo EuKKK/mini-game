@@ -22,7 +22,8 @@ public class BattleMenuwnd : window
     }
     void exit()
     {
-
+        BattleMgr.Instance.BattleExit();
+        WindowMgr.Instance.switch_window("Start");
     }
     void cancel()
     {
