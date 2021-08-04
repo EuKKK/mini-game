@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using sheeps;
-
+using UnityEngine.EventSystems;
 public class MapMgr : MonoBehaviour
 {
     public const int MAX_NUMBER = 30;
@@ -99,30 +99,13 @@ public class MapMgr : MonoBehaviour
                         HS.layer = 9;
                         highLightS.Add(HS);
                         HS.transform.SetParent(mapInfo.transform);
-                        //GamePlayer[x, y] = 1;
-                        //g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
-                        //characterPos.Add(getDic(x, y), g);
+
                         break;
 
                     case "enemy":
                         GamePlayer[x, y] = -1;
                         g.transform.position = g.transform.position + new Vector3(0, 0, -0.9f);
                         enemyPos.Add(getDic(x, y), g);
-
-                        /*
-                        sheep enter_sheep = new sheep(true);
-                        enter_sheep.hp = 200;
-                        enter_sheep.attack = 80;
-                        enter_sheep.attack_range = 1;
-                        enter_sheep.move_range = 5;
-                        enter_sheep.cordon = 5;
-                        enter_sheep.this_sheep = g;
-                        enter_sheep.this_sheep.layer = 9;
-                        Transform[] father = enter_sheep.this_sheep.GetComponentsInChildren<Transform>();
-                        foreach (Transform child in father)
-                            child.gameObject.layer = 9;
-                        enemy_GO[enter_sheep.this_sheep] = enter_sheep;
-                        */
 
                         break;
                     case "barrier":
@@ -287,47 +270,47 @@ public class MapMgr : MonoBehaviour
     }
     private void OnMouseMove()
     {
-
+        /*
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rh;
-            bool hit = Physics.Raycast(ray, out rh);
-
-            if (hit)
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-                target = rh.collider.gameObject;
-
-                locationX = GetLocationX(target.transform.position.x);
-                locationY = GetLocationY(target.transform.position.y);
-
-                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
-
-                skill = 0;
-            }
-        }
-        /*
-        if (Input.GetMouseButtonDown(1))
-        {
-
-            Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit rh;
-            bool hit = Physics.Raycast(ray, out rh);
-            if (hit)
-            {
-                target = rh.collider.gameObject;
-                locationX = GetLocationX(target.transform.position.x);
-                locationY = GetLocationY(target.transform.position.y);
-                BattleMgr.Instance.CenterManager(locationX, locationY, ref target, 1);
+                Debug.Log("在UI上");
             }
         }
         */
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+
+            }
+            else
+            {
+                Ray ray = BattleCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit rh;
+                bool hit = Physics.Raycast(ray, out rh);
+
+                if (hit)
+                {
+                    target = rh.collider.gameObject;
+
+                    locationX = GetLocationX(target.transform.position.x);
+                    locationY = GetLocationY(target.transform.position.y);
+
+                    BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
+
+                    skill = 0;
+                }
+            }
+        }
     }
     public void SkillUsed()
     {
         skill = 1;
         BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
-
     }
 
     public int[] GetChracPos(Vector3 pos)

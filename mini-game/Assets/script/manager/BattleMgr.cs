@@ -55,10 +55,12 @@ public class BattleMgr : MonoBehaviour
     private bool check = true;
     public int CharacterX;
     public int CharacterY;
+    public int InfoDic;
 
     private int t;
     private int round;
     private bool camp;
+    private bool campChange = false;
     private int _x;
     private int _y;
     private bool getPoint;
@@ -133,15 +135,7 @@ public class BattleMgr : MonoBehaviour
     /// <param name="y"></param>
     public void CharacterCheck(int locationX, int locationY, ref GameObject target)
     {
-        bool sheep = false;
-        if (target.tag == "character")
-        {
-            sheep = false;
-        }
-        else if (target.tag == "sheep")
-        {
-            sheep = true;
-        }
+        InfoDic = getDic(locationX, locationY);
 
         if (GamePlayer[locationX, locationY] == 1)
         {
@@ -190,6 +184,10 @@ public class BattleMgr : MonoBehaviour
             isWalk = true;
             walkType = false;
             HighLightDestroy();
+        }
+        else if (GamePlayer[locationX, locationY] == -1)
+        {
+            click = 3;
         }
         else
         {
@@ -710,9 +708,10 @@ public class BattleMgr : MonoBehaviour
         {
             if (!isWalk && !isEnemyWalk)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (campChange)
                 {
                     camp = false;
+                    campChange = false;
                     t = -1;
                     Debug.Log("敌人回合");
                     HighLightDestroy();
@@ -781,7 +780,7 @@ public class BattleMgr : MonoBehaviour
         {
             if (g != null)
             {
-                if (g.tag == "character") lose = false;
+                if (characterSheep[g].is_user) lose = false;
             }
         }
         if (lose || exit)
@@ -791,7 +790,7 @@ public class BattleMgr : MonoBehaviour
                 Destroy(characterPos[i]);
             }
             WindowMgr.Instance.active_window("Result");
-            User.Instance.level_up();
+            //User.Instance.level_up();
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isWin = false;
         }
@@ -1001,6 +1000,34 @@ public class BattleMgr : MonoBehaviour
     {
         return gold;
     }
+    public void CampChange()
+    {
+        campChange = true;
+    }
+    public void GetInfo(ref string name, ref int[] Info)
+    {
+        if (click == 1)
+        {
+            GameObject g = characterPos[InfoDic];
+            name = characterSheep[g].name;
+            Info[0] = characterSheep[g].hp;
+            Info[1] = characterSheep[g].max_hp;
+            Info[2] = characterSheep[g].attack;
+            Info[3] = characterSheep[g].attack_range;
+            Info[4] = characterSheep[g].move_range;
+        }
+        else if (click == 3)
+        {
+            GameObject g = enemyPos[InfoDic];
+            name = characterMonster[g].name;
+            Info[0] = characterMonster[g].hp;
+            Info[1] = characterMonster[g].max_hp;
+            Info[2] = characterMonster[g].attack;
+            Info[3] = characterMonster[g].attack_range;
+            Info[4] = characterMonster[g].move_range;
+        }
+        click = 9;
+    }
 
 
 
@@ -1183,7 +1210,7 @@ public class BattleMgr : MonoBehaviour
     }
     public void Rotate(int x, int y, bool sure)
     {
-        if (x > 0 && x < maxX && y > 0 && y < maxY)
+        if (x > 1 && x < maxX && y > 1 && y < maxY)
         {
             if (!sure)
             {

@@ -8,6 +8,7 @@ namespace sheeps
     [Serializable]
     public class sheep
     {
+        public string name;
         public int hp;
         public int max_hp;
         public int attack;
@@ -29,7 +30,7 @@ namespace sheeps
         public string class_id;
         public GameObject this_sheep;
         public string skill_id;
-        bool is_user = false;
+        public bool is_user = false;
 
 
         public sheep(bool is_monster = false)
@@ -94,7 +95,7 @@ namespace sheeps
             class_id = sheep_id;
 
             max_hp = hp;
-            
+
         }
         public int get_id()
         {

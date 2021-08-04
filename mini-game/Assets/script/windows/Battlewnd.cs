@@ -12,8 +12,12 @@ public class Battlewnd : window
     public GameObject sheep_prefab;
     public GameObject stay_btn_ob;
     public GameObject skill_btn_ob;
+    public GameObject charac_tab;
+    public GameObject end_btn_ob;
+    public GameObject round;
+    public GameObject gold;
     public Button menu;
-    private bool clickSetting = false;
+    private int clickSetting = 0;
 
     Dictionary<int, GameObject> sheep_prefabs = new Dictionary<int, GameObject>();
 
@@ -25,43 +29,99 @@ public class Battlewnd : window
     //注册按钮点击监听
     void register_btn_click()
     {
-        Button battle_btn = battle_btn_ob.GetComponent<Button>();
+        //Button battle_btn = battle_btn_ob.GetComponent<Button>();
         Button skill_btn = skill_btn_ob.GetComponent<Button>();
         Button stay_btn = stay_btn_ob.GetComponent<Button>();
-        battle_btn.onClick.AddListener(battle_end);
+        Button end_btn = end_btn_ob.GetComponent<Button>();
+        //battle_btn.onClick.AddListener(battle_end);
         skill_btn.onClick.AddListener(skillBtn);
         stay_btn.onClick.AddListener(stayBtn);
-
+        end_btn.onClick.AddListener(endBtn);
         //menu.onClick.AddListener(active_menu);
     }
 
     //结束战斗
     void battle_end()
     {
-        WindowMgr.Instance.active_window("Result");
+        //WindowMgr.Instance.active_window("Result");
     }
     void skillBtn()
     {
         MapMgr.Instance.SkillUsed();
+
     }
     void stayBtn()
     {
         BattleMgr.Instance.Stay();
     }
+    void endBtn()
+    {
+        BattleMgr.Instance.CampChange();
+    }
+    void Click1()
+    {
+        skill_btn_ob.SetActive(true);
+        stay_btn_ob.SetActive(true);
+        charac_tab.SetActive(true);
+
+        string name = "";
+        int[] info = new int[5];
+        BattleMgr.Instance.GetInfo(ref name, ref info);
+        charac_tab.transform.Find("Name").GetComponent<Text>().text = name;
+        charac_tab.transform.Find("hpNumber").GetComponent<Text>().text = info[0].ToString() + "/" + info[1].ToString();
+        charac_tab.transform.Find("attackNumber").GetComponent<Text>().text = info[2].ToString();
+        charac_tab.transform.Find("attackRangeNumber").GetComponent<Text>().text = info[3].ToString();
+        charac_tab.transform.Find("moveRangeNumber").GetComponent<Text>().text = info[4].ToString();
+        clickSetting = 0;
+    }
+    void Click2()
+    {
+        skill_btn_ob.SetActive(false);
+        stay_btn_ob.SetActive(false);
+        charac_tab.SetActive(false);
+        clickSetting = 0;
+    }
+    void Click3()
+    {
+        charac_tab.SetActive(true);
+        string name = "";
+        int[] info = new int[5];
+        BattleMgr.Instance.GetInfo(ref name, ref info);
+        charac_tab.transform.Find("Name").GetComponent<Text>().text = name;
+        charac_tab.transform.Find("hpNumber").GetComponent<Text>().text = info[0].ToString() + "/" + info[1].ToString();
+        charac_tab.transform.Find("attackNumber").GetComponent<Text>().text = info[2].ToString();
+        charac_tab.transform.Find("attackRangeNumber").GetComponent<Text>().text = info[3].ToString();
+        charac_tab.transform.Find("moveRangeNumber").GetComponent<Text>().text = info[4].ToString();
+        clickSetting = 0;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (BattleMgr.Instance.click == 1 && !clickSetting)
+        round.transform.Find("roundNumber").GetComponent<Text>().text = "round" + " " + BattleMgr.Instance.GetRound().ToString();
+        gold.transform.Find("goldNumber").GetComponent<Text>().text = "gold" + " " + BattleMgr.Instance.GetGold().ToString();
+        if (BattleMgr.Instance.click == 1)
         {
-            skill_btn_ob.SetActive(true);
-            stay_btn_ob.SetActive(true);
-            clickSetting = true;
+            clickSetting = 1;
         }
-        if (BattleMgr.Instance.click == 2 && clickSetting)
+        if (BattleMgr.Instance.click == 2)
         {
-            skill_btn_ob.SetActive(false);
-            stay_btn_ob.SetActive(false);
-            clickSetting = false;
+            clickSetting = 2;
+        }
+        if (BattleMgr.Instance.click == 3)
+        {
+            clickSetting = 3;
+        }
+        switch (clickSetting)
+        {
+            case 1:
+                Click1();
+                break;
+            case 2:
+                Click2();
+                break;
+            case 3:
+                Click3();
+                break;
         }
     }
 
