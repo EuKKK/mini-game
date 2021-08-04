@@ -767,7 +767,7 @@ public class BattleMgr : MonoBehaviour
                     Destroy(enemyPos[i]);
                 }
             }
-            if(User.Instance.level == 6001)
+            if (User.Instance.level == 6001)
             {
                 StoryMgr.Instance.start_story(2);
                 StoryMgr.Instance.need_result = true;
@@ -776,6 +776,7 @@ public class BattleMgr : MonoBehaviour
                 WindowMgr.Instance.active_window("Result");
 
             User.Instance.level_up();
+            User.Instance.money = User.Instance.money + gold;
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isWin = true;
         }
