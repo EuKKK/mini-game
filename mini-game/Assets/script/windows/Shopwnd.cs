@@ -58,11 +58,19 @@ public class Shopwnd : window, IPointerDownHandler
 
     void refresh_func()
     {
-        refresh_shop();
+        if(User.Instance.money>=2)
+        {
+            User.Instance.money-=2;
+            refresh_shop();
+        }
     }
     void level_up_func()
     {
-        User.Instance.user_level++;
+        if(User.Instance.money>=10)
+        {
+            User.Instance.money-=10;
+            User.Instance.user_level++;
+        }
     }
     void back_func()
     {
@@ -80,6 +88,7 @@ public class Shopwnd : window, IPointerDownHandler
         {
             User.Instance.dele_sheep(last_down_sheep);
             refresh_user_sheeps();
+            User.Instance.money += last_down_sheep.sell;
             last_down_sheep = null;
         }
     }
@@ -90,15 +99,20 @@ public class Shopwnd : window, IPointerDownHandler
     void buy_sheep_btn(int num)
     {
         if(shop_units[num] == -1 || shop_units[num] == 0 || User.Instance.sheep_map.Count >= 14) return;
-      
-        sheep new_sheep = new sheep();
-        new_sheep.load_data(shop_units[num].ToString());
-        User.Instance.add_sheep(new_sheep);
-        redraw();
-        SheepMgr.dele_id(shop_units[num]);
+        int sell_money = int.Parse(ExcMgr.Instance.get_data("character", shop_units[num].ToString(), "费用"));
+        if(User.Instance.money>=sell_money)
+        {
+            User.Instance.money -= sell_money;
+            sheep new_sheep = new sheep();
+            new_sheep.load_data(shop_units[num].ToString());
+            User.Instance.add_sheep(new_sheep);
+            redraw();
+            SheepMgr.dele_id(shop_units[num]);
 
-        shop_units[num] = -1;
-        GlobalFuncMgr.set_image(sell_sheeps[num], "白");
+            shop_units[num] = -1;
+            GlobalFuncMgr.set_image(sell_sheeps[num], "白");
+        }
+        
     }
     override public void redraw(GameObject window = null)
     {
@@ -118,6 +132,7 @@ public class Shopwnd : window, IPointerDownHandler
         }
 
         refresh_user_sheeps();
+        money.text = "金币"+User.Instance.money.ToString();
     }
 
     IEnumerator start_story_async()
@@ -204,13 +219,13 @@ public class Shopwnd : window, IPointerDownHandler
             if(num > User.Instance.sheep_map.Count) return ;
             sheep sheep_info = shop_user_sheep_map[num];
             sheep_infos[0].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "角色名字");
-            sheep_infos[1].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "hp");
-            sheep_infos[2].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击范围");
-            sheep_infos[3].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "移动范围");
+            sheep_infos[1].GetComponent<Text>().text = "生命值:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "hp");
+            sheep_infos[2].GetComponent<Text>().text = "攻击范围:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击范围");
+            sheep_infos[3].GetComponent<Text>().text = "移动范围:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "移动范围");
             if (sheep_info.skill == "attack")
-                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击");
+                sheep_infos[4].GetComponent<Text>().text = "攻击:" + ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击");
             else
-                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("skill", sheep_info.skill_id, "技能效果");
+                sheep_infos[4].GetComponent<Text>().text = "技能效果:" + ExcMgr.Instance.get_data("skill", sheep_info.skill_id, "技能效果");
 
         }
         if (list.Count>0&&list[0].gameObject.tag == "sellcharac")
@@ -221,14 +236,14 @@ public class Shopwnd : window, IPointerDownHandler
             if(shop_units[num] == -1 || shop_units[num] == 0 ) return;
             string class_id = shop_units[num].ToString();
             sheep_infos[0].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "角色名字");
-            sheep_infos[1].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "hp");
-            sheep_infos[2].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "攻击范围");
-            sheep_infos[3].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "移动范围");
+            sheep_infos[1].GetComponent<Text>().text = "生命值:" + ExcMgr.Instance.get_data("character", class_id, "hp");
+            sheep_infos[2].GetComponent<Text>().text = "攻击范围:" + ExcMgr.Instance.get_data("character", class_id, "攻击范围");
+            sheep_infos[3].GetComponent<Text>().text = "移动范围:" + ExcMgr.Instance.get_data("character", class_id, "移动范围");
             string skill = ExcMgr.Instance.get_data("character", class_id, "技能id");
             if (skill != null && skill != "")
-                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("skill", skill, "技能效果");
+                sheep_infos[4].GetComponent<Text>().text = "技能效果:" + ExcMgr.Instance.get_data("skill", skill, "技能效果");
             else
-                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "攻击");
+                sheep_infos[4].GetComponent<Text>().text =  "攻击:" + ExcMgr.Instance.get_data("character", class_id, "攻击");
 
         }
     }

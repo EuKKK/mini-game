@@ -31,6 +31,7 @@ namespace sheeps
         public GameObject this_sheep;
         public string skill_id;
         public bool is_user = false;
+        public int sell;
 
 
         public sheep(bool is_monster = false)
@@ -80,6 +81,7 @@ namespace sheeps
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星血量提升系数"), out hp_index);
             float.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "升星攻击提升"), out attack_index);
             int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "警戒范围"), out cordon);
+            int.TryParse(ExcMgr.Instance.get_data("character", sheep_id, "售价"), out sell);
             if (star == 2)
             {
                 hp = (int)(hp * hp_index);
