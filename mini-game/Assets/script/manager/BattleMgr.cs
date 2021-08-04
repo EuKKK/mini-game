@@ -1648,13 +1648,15 @@ public class BattleMgr : MonoBehaviour
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public int GetLocationX(float pos) //得到坐标信息
+    public int GetLocationX(float pos)
     {
-        return ((int)(pos + InitX - mapInfo.transform.position.x) - 20) / 40 + 1;
+        float mathX = pos + InitX - mapInfo.transform.position.x;
+        return ((int)(mathX) - 20) / 40 + 1;
     }
-    public int GetLocationY(float pos) //得到坐标信息
+    public int GetLocationY(float pos)
     {
-        return ((int)(pos + InitY - mapInfo.transform.position.y) - 20) / 40 + 1;
+        float mathY = pos + InitY - mapInfo.transform.position.y;
+        return ((int)(mathY) - 20) / 40 + 1;
     }
     public float GetPositionX(int loc) //得到位置信息
     {
