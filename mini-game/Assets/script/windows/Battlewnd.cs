@@ -131,6 +131,7 @@ public class Battlewnd : window
         {
             draw_sheep(id, User.Instance.get_sheeps()[id]);
         }
+        Game.Instance.switch_music("battle");
     }
 
     void draw_sheep(int id, sheep u_sheep)

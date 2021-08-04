@@ -29,7 +29,15 @@ public class Resultwnd : window
     //结束战斗
     void back()
     {
- if (battleResult == 1) Game.Instance.player_save();Game.Instance.switch_music("normal");        MapMgr.Instance.leave_battle();
+        if (battleResult == 1) Game.Instance.player_save();
+        Game.Instance.switch_music("normal");       
+        MapMgr.Instance.leave_battle();
+        if(User.Instance.level == 6002)
+        {
+            WindowMgr.Instance.switch_window("Battlestandby");
+            MapMgr.Instance.GetMap();  
+        }
+        else
         WindowMgr.Instance.switch_window("Mode");
 
     }

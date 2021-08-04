@@ -480,6 +480,7 @@ MonoBehaviour:
   - "\u55EF\uFF1F\u4F60\u95EE\u6211\u662F\u8C01\uFF1F"
   - "hmm\uFF0C\u4E0B\u6B21\u4E00\u5B9A\u544A\u8BC9\u4F60\uFF0C\u5982\u679C\u6709\u7684\u8BDD"
   story_chapters: 0300000001000000020000000400000004000000
+  need_result: 0
 --- !u!1 &40434526
 GameObject:
   m_ObjectHideFlags: 0

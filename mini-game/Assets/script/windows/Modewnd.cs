@@ -36,7 +36,6 @@ public class Modewnd : window
     //开始战斗
     void battle_start()
     {
-        Game.Instance.switch_music("battle");
         if(level_text.text != "1")
             User.Instance.level = User.Instance.level + int.Parse(level_text.text) - 1;
         WindowMgr.Instance.switch_window("Battlestandby");

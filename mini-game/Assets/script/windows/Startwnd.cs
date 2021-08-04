@@ -33,8 +33,14 @@ public class Startwnd : window
     //开始游戏
     void start_game()
     {
-        WindowMgr.Instance.switch_window("Mode");
         User.Instance.init();
+        if(User.Instance.level == 6001 || User.Instance.level == 6002)
+        {
+            WindowMgr.Instance.switch_window("Battlestandby");
+            MapMgr.Instance.GetMap();  
+        }
+        else 
+        WindowMgr.Instance.switch_window("Mode");
     }
     //继续游戏
     void continue_game()

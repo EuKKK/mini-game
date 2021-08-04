@@ -768,9 +768,12 @@ public class BattleMgr : MonoBehaviour
                 }
             }
             if(User.Instance.level == 6001)
-            StoryMgr.Instance.start_story(2);
-
-            WindowMgr.Instance.active_window("Result");
+            {
+                StoryMgr.Instance.start_story(2);
+                StoryMgr.Instance.need_result = true;
+            }
+            else
+                WindowMgr.Instance.active_window("Result");
 
             User.Instance.level_up();
             MapMgr.Instance.Playing = false;

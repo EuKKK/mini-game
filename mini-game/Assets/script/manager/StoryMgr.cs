@@ -10,6 +10,7 @@ public class StoryMgr:MonoBehaviour
 
     public string [] stroy_lines = new string[14];
     public int[] story_chapters = new int[5];
+    public bool need_result = false;
     int story_num = 0;
     int now_stroy_id = -1;
     void Awake()
@@ -41,6 +42,11 @@ public class StoryMgr:MonoBehaviour
     public void end_stroy()
     {
         WindowMgr.Instance.close_window("Story");
+        if(need_result)
+        {
+            WindowMgr.Instance.active_window("Result");
+            need_result = false;
+        }
     }
     public string get_story()
     {
