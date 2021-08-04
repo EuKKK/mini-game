@@ -337,9 +337,10 @@ public class MapMgr : MonoBehaviour
         bool hit = Physics.Raycast(ray, out rh);
         if (hit)
         {
+
             map_pos = new int[2];
             GameObject target = rh.collider.gameObject;
-
+            Debug.Log(target.name);
             if (target.layer != 9) return null;
             if (!target.name.Contains("HighLightSheep")) return null;
 

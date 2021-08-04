@@ -69,12 +69,12 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
         int now_sheep_cnt = 0;
         foreach (int id in user_sheeps.Keys)
         {
-            if(left_num>0) left_num--;
+            if (left_num > 0) left_num--;
             else
             {
-                if(now_sheep_cnt<4)
+                if (now_sheep_cnt < 4)
                 {
-                    now_sheep_cnt ++;
+                    now_sheep_cnt++;
                     draw_sheep(id.ToString(), user_sheeps[id]);
                 }
             }
@@ -140,12 +140,12 @@ public class Battlestandbywnd : window, IDragHandler, IPointerDownHandler, IPoin
     }
     public void left_btn()
     {
-        if(left_num-4>0) left_num-=4;
+        if (left_num - 4 > 0) left_num -= 4;
         redraw_sheeps();
     }
     public void right_btn()
     {
-        if(left_num+5<User.Instance.sheep_map.Count) left_num+=5;
+        if (left_num + 5 < User.Instance.sheep_map.Count) left_num += 5;
         redraw_sheeps();
     }
 }
