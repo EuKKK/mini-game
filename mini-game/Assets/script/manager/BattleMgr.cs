@@ -141,18 +141,22 @@ public class BattleMgr : MonoBehaviour
         {
             click = 1;
 
-            if (!characterSheep[target].isSkilled && !characterSheep[target].isUsed)
+            try
             {
-                character = target;
-                MapRouteInit();
-                HighLightDestroy();
-                mapRoute[locationX, locationY].direction = Direction.stand;
-                mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
-                CharacterX = locationX;
-                CharacterY = locationY;
-                CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
-                check = true;
+                if (!characterSheep[target].isSkilled && !characterSheep[target].isUsed)
+                {
+                    character = target;
+                    MapRouteInit();
+                    HighLightDestroy();
+                    mapRoute[locationX, locationY].direction = Direction.stand;
+                    mapRoute[locationX, locationY].movePoint = characterSheep[character].move_range;
+                    CharacterX = locationX;
+                    CharacterY = locationY;
+                    CharacterMove(locationX, locationY, true, characterSheep[character].move_range);
+                    check = true;
+                }
             }
+            catch { }
         }
         else if (HighLight[locationX, locationY] == 1)
         {
@@ -797,8 +801,8 @@ public class BattleMgr : MonoBehaviour
             {
                 Destroy(characterPos[i]);
             }
-            if(!exit)
-            WindowMgr.Instance.active_window("Result");
+            if (!exit)
+                WindowMgr.Instance.active_window("Result");
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isLose = true;
         }
