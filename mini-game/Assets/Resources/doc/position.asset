@@ -37,7 +37,7 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6002
       - key: "\u9B54\u7269id"
-        val: 1101,1101,1102,1103
+        val: 1105,1102,1101,1103
       - key: 
         val: 
   - out_map:
@@ -46,7 +46,7 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6003
       - key: "\u9B54\u7269id"
-        val: 1103,1104,1101,1105,1102
+        val: 1104,1103,1102,1108,1105
       - key: 
         val: 
   - out_map:
@@ -55,7 +55,7 @@ MonoBehaviour:
       - key: "\u5173\u5361id"
         val: 6004
       - key: "\u9B54\u7269id"
-        val: 1102,1104,1106,1108,1107,1102
+        val: 1107,1106,1104,1110,1106,1104
       - key: 
         val: 
   - out_map:

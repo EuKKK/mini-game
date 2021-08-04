@@ -60,7 +60,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1001
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: archer
+        val: Archer
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -101,7 +101,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1002
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: emiya
+        val: Flare
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -142,7 +142,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1003
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: axe
+        val: Blade
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -183,7 +183,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1004
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: zephyr
+        val: Zephyrus
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -224,7 +224,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1005
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: knight
+        val: Knight
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -265,7 +265,7 @@ MonoBehaviour:
       - key: "\u89D2\u8272id"
         val: 1006
       - key: "\u89D2\u8272\u540D\u5B57"
-        val: paladin
+        val: Paladin
       - key: "\u661F\u7EA7"
         val: 1
       - key: "\u9635\u8425"
@@ -478,7 +478,7 @@ MonoBehaviour:
       - key: hp
         val: 288
       - key: "\u653B\u51FB"
-        val: 54
+        val: 72
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -519,7 +519,7 @@ MonoBehaviour:
       - key: hp
         val: 346
       - key: "\u653B\u51FB"
-        val: 65
+        val: 86
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -560,7 +560,7 @@ MonoBehaviour:
       - key: hp
         val: 264
       - key: "\u653B\u51FB"
-        val: 72
+        val: 96
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -601,7 +601,7 @@ MonoBehaviour:
       - key: hp
         val: 317
       - key: "\u653B\u51FB"
-        val: 86
+        val: 115
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -642,7 +642,7 @@ MonoBehaviour:
       - key: hp
         val: 396
       - key: "\u653B\u51FB"
-        val: 108
+        val: 144
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -683,7 +683,7 @@ MonoBehaviour:
       - key: hp
         val: 264
       - key: "\u653B\u51FB"
-        val: 72
+        val: 96
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -724,7 +724,7 @@ MonoBehaviour:
       - key: hp
         val: 317
       - key: "\u653B\u51FB"
-        val: 86
+        val: 115
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -765,7 +765,7 @@ MonoBehaviour:
       - key: hp
         val: 216
       - key: "\u653B\u51FB"
-        val: 99
+        val: 132
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -806,7 +806,7 @@ MonoBehaviour:
       - key: hp
         val: 260
       - key: "\u653B\u51FB"
-        val: 119
+        val: 159
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -847,7 +847,7 @@ MonoBehaviour:
       - key: hp
         val: 338
       - key: "\u653B\u51FB"
-        val: 155
+        val: 207
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -888,7 +888,7 @@ MonoBehaviour:
       - key: hp
         val: 619
       - key: "\u653B\u51FB"
-        val: 168
+        val: 225
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -929,7 +929,7 @@ MonoBehaviour:
       - key: hp
         val: 338
       - key: "\u653B\u51FB"
-        val: 155
+        val: 207
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -970,7 +970,7 @@ MonoBehaviour:
       - key: hp
         val: 675
       - key: "\u653B\u51FB"
-        val: 127
+        val: 168
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -1011,7 +1011,7 @@ MonoBehaviour:
       - key: hp
         val: 727
       - key: "\u653B\u51FB"
-        val: 137
+        val: 181
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -1050,9 +1050,9 @@ MonoBehaviour:
       - key: "\u9635\u8425"
         val: 0
       - key: hp
-        val: 320
+        val: 250
       - key: "\u653B\u51FB"
-        val: 90
+        val: 70
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -1091,9 +1091,9 @@ MonoBehaviour:
       - key: "\u9635\u8425"
         val: 0
       - key: hp
-        val: 360
+        val: 300
       - key: "\u653B\u51FB"
-        val: 100
+        val: 80
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -1132,9 +1132,9 @@ MonoBehaviour:
       - key: "\u9635\u8425"
         val: 0
       - key: hp
-        val: 400
+        val: 350
       - key: "\u653B\u51FB"
-        val: 110
+        val: 90
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
@@ -1173,9 +1173,9 @@ MonoBehaviour:
       - key: "\u9635\u8425"
         val: 0
       - key: hp
-        val: 440
+        val: 400
       - key: "\u653B\u51FB"
-        val: 120
+        val: 100
       - key: "\u6280\u80FDid"
         val: 
       - key: "\u653B\u51FB\u8303\u56F4"
