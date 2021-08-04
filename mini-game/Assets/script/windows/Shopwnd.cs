@@ -58,10 +58,11 @@ public class Shopwnd : window, IPointerDownHandler
 
     void refresh_func()
     {
-        if(User.Instance.money>=2)
+        if(User.Instance.money>=3)
         {
-            User.Instance.money-=2;
+            User.Instance.money-=3;
             refresh_shop();
+            money.text = "金币"+User.Instance.money.ToString();
         }
     }
     void level_up_func()
@@ -70,6 +71,7 @@ public class Shopwnd : window, IPointerDownHandler
         {
             User.Instance.money-=10;
             User.Instance.user_level++;
+            money.text = "金币"+User.Instance.money.ToString();
         }
     }
     void back_func()
