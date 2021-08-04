@@ -241,12 +241,14 @@ public class MapMgr : MonoBehaviour
     public int GetLocationX(float pos)
     {
         float mathX = pos + InitX - mapInfo.transform.position.x;
-        return ((int)(mathX) - 20) / 40 + 1;
+        return Mathf.FloorToInt((mathX - 20) / 40) + 1;
+        //return ((int)(mathX) - 20) / 40 + 1;
     }
     public int GetLocationY(float pos)
     {
         float mathY = pos + InitY - mapInfo.transform.position.y;
-        return ((int)(mathY) - 20) / 40 + 1;
+        return Mathf.FloorToInt((mathY - 20) / 40) + 1;
+        //return ((int)(mathY) - 20) / 40 + 1;
     }
     public float GetPositionX(int loc)
     {
