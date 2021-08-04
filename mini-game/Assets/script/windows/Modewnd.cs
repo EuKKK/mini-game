@@ -10,7 +10,6 @@ public class Modewnd : window
     public GameObject menu;
     public GameObject battle_btn_ob;
     public GameObject shop_btn_ob;
-    public GameObject guide_btn_ob;
     public GameObject back_btn_ob;
     public InputField level_text;
 
@@ -24,12 +23,10 @@ public class Modewnd : window
     {
         Button battle_btn = battle_btn_ob.GetComponent<Button>();
         Button shop_btn = shop_btn_ob.GetComponent<Button>();
-        Button guide_btn = guide_btn_ob.GetComponent<Button>();
         Button back_btn = back_btn_ob.GetComponent<Button>();
 
         battle_btn.onClick.AddListener(battle_start);
         shop_btn.onClick.AddListener(open_shop);
-        guide_btn.onClick.AddListener(open_guide);
         back_btn.onClick.AddListener(back);
     }
 
@@ -48,10 +45,7 @@ public class Modewnd : window
         WindowMgr.Instance.switch_window("Shop");
     }
     //打开指引
-    void open_guide()
-    {
 
-    }
 
     void back()
     {

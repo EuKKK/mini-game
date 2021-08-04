@@ -1103,7 +1103,7 @@ public class BattleMgr : MonoBehaviour
     public void SkillUse(int CharacterX, int CharacterY, int locationX, int locationY, GameObject gameObject, bool sure)
     {
 
-        if (!characterSheep[gameObject].isSkilled)
+        if (characterSheep.ContainsKey(gameObject)&&!characterSheep[gameObject].isSkilled)
         {
             switch (characterSheep[gameObject].skill)
             {
