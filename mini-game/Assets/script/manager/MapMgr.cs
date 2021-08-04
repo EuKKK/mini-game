@@ -303,11 +303,11 @@ public class MapMgr : MonoBehaviour
                 {
                     target = rh.collider.gameObject;
 
-
+                    /*
                     Debug.Log(target.transform.position.x + "," + target.transform.position.y);
                     Debug.Log(InitX);
                     Debug.Log(mapInfo.transform.position.x);
-
+                    */
 
                     locationX = GetLocationX(target.transform.position.x);
                     locationY = GetLocationY(target.transform.position.y);
