@@ -72,14 +72,14 @@ public class Battlewnd : window
         charac_tab.transform.Find("attackNumber").GetComponent<Text>().text = info[2].ToString();
         charac_tab.transform.Find("attackRangeNumber").GetComponent<Text>().text = info[3].ToString();
         charac_tab.transform.Find("moveRangeNumber").GetComponent<Text>().text = info[4].ToString();
-        clickSetting = 0;
+
     }
     void Click2()
     {
         skill_btn_ob.SetActive(false);
         stay_btn_ob.SetActive(false);
         charac_tab.SetActive(false);
-        clickSetting = 0;
+
     }
     void Click3()
     {
@@ -92,37 +92,30 @@ public class Battlewnd : window
         charac_tab.transform.Find("attackNumber").GetComponent<Text>().text = info[2].ToString();
         charac_tab.transform.Find("attackRangeNumber").GetComponent<Text>().text = info[3].ToString();
         charac_tab.transform.Find("moveRangeNumber").GetComponent<Text>().text = info[4].ToString();
-        clickSetting = 0;
+
     }
     // Update is called once per frame
     void Update()
     {
         round.transform.Find("roundNumber").GetComponent<Text>().text = "round" + " " + BattleMgr.Instance.GetRound().ToString();
         gold.transform.Find("goldNumber").GetComponent<Text>().text = "gold" + " " + BattleMgr.Instance.GetGold().ToString();
-        if (BattleMgr.Instance.click == 1)
+
+        if (BattleMgr.Instance.click == 1 && clickSetting != 1)
         {
             clickSetting = 1;
+            Click1();
         }
-        if (BattleMgr.Instance.click == 2)
+        if (BattleMgr.Instance.click == 2 && clickSetting != 2)
         {
             clickSetting = 2;
+            Click2();
         }
-        if (BattleMgr.Instance.click == 3)
+        if (BattleMgr.Instance.click == 3 && clickSetting != 3)
         {
-            clickSetting = 3;
+            clickSetting = 2;
+            Click3();
         }
-        switch (clickSetting)
-        {
-            case 1:
-                Click1();
-                break;
-            case 2:
-                Click2();
-                break;
-            case 3:
-                Click3();
-                break;
-        }
+
     }
 
     public override void redraw(GameObject window = null)

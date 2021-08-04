@@ -9,6 +9,9 @@ public class Resultwnd : window
 {
     public GameObject menu;
     public GameObject back_ob;
+    public GameObject text;
+    public bool textCheck;
+    public int battleResult;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +29,32 @@ public class Resultwnd : window
     //结束战斗
     void back()
     {
-        Game.Instance.player_save();
+        if (battleResult == 1) Game.Instance.player_save();
         MapMgr.Instance.leave_battle();
         WindowMgr.Instance.switch_window("Mode");
+
     }
 
-
+    void win()
+    {
+        battleResult = 1;
+        text.GetComponent<Text>().text = "胜利";
+    }
+    void lose()
+    {
+        battleResult = 0;
+        text.GetComponent<Text>().text = "失败";
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        if (MapMgr.Instance.isWin)
+        {
+            win();
+        }
+        else if (MapMgr.Instance.isLose)
+        {
+            lose();
+        }
     }
 }

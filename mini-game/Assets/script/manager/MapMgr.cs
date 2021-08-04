@@ -36,6 +36,7 @@ public class MapMgr : MonoBehaviour
     private Vector3 lastMousePosition;
     public bool Playing = false;
     public bool isWin = false;
+    public bool isLose = false;
     List<float[]> play_pos;
     public int skill;
 
@@ -53,6 +54,8 @@ public class MapMgr : MonoBehaviour
 
         //初始化地图数据
         map_init();
+        isWin = false;
+        isLose = false;
         InitX = mapInfo.transform.position.x;
         InitY = mapInfo.transform.position.y;
         rotX = ex.transform.eulerAngles.x;

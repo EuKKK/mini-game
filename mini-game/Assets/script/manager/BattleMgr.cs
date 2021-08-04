@@ -795,7 +795,7 @@ public class BattleMgr : MonoBehaviour
             }
             WindowMgr.Instance.active_window("Result");
             MapMgr.Instance.Playing = false;
-            MapMgr.Instance.isWin = false;
+            MapMgr.Instance.isLose = true;
         }
     }
     private void RoundStart()
