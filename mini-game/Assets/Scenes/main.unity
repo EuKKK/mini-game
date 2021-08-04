@@ -6414,7 +6414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &924820865
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7100,7 +7100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1013368636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7174,7 +7174,6 @@ MonoBehaviour:
   battle_btn_ob: {fileID: 483828517}
   shop_btn_ob: {fileID: 72512484}
   back_btn_ob: {fileID: 42495057}
-  level_text: {fileID: 0}
 --- !u!1 &1056417612
 GameObject:
   m_ObjectHideFlags: 0

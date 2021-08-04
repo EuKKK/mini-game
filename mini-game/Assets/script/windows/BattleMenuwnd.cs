@@ -25,9 +25,10 @@ public class BattleMenuwnd : window
         Game.Instance.switch_music("normal");   
         BattleMgr.Instance.BattleExit();
         WindowMgr.Instance.switch_window("Start");
+        MapMgr.Instance.leave_battle();
     }
     void cancel()
     {
-        
+        this.gameObject.SetActive(false);
     }
 }
