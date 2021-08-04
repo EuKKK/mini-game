@@ -783,6 +783,7 @@ public class BattleMgr : MonoBehaviour
 
             User.Instance.level_up();
             User.Instance.money = User.Instance.money + gold;
+
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isWin = true;
         }
@@ -1012,7 +1013,14 @@ public class BattleMgr : MonoBehaviour
     }
     public int GetGold()
     {
-        return gold + User.Instance.money;
+        if (MapMgr.Instance.isWin)
+        {
+            return User.Instance.money;
+        }
+        else
+        {
+            return gold + User.Instance.money;
+        }
     }
     public void CampChange()
     {
