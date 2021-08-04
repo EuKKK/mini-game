@@ -169,16 +169,16 @@ public class MapMgr : MonoBehaviour
         if (User.Instance.level == 6002)
         {
             //增加跳关容错
-            if (User.Instance.sheep_map.Count < 4)
-            {
-                sheep new_sheep = new sheep();
-                new_sheep.load_data("1008");
-                User.Instance.sheep_map[4] = new_sheep;
-            }
-            for (int i = 1; i <= 4; i++)
-            {
-                FormationMgr.Instance.enter_team(play_pos[i - 1][0], play_pos[i - 1][1], User.Instance.get_sheep_by_id(i));
-            }
+            // if (User.Instance.sheep_map.Count < 4)
+            // {
+            //     sheep new_sheep = new sheep();
+            //     new_sheep.load_data("1008");
+            //     User.Instance.sheep_map[4] = new_sheep;
+            // }
+            FormationMgr.Instance.enter_team(play_pos[0][0], play_pos[0][1], User.Instance.get_sheep_by_id(3));
+            FormationMgr.Instance.enter_team(play_pos[1][0], play_pos[1][1], User.Instance.get_sheep_by_id(4));
+            FormationMgr.Instance.enter_team(play_pos[2][0], play_pos[2][1], User.Instance.get_sheep_by_id(2));
+            FormationMgr.Instance.enter_team(play_pos[3][0], play_pos[3][1], User.Instance.get_sheep_by_id(1));
             GetSheep();
             WindowMgr.Instance.switch_window("Battle");
             StoryMgr.Instance.start_story(3);
