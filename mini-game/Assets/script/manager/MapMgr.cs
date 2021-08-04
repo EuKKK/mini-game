@@ -241,14 +241,14 @@ public class MapMgr : MonoBehaviour
     public int GetLocationX(float pos)
     {
         float mathX = pos + InitX - mapInfo.transform.position.x;
-        return Mathf.FloorToInt((mathX - 20) / 40) + 1;
-        //return ((int)(mathX) - 20) / 40 + 1;
+        int posX = Mathf.RoundToInt(mathX);
+        return (posX - 20) / 40 + 1;
     }
     public int GetLocationY(float pos)
     {
         float mathY = pos + InitY - mapInfo.transform.position.y;
-        return Mathf.FloorToInt((mathY - 20) / 40) + 1;
-        //return ((int)(mathY) - 20) / 40 + 1;
+        int posY = Mathf.RoundToInt(mathY);
+        return (posY - 20) / 40 + 1;
     }
     public float GetPositionX(int loc)
     {
@@ -303,16 +303,19 @@ public class MapMgr : MonoBehaviour
                 {
                     target = rh.collider.gameObject;
 
-                    locationX = GetLocationX(target.transform.position.x);
-                    locationY = GetLocationY(target.transform.position.y);
 
-                    /*
                     Debug.Log(target.transform.position.x + "," + target.transform.position.y);
                     Debug.Log(InitX);
                     Debug.Log(mapInfo.transform.position.x);
-                    Debug.Log(locationX + "," + locationY);
 
-                    */
+
+                    locationX = GetLocationX(target.transform.position.x);
+                    locationY = GetLocationY(target.transform.position.y);
+
+                    // Debug.Log(locationX + "," + locationY);
+
+
+
                     BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
 
                     skill = 0;

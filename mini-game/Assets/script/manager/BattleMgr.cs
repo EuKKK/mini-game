@@ -1107,7 +1107,7 @@ public class BattleMgr : MonoBehaviour
     public void SkillUse(int CharacterX, int CharacterY, int locationX, int locationY, GameObject gameObject, bool sure)
     {
 
-        if (characterSheep.ContainsKey(gameObject)&&!characterSheep[gameObject].isSkilled)
+        if (characterSheep.ContainsKey(gameObject) && !characterSheep[gameObject].isSkilled)
         {
             switch (characterSheep[gameObject].skill)
             {
@@ -1656,14 +1656,14 @@ public class BattleMgr : MonoBehaviour
     public int GetLocationX(float pos)
     {
         float mathX = pos + InitX - mapInfo.transform.position.x;
-        return Mathf.FloorToInt((mathX - 20) / 40) + 1;
-        //return ((int)(mathX) - 20) / 40 + 1;
+        int posX = Mathf.RoundToInt(mathX);
+        return (posX - 20) / 40 + 1;
     }
     public int GetLocationY(float pos)
     {
         float mathY = pos + InitY - mapInfo.transform.position.y;
-        return Mathf.FloorToInt((mathY - 20) / 40) + 1;
-        //return ((int)(mathY) - 20) / 40 + 1;
+        int posY = Mathf.RoundToInt(mathY);
+        return (posY - 20) / 40 + 1;
     }
     public float GetPositionX(int loc) //得到位置信息
     {
