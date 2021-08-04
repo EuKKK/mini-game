@@ -148,6 +148,7 @@ public class Shopwnd : window, IPointerDownHandler
         shop_units = SheepMgr.get_random_percent();
         for(int i=0;i<3;i++)
         {
+            if(shop_units[i]!=0)
             GlobalFuncMgr.set_image(sell_sheeps[i], ExcMgr.Instance.get_data("character", shop_units[i].ToString(), "人物图片"));
         }        
     }

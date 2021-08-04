@@ -29,7 +29,8 @@ public class SheepMgr
             while(index < 1010 && random - sheep_store[index] > 0)
             {
                 index ++;
-                random -= sheep_store[index];
+                if(sheep_store[index]!=0)
+                    random -= sheep_store[index];
             }
             shop_sheep_id[i] = index;
         }
