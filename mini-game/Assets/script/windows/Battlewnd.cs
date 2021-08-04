@@ -25,6 +25,7 @@ public class Battlewnd : window
     void Start()
     {
         register_btn_click();
+
     }
     //注册按钮点击监听
     void register_btn_click()
@@ -100,19 +101,17 @@ public class Battlewnd : window
         round.transform.Find("roundNumber").GetComponent<Text>().text = "round" + " " + BattleMgr.Instance.GetRound().ToString();
         gold.transform.Find("goldNumber").GetComponent<Text>().text = "gold" + " " + BattleMgr.Instance.GetGold().ToString();
 
-        if (BattleMgr.Instance.click == 1 && clickSetting != 1)
+        if (BattleMgr.Instance.click == 1)
         {
-            clickSetting = 1;
             Click1();
         }
-        if (BattleMgr.Instance.click == 2 && clickSetting != 2)
+        if (BattleMgr.Instance.click == 2)
         {
-            clickSetting = 2;
             Click2();
         }
-        if (BattleMgr.Instance.click == 3 && clickSetting != 3)
+        if (BattleMgr.Instance.click == 3)
         {
-            clickSetting = 2;
+
             Click3();
         }
 
@@ -120,6 +119,9 @@ public class Battlewnd : window
 
     public override void redraw(GameObject window = null)
     {
+        skill_btn_ob.SetActive(false);
+        stay_btn_ob.SetActive(false);
+        charac_tab.SetActive(false);
         if (!window)
             window = this.gameObject;
         base.redraw(window);

@@ -184,11 +184,11 @@ public class MapMgr : MonoBehaviour
             StoryMgr.Instance.start_story(3);
             BattleMgr.Instance.GameStart();
         }
-         if(User.Instance.level == 6003&&first_third)
-         {
-             first_third = false;
-             StoryMgr.Instance.start_story(5);
-         }
+        if (User.Instance.level == 6003 && first_third)
+        {
+            first_third = false;
+            StoryMgr.Instance.start_story(5);
+        }
 
     }
 
@@ -240,11 +240,13 @@ public class MapMgr : MonoBehaviour
 
     public int GetLocationX(float pos)
     {
-        return ((int)(pos + InitX - mapInfo.transform.position.x) - 20) / 40 + 1;
+        float mathX = pos + InitX - mapInfo.transform.position.x;
+        return ((int)(mathX) - 20) / 40 + 1;
     }
     public int GetLocationY(float pos)
     {
-        return ((int)(pos + InitY - mapInfo.transform.position.y) - 20) / 40 + 1;
+        float mathY = pos + InitY - mapInfo.transform.position.y;
+        return ((int)(mathY) - 20) / 40 + 1;
     }
     public float GetPositionX(int loc)
     {
@@ -282,9 +284,9 @@ public class MapMgr : MonoBehaviour
     private void OnMouseMove()
     {
 
-
         if (Input.GetMouseButtonDown(0))
         {
+
             if (EventSystem.current.IsPointerOverGameObject())
             {
 
@@ -302,6 +304,13 @@ public class MapMgr : MonoBehaviour
                     locationX = GetLocationX(target.transform.position.x);
                     locationY = GetLocationY(target.transform.position.y);
 
+                    /*
+                    Debug.Log(target.transform.position.x + "," + target.transform.position.y);
+                    Debug.Log(InitX);
+                    Debug.Log(mapInfo.transform.position.x);
+                    Debug.Log(locationX + "," + locationY);
+
+                    */
                     BattleMgr.Instance.CenterManager(locationX, locationY, ref target, skill);
 
                     skill = 0;
