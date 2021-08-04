@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6399,10 +6399,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 924820864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3ba4b94eb14d124883ea2558ac681e7, type: 3}
+  m_Script: {fileID: 11500000, guid: afed27fd64861ad46a7d966600be973c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 0}
+  menu: {fileID: 924820864}
   new_game_btn_ob: {fileID: 373094106}
   continue_game_btn_ob: {fileID: 475723307}
   exit_btn_ob: {fileID: 1572354464}
@@ -7014,10 +7014,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1013368635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae20045465df38d459decbb708f39302, type: 3}
+  m_Script: {fileID: 11500000, guid: 4dc5a31a1233d7b4389a51b821d3437a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 0}
+  menu: {fileID: 1013368635}
   battle_btn_ob: {fileID: 483828517}
   shop_btn_ob: {fileID: 72512484}
   guide_btn_ob: {fileID: 1049835481}
