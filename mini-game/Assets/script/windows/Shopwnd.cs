@@ -8,7 +8,7 @@ using sheeps;
 using UnityEngine.EventSystems;
 
 
-public class Shopwnd : window, IPointerEnterHandler
+public class Shopwnd : window, IPointerDownHandler
 {
    public Text money;
    public GameObject sheep_panel;
@@ -22,12 +22,14 @@ public class Shopwnd : window, IPointerEnterHandler
    public Button buy_sheep1;
    public Button buy_sheep2;
    public Button buy_sheep3;
+   public sheep last_down_sheep;
    bool need_refresh = true;
    Dictionary<int, GameObject> shop_sheep_map = new Dictionary<int, GameObject>();
    Dictionary<int, sheep> shop_user_sheep_map = new Dictionary<int, sheep>();
    Dictionary<int, string> buttons = new Dictionary<int, string>();
    int [] shop_units = new int[3];
    public List<GameObject> sell_sheeps = new List<GameObject>();
+   public List<GameObject> sheep_infos = new List<GameObject>();
 
     void Awake()
     {
@@ -73,7 +75,12 @@ public class Shopwnd : window, IPointerEnterHandler
     }
     void sell_func()
     {
-        
+        if(last_down_sheep!=null)
+        {
+            User.Instance.dele_sheep(last_down_sheep);
+            refresh_user_sheeps();
+            last_down_sheep = null;
+        }
     }
     void cancel_func()
     {
@@ -134,7 +141,7 @@ public class Shopwnd : window, IPointerEnterHandler
         {
             GlobalFuncMgr.set_image(shop_sheep_map[i], "白");
             shop_sheep_map[i].transform.Find("star").gameObject.SetActive(false);
-            shop_user_sheep_map[i] = null;
+            shop_user_sheep_map.Remove(i);
         }
 
     }
@@ -171,16 +178,62 @@ public class Shopwnd : window, IPointerEnterHandler
             }
         }
     }
+    void Update()
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+        List<RaycastResult> list = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, list);
+        if (list.Count>0&&list[0].gameObject.tag == "shopcharac")
+        {
+            string ob_name = list[0].gameObject.name;
+            ob_name = ob_name.Replace("sheep", "");
+            int num = int.Parse(ob_name);
+            if(num > User.Instance.sheep_map.Count) return ;
+            sheep sheep_info = shop_user_sheep_map[num];
+            sheep_infos[0].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "角色名字");
+            sheep_infos[1].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "hp");
+            sheep_infos[2].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击范围");
+            sheep_infos[3].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "移动范围");
+            if (sheep_info.skill == "attack")
+                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", sheep_info.class_id, "攻击");
+            else
+                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("skill", sheep_info.skill_id, "技能效果");
 
-    public void OnPointerEnter(PointerEventData eventData)
+        }
+        if (list.Count>0&&list[0].gameObject.tag == "sellcharac")
+        {
+            string ob_name = list[0].gameObject.name;
+            ob_name = ob_name.Replace("sheep", "");
+            int num = int.Parse(ob_name) - 1;
+            if(shop_units[num] == -1 || shop_units[num] == 0 ) return;
+            string class_id = shop_units[num].ToString();
+            sheep_infos[0].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "角色名字");
+            sheep_infos[1].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "hp");
+            sheep_infos[2].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "攻击范围");
+            sheep_infos[3].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "移动范围");
+            string skill = ExcMgr.Instance.get_data("character", class_id, "技能id");
+            if (skill != null && skill != "")
+                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("skill", skill, "技能效果");
+            else
+                sheep_infos[4].GetComponent<Text>().text = ExcMgr.Instance.get_data("character", class_id, "攻击");
+
+        }
+    }
+    public void OnPointerDown(PointerEventData eventData)
     {
         List<RaycastResult> list = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, list);
-        if (list[0].gameObject.tag == "shopcharac")
+        last_down_sheep = null;
+        if (list.Count>0&&list[0].gameObject.tag == "shopcharac")
         {
             string ob_name = list[0].gameObject.name;
+            ob_name = ob_name.Replace("sheep", "");
             int num = int.Parse(ob_name);
+            if(num > User.Instance.sheep_map.Count) return ;
+            last_down_sheep = shop_user_sheep_map[num];
         }
     }
+    
 
 }

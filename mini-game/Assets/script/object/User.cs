@@ -77,14 +77,14 @@ public class User : MonoBehaviour
     }
 
     public void level_up()
-{
+    {
         int new_level = level + 1;
         if (new_level <= 6008)
             level = new_level;
         if (level == 6002)
         {
             sheep new_sheep = new sheep();
-            new_sheep.load_data("1009");
+            new_sheep.load_data("1008");
             sheep_map[4] = new_sheep;
         }
     }
