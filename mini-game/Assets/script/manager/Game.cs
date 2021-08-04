@@ -7,6 +7,9 @@ using UnityEditor;
 public class Game : MonoBehaviour
 {
     public static Game Instance { get; private set; }
+    public AudioClip normal;
+    public AudioClip battle;
+    public AudioSource back;
     void Awake()
     {
         Instance = this;
@@ -15,6 +18,10 @@ public class Game : MonoBehaviour
     void Start()
     {
         SheepMgr.init_store();
+        back.loop = true;
+        back.clip = normal;
+        back.Play(); //播放背景音乐
+
         //test_asset();
     }
 
@@ -57,6 +64,19 @@ public class Game : MonoBehaviour
             User.Instance.add_sheep(u_sheep);
         }
 
+    }
+    public void switch_music(string name)
+    {
+        if(name == "battle")
+        {
+            back.clip = battle;
+            back.Play(); //播放背景音乐
+        }
+        if(name == "normal")
+        {
+            back.clip = normal;
+            back.Play(); //播放背景音乐
+        }
     }
  
 }
