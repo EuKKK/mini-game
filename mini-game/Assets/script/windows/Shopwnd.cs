@@ -30,6 +30,7 @@ public class Shopwnd : window, IPointerDownHandler
    int [] shop_units = new int[3];
    public List<GameObject> sell_sheeps = new List<GameObject>();
    public List<GameObject> sheep_infos = new List<GameObject>();
+   bool first_enter = true;
 
     void Awake()
     {
@@ -109,6 +110,11 @@ public class Shopwnd : window, IPointerDownHandler
         {
             refresh_shop();
             need_refresh = false;
+        }
+        if(first_enter)
+        {
+            first_enter = false;
+            StoryMgr.Instance.start_story(4);
         }
 
         refresh_user_sheeps();

@@ -31,7 +31,6 @@ public class Storywnd : window
 
         window.SetActive(true);
 
-        int story_num = StoryMgr.Instance.get_now_story_num();
         story_text.text = StoryMgr.Instance.get_story();
     }
     void push_next()

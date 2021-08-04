@@ -767,7 +767,11 @@ public class BattleMgr : MonoBehaviour
                     Destroy(enemyPos[i]);
                 }
             }
+            if(User.Instance.level == 6001)
+            StoryMgr.Instance.start_story(2);
+
             WindowMgr.Instance.active_window("Result");
+
             User.Instance.level_up();
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isWin = true;
@@ -790,7 +794,6 @@ public class BattleMgr : MonoBehaviour
                 Destroy(characterPos[i]);
             }
             WindowMgr.Instance.active_window("Result");
-            //User.Instance.level_up();
             MapMgr.Instance.Playing = false;
             MapMgr.Instance.isWin = false;
         }

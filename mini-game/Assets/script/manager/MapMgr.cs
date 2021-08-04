@@ -40,6 +40,7 @@ public class MapMgr : MonoBehaviour
     public int skill;
 
     GameObject target;
+    bool first_third = true;
 
     void Start()
     {
@@ -177,8 +178,14 @@ public class MapMgr : MonoBehaviour
             }
             GetSheep();
             WindowMgr.Instance.switch_window("Battle");
+            StoryMgr.Instance.start_story(3);
             BattleMgr.Instance.GameStart();
         }
+         if(User.Instance.level == 6003&&first_third)
+         {
+             first_third = false;
+             StoryMgr.Instance.start_story(5);
+         }
 
     }
 
