@@ -22,6 +22,7 @@ public class BattleMenuwnd : window
     }
     void exit()
     {
+        Game.Instance.switch_music("normal");   
         BattleMgr.Instance.BattleExit();
         WindowMgr.Instance.switch_window("Start");
     }
