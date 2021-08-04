@@ -62,6 +62,32 @@ public class Battlewnd : window
     void Click1()
     {
         skill_btn_ob.SetActive(true);
+
+        string skill = BattleMgr.Instance.GetSkill();
+        skill_btn_ob.transform.Find("Attract").gameObject.SetActive(false);
+        skill_btn_ob.transform.Find("Rotate").gameObject.SetActive(false);
+        skill_btn_ob.transform.Find("Push").gameObject.SetActive(false);
+        skill_btn_ob.transform.Find("Cannon").gameObject.SetActive(false);
+        skill_btn_ob.transform.Find("Attack").gameObject.SetActive(false);
+        switch (skill)
+        {            
+            case "attract":
+                skill_btn_ob.transform.Find("Attract").gameObject.SetActive(true);
+                break;
+            case "push":
+                skill_btn_ob.transform.Find("Push").gameObject.SetActive(true);
+                break;
+            case "cannon":
+                skill_btn_ob.transform.Find("Cannon").gameObject.SetActive(true);
+                break;
+            case "rotate":
+                skill_btn_ob.transform.Find("Rotate").gameObject.SetActive(true);
+                break;
+            case "attack":
+                skill_btn_ob.transform.Find("Attack").gameObject.SetActive(true);
+                break;
+        }
+
         stay_btn_ob.SetActive(true);
         charac_tab.SetActive(true);
 

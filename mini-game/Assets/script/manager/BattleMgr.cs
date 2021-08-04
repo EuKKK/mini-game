@@ -1035,7 +1035,11 @@ public class BattleMgr : MonoBehaviour
         }
         click = 9;
     }
-
+    public string GetSkill()
+    {
+        GameObject g = characterPos[InfoDic];
+        return characterSheep[g].skill;
+    }
 
 
 
