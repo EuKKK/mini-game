@@ -11,7 +11,6 @@ public class Modewnd : window
     public GameObject battle_btn_ob;
     public GameObject shop_btn_ob;
     public GameObject back_btn_ob;
-    public InputField level_text;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +32,6 @@ public class Modewnd : window
     //开始战斗
     void battle_start()
     {
-        if(level_text.text != "1")
-            User.Instance.level = User.Instance.level + int.Parse(level_text.text) - 1;
         WindowMgr.Instance.switch_window("Battlestandby");
         MapMgr.Instance.GetMap();
     }
