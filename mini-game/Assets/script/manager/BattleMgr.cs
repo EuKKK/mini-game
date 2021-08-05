@@ -1630,7 +1630,7 @@ public class BattleMgr : MonoBehaviour
         enemyPos.Remove(pos);
         DestroyImmediate(g);
         Debug.Log("怪物死亡");
-        gold = gold + 4;
+        gold = gold + 3;
         isEnemyWalk = false;
         t++;
     }
