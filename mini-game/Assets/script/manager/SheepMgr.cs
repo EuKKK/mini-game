@@ -26,12 +26,13 @@ public class SheepMgr
         {
             int random = Random.Range(0,total_num);
             int index = 1001;
-            while(index < 1010 && random - sheep_store[index] > 0)
+            while(index <= 1010 && random - sheep_store[index] >= 0)
             {
-                index ++;
                 if(sheep_store[index]!=0)
                     random -= sheep_store[index];
+                index ++;
             }
+            if(index>1010) index = 1010;
             shop_sheep_id[i] = index;
         }
         return shop_sheep_id;

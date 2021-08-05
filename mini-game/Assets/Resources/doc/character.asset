@@ -375,7 +375,7 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E082"
       - key: "\u5E93\u5B58"
-        val: 1
+        val: 0
       - key: "\u8D4F\u91D1"
         val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
@@ -416,7 +416,7 @@ MonoBehaviour:
       - key: "\u4EBA\u7269\u56FE\u7247"
         val: "\u6CD5\u5E083"
       - key: "\u5E93\u5B58"
-        val: 0
+        val: 1
       - key: "\u8D4F\u91D1"
         val: 0
       - key: "\u5347\u661F\u8840\u91CF\u63D0\u5347\u7CFB\u6570"
