@@ -35,6 +35,7 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetInt("player_money", User.Instance.money);
         PlayerPrefs.SetInt("player_level", User.Instance.level);
         PlayerPrefs.SetInt("player_character_num", User.Instance.character_num);
+        PlayerPrefs.SetInt("player_id", GlobalFuncMgr.sheep_id);
         Dictionary<int,sheep> sheeps = User.Instance.get_sheeps();
         string sheep_ex = "sheep_";
         int cnt = 1;
@@ -54,6 +55,7 @@ public class Game : MonoBehaviour
         User.Instance.money = PlayerPrefs.GetInt("player_money");
         User.Instance.level = PlayerPrefs.GetInt("player_level");
         User.Instance.character_num = PlayerPrefs.GetInt("player_character_num");
+        GlobalFuncMgr.sheep_id = PlayerPrefs.GetInt("player_id");
         int cnt = PlayerPrefs.GetInt("sheep_count");
         string sheep_ex = "sheep_";
         string sheep_id = "";

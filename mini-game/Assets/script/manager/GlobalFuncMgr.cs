@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine.UI;
 public class GlobalFuncMgr 
 {
-    static int sheep_id = 0;
+    public static int sheep_id = 0;
     void Start()
     {
         //test_asset();

@@ -30,7 +30,7 @@ public class Shopwnd : window, IPointerDownHandler
    int [] shop_units = new int[3];
    public List<GameObject> sell_sheeps = new List<GameObject>();
    public List<GameObject> sheep_infos = new List<GameObject>();
-   bool first_enter = true;
+   public bool first_enter = true;
 
     void Awake()
     {
@@ -63,6 +63,7 @@ public class Shopwnd : window, IPointerDownHandler
             User.Instance.money-=3;
             refresh_shop();
             money.text = "金币"+User.Instance.money.ToString();
+            Game.Instance.player_save();
         }
     }
     void level_up_func()
@@ -72,6 +73,7 @@ public class Shopwnd : window, IPointerDownHandler
             User.Instance.money-=10;
             User.Instance.user_level++;
             money.text = "金币"+User.Instance.money.ToString();
+            Game.Instance.player_save();
         }
     }
     void back_func()
@@ -113,6 +115,7 @@ public class Shopwnd : window, IPointerDownHandler
 
             shop_units[num] = -1;
             GlobalFuncMgr.set_image(sell_sheeps[num], "白");
+            Game.Instance.player_save();
         }
         
     }
