@@ -164,9 +164,10 @@ public class BattleMgr : MonoBehaviour
         {
             click = 2;
             step = 0;
+            /*
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
-
+            */
             wayWalk(locationX, locationY, CharacterX, CharacterY);
             isWalk = true;
             walkType = true;
@@ -182,10 +183,10 @@ public class BattleMgr : MonoBehaviour
             mapRoute[CharacterX, CharacterY].direction = Direction.stand;
             mapRoute[CharacterX, CharacterY].movePoint = characterSheep[character].move_range;
             DangerousWayWalk(CharacterX, CharacterY, locationX, locationY, characterSheep[character].move_range, 0, true);
-
+            /*
             GamePlayer[CharacterX, CharacterY] = 0;
             GamePlayer[locationX, locationY] = 1;
-
+            */
             step = 0;
             isWalk = true;
             walkType = false;
@@ -566,38 +567,37 @@ public class BattleMgr : MonoBehaviour
             int absI = point - Mathf.Abs(i);
             for (int j = -absI; j <= absI; j++)
             {
-
-                if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
+                try
                 {
-
-                    int pos = getDic(_x + i, _y + j);
-                    GameObject g = characterPos[pos];
-                    //bool t = false;
-                    bool r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].move_range + characterMonster[enemy].attack_range, 0, false);
-                    if (r)
+                    if (_x + i >= 1 && _x + i <= 30 && _y + j >= 1 && _y + j <= 30 && GamePlayer[_x + i, _y + j] == 1)
                     {
-
-                        if (characterSheep[g].hp <= healthM)
+                        int pos = getDic(_x + i, _y + j);
+                        GameObject g = characterPos[pos];
+                        //bool t = false;
+                        bool r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].move_range + characterMonster[enemy].attack_range, 0, false);
+                        if (r)
                         {
-                            characterAttackX = i + _x;
-                            characterAttackY = j + _y;
-                            healthM = characterSheep[g].hp;
-
+                            if (characterSheep[g].hp <= healthM)
+                            {
+                                characterAttackX = i + _x;
+                                characterAttackY = j + _y;
+                                healthM = characterSheep[g].hp;
+                            }
                         }
-                    }
-                    else
-                    {
-
-                        r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].cordon, 0, false);
-                        if (characterSheep[g].hp <= healthC && r && healthM == 999)
+                        else
                         {
-                            characterAttackX = i + _x;
-                            characterAttackY = j + _y;
-                            healthC = characterSheep[g].hp;
-
+                            r = EnemyReach(_x, _y, _x + i, _y + j, characterMonster[enemy].cordon, 0, false);
+                            if (characterSheep[g].hp <= healthC && r && healthM == 999)
+                            {
+                                characterAttackX = i + _x;
+                                characterAttackY = j + _y;
+                                healthC = characterSheep[g].hp;
+                            }
                         }
                     }
                 }
+                catch { }
+
             }
         }
     }
@@ -828,6 +828,9 @@ public class BattleMgr : MonoBehaviour
                 if (sleep >= (int)(0.07f / Time.deltaTime))
                 {
                     characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
+
+                    GamePlayer[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] = 0;
+
                     switch (way[step])
                     {
                         case Direction.up:
@@ -844,6 +847,9 @@ public class BattleMgr : MonoBehaviour
                             break;
                     }
                     characterPos.Add(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)), character);
+
+                    GamePlayer[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] = 1;
+
                     if (MapInfo[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] == 500)
                     {
                         SheepDamage(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y), trapDamage);
@@ -871,6 +877,9 @@ public class BattleMgr : MonoBehaviour
                 {
                     step++;
                     characterPos.Remove(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)));
+
+                    GamePlayer[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] = 0;
+
                     switch (way[step])
                     {
                         case Direction.up:
@@ -890,6 +899,9 @@ public class BattleMgr : MonoBehaviour
                             break;
                     }
                     characterPos.Add(getDic(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)), character);
+
+                    GamePlayer[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] = 1;
+
                     if (MapInfo[GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y)] == 500)
                     {
                         SheepDamage(GetLocationX(character.transform.position.x), GetLocationY(character.transform.position.y), trapDamage);
