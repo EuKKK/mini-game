@@ -57,7 +57,7 @@ public class User : MonoBehaviour
     }
     public void init()
     {
-        level = 6007;
+        level = 6001;
         money = 0;
         sheep new_sheep_1 = new sheep();
         sheep new_sheep_2 = new sheep();
